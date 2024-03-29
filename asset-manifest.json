@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/userModelVSF/static/css/main.e024f98b.css",
-    "main.js": "/userModelVSF/static/js/main.af397da4.js",
+    "main.js": "/userModelVSF/static/js/main.a76657d9.js",
     "static/js/787.917857b7.chunk.js": "/userModelVSF/static/js/787.917857b7.chunk.js",
     "static/media/razorpayImage.jpg": "/userModelVSF/static/media/razorpayImage.1db772aac9e3629965dd.jpg",
     "static/media/vsfintechLogo.png": "/userModelVSF/static/media/vsfintechLogo.8b9738ffe69bed38bb4d.png",
@@ -9,11 +9,11 @@
     "static/media/GoogleGLogo.png": "/userModelVSF/static/media/GoogleGLogo.81fdb134397492b14f45.png",
     "index.html": "/userModelVSF/index.html",
     "main.e024f98b.css.map": "/userModelVSF/static/css/main.e024f98b.css.map",
-    "main.af397da4.js.map": "/userModelVSF/static/js/main.af397da4.js.map",
+    "main.a76657d9.js.map": "/userModelVSF/static/js/main.a76657d9.js.map",
     "787.917857b7.chunk.js.map": "/userModelVSF/static/js/787.917857b7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e024f98b.css",
-    "static/js/main.af397da4.js"
+    "static/js/main.a76657d9.js"
   ]
 }
