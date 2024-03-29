@@ -1,0 +1,43 @@
+import React from "react";
+import HeaderComponent from "../Components/mainComponents/HeaderComponent";
+import SubHeatMapPage from "../Components/mainComponents/SubHeatMapPage";
+import FullGraphChart from "../Components/mainComponents/FullGraphChart";
+
+// import { useEffect } from "react";
+// import { useDispatch } from 'react-redux';
+// import { setResultData, setIsLoadingHeatmap } from '../actions/actions';
+
+const SubLandingPage = ()=>{
+    // const dispatch = useDispatch();
+
+  // const fetchData = async () => {
+  //     dispatch(setIsLoadingHeatmap(true));
+  //     try {
+  //         const response = await fetch(`https://heatmap-node-1.onrender.com/getheatmappcntdata`);
+  //         if (!response.ok) {
+  //             throw new Error(`http error status:${response.status}`);
+  //         }
+  //         const result = await response.json();
+  //         // console.log(result.data);
+  //         // setResultData(result.data);
+  //         dispatch(setResultData(result.data));
+  //     } catch (error) {
+  //         console.error("Error fetching stock data:", error);
+  //     } finally {
+  //         dispatch(setIsLoadingHeatmap(false));
+  //     }
+  // };
+  
+  // useEffect(() => {
+  //     fetchData();
+  // }, [dispatch]);
+  
+    return(
+        <div>
+            <HeaderComponent/>
+            <SubHeatMapPage/>
+            <FullGraphChart/>
+        </div>
+    )
+}
+export default SubLandingPage;
