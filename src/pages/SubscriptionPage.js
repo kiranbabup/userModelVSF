@@ -3,24 +3,24 @@ import bgstrip from "../assets/images/bgstrip.jpg"
 import CardComponent from "../Components/CardComponent";
 import SubscribeCard from "../Components/SubscribeCard";
 import HeaderComponent from "../Components/mainComponents/HeaderComponent";
+import { useNavigate } from "react-router-dom";
 const SubscriptionPage = () => {
     // const [isLoading, setLoading] = React.useState(false);
-    
+    const navigate = useNavigate();
     // window.open("https://rzp.io/l/SQ6riaQK2", "_blank");
 
     const onSubscribeClickHandle = (titleType, code) => {
-        let url = '';
+        let url = '/paybyrazorpay';
         if (titleType === "Subcribe for 3-months") {
             console.log(titleType, "t1", code);
-            url = '/userModelVSF/#/paybyrazorpay';
+            navigate(url);
         } else if (titleType === "Subcribe for 6-months") {
             console.log(titleType, "t2", code);
-            url = '/userModelVSF/#/paybyrazorpay';
+            navigate(url);
         } else {
             console.log(titleType, "t3", code);
-            url = '/userModelVSF/#/paybyrazorpay';
+            navigate(url);
         }
-        window.open(url, '_blank');
     }
 
         // setLoading(true);
