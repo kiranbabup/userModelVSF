@@ -12,13 +12,13 @@ const SubscriptionPage = () => {
         let url = '';
         if (titleType === "Subcribe for 3-months") {
             console.log(titleType, "t1", code);
-            url = '/paybyrazorpay';
+            url = '/#/paybyrazorpay';
         } else if (titleType === "Subcribe for 6-months") {
             console.log(titleType, "t2", code);
-            url = '/paybyrazorpay';
+            url = '/#/paybyrazorpay';
         } else {
             console.log(titleType, "t3", code);
-            url = '/paybyrazorpay';
+            url = '/#/paybyrazorpay';
         }
         window.open(url, '_blank');
     }

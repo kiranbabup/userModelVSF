@@ -16,7 +16,6 @@ const CustomeRoutes = () => {
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/404" element={<Page404 />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/paybyrazorpay" element={<RazorPayPage />} />
 
       {/* <Route path="/fullheatmap" element={<LastMonthHeatMap />} /> */}
 
@@ -25,6 +24,7 @@ const CustomeRoutes = () => {
           <Route path="subscription" element={<SubscriptionPage />} />
           <Route path="profile" element={<ProfilePage/>}/>
           <Route path="blog" element={<BlogPage/>}/>
+          <Route path="paybyrazorpay" element={<RazorPayPage />} />
       </Route>
 
       <Route path="/" element={<ProtectedRoute type="sub" />} >
