@@ -27,7 +27,7 @@ export default function SubscribeCard({ titleType, onSubscribeClickHandle }) {
     var price;
     if (titleType === "Subcribe for 3-months") {
         price = 6000;
-    } else if (titleType === "Subcribe for Half year") {
+    } else if (titleType === "Subcribe for 6-months") {
         price = 12000;
     } else if (titleType === "Subcribe for an Year") {
         price = 24000;

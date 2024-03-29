@@ -15,7 +15,7 @@ export default function Page404() {
           <Box p={2} />
 
           <div>
-            <Button to="/vsfintech/" size="large" variant="contained" component={RouterLink}>
+            <Button to="/" size="large" variant="contained" component={RouterLink}>
               Go to Login
             </Button>
           </div>

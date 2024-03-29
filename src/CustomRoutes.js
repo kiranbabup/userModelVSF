@@ -7,26 +7,26 @@ import ProtectedRoute from "./actions/ProtectedRoute";
 import SubscriptionPage from "./pages/SubscriptionPage";
 import ProfilePage from "./pages/ProfilePage";
 import BlogPage from "./pages/BlogPage";
+import RazorPayPage from "./pages/RazorPayPage";
 // import LastMonthHeatMap from "./otherTestingFiles/LastMonthHeatMap";
 
 const CustomeRoutes = () => {
   return (
     <Routes>
-      <Route path="/vsfintech/" element={<Navigate to="/vsfintech/login" />} />
-      <Route path="/vsfintech/404" element={<Page404 />} />
-      <Route path="/vsfintech/login" element={<LoginPage />} />
+      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/404" element={<Page404 />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/paybyrazorpay" element={<RazorPayPage />} />
 
-      {/* <Route path="/vsfintech/fullheatmap" element={<LastMonthHeatMap />} /> */}
+      {/* <Route path="/fullheatmap" element={<LastMonthHeatMap />} /> */}
 
-      <Route path="/vsfintech/" element={<ProtectedRoute type="unsub" />} >
-        {/* <Route path="/user" element={< />}> */}
+      <Route path="/" element={<ProtectedRoute type="unsub" />} >
           <Route path="heatmap" element={<UnsubLandingPage />} />
           <Route path="subscription" element={<SubscriptionPage />} />
           <Route path="profile" element={<ProfilePage/>}/>
           <Route path="blog" element={<BlogPage/>}/>
-        {/* </Route> */}
       </Route>
-      <Route path="/vsfintech/" element={<ProtectedRoute type="sub" />} >
+      <Route path="/" element={<ProtectedRoute type="sub" />} >
         <Route path="vipheatmap" element={<SubLandingPage />} />
         <Route path="vipprofile" element={<ProfilePage/>}/>
         <Route path="vipblog" element={<BlogPage/>}/>

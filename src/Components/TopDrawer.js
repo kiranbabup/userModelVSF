@@ -31,7 +31,7 @@ export default function TopDrawer({ isDrawerOpen, onClose, expiryMsg }) {
   );
 
   const onSubscribeClickHandle = () => {
-    navigate("/vsfintech/subscription")
+    navigate("/subscription")
   }
 
   const list = (

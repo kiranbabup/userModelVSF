@@ -5,17 +5,23 @@ import SubscribeCard from "../Components/SubscribeCard";
 import HeaderComponent from "../Components/mainComponents/HeaderComponent";
 const SubscriptionPage = () => {
     // const [isLoading, setLoading] = React.useState(false);
+    
+    // window.open("https://rzp.io/l/SQ6riaQK2", "_blank");
+
     const onSubscribeClickHandle = (titleType, code) => {
+        let url = '';
         if (titleType === "Subcribe for 3-months") {
             console.log(titleType, "t1", code);
-            // window.open("https://rzp.io/l/SQ6riaQK2", "_blank");
-        } else if (titleType === "Subcribe for Half year") {
+            url = '/paybyrazorpay';
+        } else if (titleType === "Subcribe for 6-months") {
             console.log(titleType, "t2", code);
-            // window.open("https://rzp.io/l/SQ6riaQK2", "_blank");
+            url = '/paybyrazorpay';
         } else {
             console.log(titleType, "t3", code);
-            // window.open("https://rzp.io/l/SQ6riaQK2", "_blank");
+            url = '/paybyrazorpay';
         }
+        window.open(url, '_blank');
+    }
 
         // setLoading(true);
         //link to Payment
@@ -27,7 +33,6 @@ const SubscriptionPage = () => {
         // handleClick();
         // window.location.reload();
         // }, 8000);
-    }
     return (
         <Box>
             <HeaderComponent />
@@ -41,7 +46,7 @@ const SubscriptionPage = () => {
                 <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", pb: 2, mb: 2, justifyContent: "center" }}>
                     <CardComponent />
                     <SubscribeCard titleType={"Subcribe for 3-months"} onSubscribeClickHandle={onSubscribeClickHandle} />
-                    <SubscribeCard titleType={"Subcribe for Half year"} onSubscribeClickHandle={onSubscribeClickHandle} />
+                    <SubscribeCard titleType={"Subcribe for 6-months"} onSubscribeClickHandle={onSubscribeClickHandle} />
                     <SubscribeCard titleType={"Subcribe for an Year"} onSubscribeClickHandle={onSubscribeClickHandle} />
                 </Box>
             </Box>

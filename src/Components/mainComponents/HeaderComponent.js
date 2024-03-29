@@ -26,42 +26,42 @@ const HeaderComponent = () => {
   const handleLogout = () => {
     dispatch(authLogout());
     localStorage.clear();
-    nav('/vsfintech/login');
+    nav('/login');
   };
 
   const handleHome = () => {
     if (user ? user.email_verified === 1 && user.is_subscribed === 0 : 0) {
       // console.log("unsub");
-      nav("/vsfintech/heatmap");
+      nav("/heatmap");
     } else if (user ? user.email_verified === 1 && user.is_subscribed === 1 : 0) {
-      nav('/vsfintech/vipheatmap');
+      nav('/vipheatmap');
       // console.log("sub");
     } else {
-      nav("/vsfintech/404")
+      nav("/404")
     }
   }
 
   const handleProfile = () => {
     if (user ? user.email_verified === 1 && user.is_subscribed === 0 : 0) {
       // console.log("unsub");
-      nav("/vsfintech/profile");
+      nav("/profile");
     } else if (user ? user.email_verified === 1 && user.is_subscribed === 1 : 0) {
-      nav("/vsfintech/vipprofile");
+      nav("/vipprofile");
       // console.log("sub");
     } else {
-      nav("/vsfintech/404")
+      nav("/404")
     }
   }
   
   const handleBlog = () => {
     if (user ? user.email_verified === 1 && user.is_subscribed === 0 : 0) {
       // console.log("unsub");
-      nav("/vsfintech/blog");
+      nav("/blog");
     } else if (user ? user.email_verified === 1 && user.is_subscribed === 1 : 0) {
-      nav("/vsfintech/vipblog");
+      nav("/vipblog");
       // console.log("sub");
     } else {
-      nav("/vsfintech/404")
+      nav("/404")
     }
   }
   const handleDrawerToggle = () => {
