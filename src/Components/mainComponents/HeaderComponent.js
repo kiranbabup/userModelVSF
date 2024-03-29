@@ -26,42 +26,42 @@ const HeaderComponent = () => {
   const handleLogout = () => {
     dispatch(authLogout());
     localStorage.clear();
-    nav('/userModelVSF/login');
+    nav('/login');
   };
 
   const handleHome = () => {
     if (user ? user.email_verified === 1 && user.is_subscribed === 0 : 0) {
       // console.log("unsub");
-      nav("/userModelVSF/heatmap");
+      nav("/heatmap");
     } else if (user ? user.email_verified === 1 && user.is_subscribed === 1 : 0) {
-      nav('/userModelVSF/vipheatmap');
+      nav('/vipheatmap');
       // console.log("sub");
     } else {
-      nav("/userModelVSF/404")
+      nav("/404")
     }
   }
 
   const handleProfile = () => {
     if (user ? user.email_verified === 1 && user.is_subscribed === 0 : 0) {
       // console.log("unsub");
-      nav("/userModelVSF/profile");
+      nav("/profile");
     } else if (user ? user.email_verified === 1 && user.is_subscribed === 1 : 0) {
-      nav("/userModelVSF/vipprofile");
+      nav("/vipprofile");
       // console.log("sub");
     } else {
-      nav("/userModelVSF/404")
+      nav("/404")
     }
   }
   
   const handleBlog = () => {
     if (user ? user.email_verified === 1 && user.is_subscribed === 0 : 0) {
       // console.log("unsub");
-      nav("/userModelVSF/blog");
+      nav("/blog");
     } else if (user ? user.email_verified === 1 && user.is_subscribed === 1 : 0) {
-      nav("/userModelVSF/vipblog");
+      nav("/vipblog");
       // console.log("sub");
     } else {
-      nav("/userModelVSF/404")
+      nav("/404")
     }
   }
   const handleDrawerToggle = () => {

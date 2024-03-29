@@ -13,21 +13,21 @@ import RazorPayPage from "./pages/RazorPayPage";
 const CustomeRoutes = () => {
   return (
     <Routes>
-      <Route path="/userModelVSF/" element={<Navigate to="/userModelVSF/login" />} />
-      <Route path="/userModelVSF/404" element={<Page404 />} />
-      <Route path="/userModelVSF/login" element={<LoginPage />} />
-      <Route path="/userModelVSF/paybyrazorpay" element={<RazorPayPage />} />
+      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/404" element={<Page404 />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/paybyrazorpay" element={<RazorPayPage />} />
 
       {/* <Route path="/fullheatmap" element={<LastMonthHeatMap />} /> */}
 
-      <Route path="/userModelVSF/" element={<ProtectedRoute type="unsub" />} >
+      <Route path="/" element={<ProtectedRoute type="unsub" />} >
           <Route path="heatmap" element={<UnsubLandingPage />} />
           <Route path="subscription" element={<SubscriptionPage />} />
           <Route path="profile" element={<ProfilePage/>}/>
           <Route path="blog" element={<BlogPage/>}/>
       </Route>
 
-      <Route path="/userModelVSF/" element={<ProtectedRoute type="sub" />} >
+      <Route path="/" element={<ProtectedRoute type="sub" />} >
         <Route path="vipheatmap" element={<SubLandingPage />} />
         <Route path="vipprofile" element={<ProfilePage/>}/>
         <Route path="vipblog" element={<BlogPage/>}/>

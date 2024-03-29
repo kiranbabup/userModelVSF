@@ -30,7 +30,7 @@ export default function AnchorTemporaryDrawer({ isDrawerOpen, onClose }) {
   );
 
   const onSubscribeClickHandle = () => {
-    navigate("/userModelVSF/subscription")
+    navigate("/subscription")
   }
 
   const list = (

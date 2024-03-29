@@ -31,7 +31,7 @@ export default function TopDrawer({ isDrawerOpen, onClose, expiryMsg }) {
   );
 
   const onSubscribeClickHandle = () => {
-    navigate("/userModelVSF/subscription")
+    navigate("/subscription")
   }
 
   const list = (
