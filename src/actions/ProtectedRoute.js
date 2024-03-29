@@ -6,11 +6,11 @@ const ProtectedRoute = ({ auth, type }) => {
   // console.log(auth.email_verified);
   // console.log(auth);
   if(auth.email_verified === 1 && auth.is_subscribed === 0){
-    return type === "unsub" ? <Outlet /> : <Navigate to="/404" replace />;
+    return type === "unsub" ? <Outlet /> : <Navigate to="/userModelVSF/404" replace />;
   }else if(auth.email_verified === 1 && auth.is_subscribed === 1){
-    return type === "sub" ? <Outlet /> : <Navigate to="/404" replace />;
+    return type === "sub" ? <Outlet /> : <Navigate to="/userModelVSF/404" replace />;
   }else{
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/userModelVSF/login" replace />;
   }
 };
 

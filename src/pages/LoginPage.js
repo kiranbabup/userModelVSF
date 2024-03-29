@@ -55,11 +55,11 @@ const LoginPage = ({ authSuccess }) => {
       if (responseData.email_verified === 1 && responseData.is_subscribed === 1) {
         authSuccess(responseData);
         // console.log("nav full");
-        navigate("/vipheatmap", { replace: true });
+        navigate("/userModelVSF/vipheatmap", { replace: true });
       } else if (responseData.email_verified === 1 && responseData.is_subscribed === 0) {
         authSuccess(responseData);
         // console.log("nav unsub");
-        navigate("/heatmap", { replace: true });
+        navigate("/userModelVSF/heatmap", { replace: true });
       }
       setLoading(false);
     } catch (err) {
