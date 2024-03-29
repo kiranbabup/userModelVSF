@@ -26,12 +26,12 @@ const CustomeRoutes = () => {
           <Route path="profile" element={<ProfilePage/>}/>
           <Route path="blog" element={<BlogPage/>}/>
       </Route>
+
       <Route path="/userModelVSF/" element={<ProtectedRoute type="sub" />} >
         <Route path="vipheatmap" element={<SubLandingPage />} />
         <Route path="vipprofile" element={<ProfilePage/>}/>
         <Route path="vipblog" element={<BlogPage/>}/>
       </Route>
-
     </Routes>
   );
 };
