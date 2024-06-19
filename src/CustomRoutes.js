@@ -8,6 +8,7 @@ import SubscriptionPage from "./pages/SubscriptionPage";
 import ProfilePage from "./pages/ProfilePage";
 import BlogPage from "./pages/BlogPage";
 import RazorPayPage from "./pages/RazorPayPage";
+import AccountExpiredPage from "./pages/AccountExpiredPage";
 // import LastMonthHeatMap from "./otherTestingFiles/LastMonthHeatMap";
 
 const CustomeRoutes = () => {
@@ -31,6 +32,7 @@ const CustomeRoutes = () => {
         <Route path="vipheatmap" element={<SubLandingPage />} />
         <Route path="vipprofile" element={<ProfilePage/>}/>
         <Route path="vipblog" element={<BlogPage/>}/>
+        <Route path="subscriptionexpired" element={<AccountExpiredPage />} />
       </Route>
     </Routes>
   );

@@ -13,6 +13,7 @@ import { months } from '../../constants';
 import YearlyHeatMap from '../YearlyHeatMap';
 import TopDrawer from '../TopDrawer';
 import { calculateDaysLeft } from '../../assets/data/functions';
+import { useNavigate } from 'react-router-dom';
 // import { useSelector } from 'react-redux';
 
 const SubHeatMapPage = () => {
@@ -40,6 +41,7 @@ const SubHeatMapPage = () => {
     const [isLoadingAllHeatMap, setIsLoadingAllHeatMap] = useState(false);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [expiryMsg, setexpiryMsg] = useState("");
+    const navigate = useNavigate();
 
     const fetchData = async () => {
         setIsLoadingHeatMap(true);
@@ -57,11 +59,12 @@ const SubHeatMapPage = () => {
             setIsLoadingHeatMap(false);
         }
     };
+
+    const endingDate = "22-04-2024";
+    const daysLeft = calculateDaysLeft(endingDate);
+
     useEffect(() => {
         fetchData();
-        const endingDate = "5-04-2024";
-        const daysLeft = calculateDaysLeft(endingDate);
-        // console.log(daysLeft);
         if(daysLeft <= 5){
             setIsDrawerOpen(true);
             setexpiryMsg(`Subscription Expires in ${daysLeft} days`);
@@ -191,7 +194,12 @@ const SubHeatMapPage = () => {
     }
 
     const handleDrawerClose = () => {
-        setIsDrawerOpen(false);
+        if(daysLeft <= 0){
+            navigate("/subscriptionexpired");
+            
+        }else{
+            setIsDrawerOpen(false);
+        }
     }
 
     return (
