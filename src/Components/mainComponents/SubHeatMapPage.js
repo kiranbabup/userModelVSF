@@ -60,7 +60,7 @@ const SubHeatMapPage = () => {
         }
     };
 
-    const endingDate = "22-04-2024";
+    const endingDate = "23-06-2024";
     const daysLeft = calculateDaysLeft(endingDate);
 
     useEffect(() => {

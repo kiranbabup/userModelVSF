@@ -278,21 +278,28 @@ const UnSubGraph = () => {
   };
 
   const compareGenerateDataPoints = () => {
+    // datapoints from db
     const mainOptionDataPoints = generateDataPoints1();
     const dataSeries = [];
-
+    var mainPointLast = null;
+  
     // Convert negative values to positive in mainOptionDataPoints
     const mainOptionPositiveDataPoints = mainOptionDataPoints.map((dataPoint) => ({
       x: dataPoint.x,
       y: Math.abs(dataPoint.y),
     }));
-
+  
     // Calculate the percentage values relative to mainOption
     const mainOptionPercentageDataPoints = mainOptionPositiveDataPoints.map((dataPoint) => ({
       x: dataPoint.x,
       y: (dataPoint.y / mainOptionPositiveDataPoints[dataPoint.x.getDate() - 1].y) * 100,
     }));
-
+    console.log(mainOptionPercentageDataPoints);
+  
+    if (mainOptionPercentageDataPoints.length > 0) {
+      mainPointLast = mainOptionPercentageDataPoints[mainOptionPercentageDataPoints.length - 1];
+    }
+  
     dataSeries.push({
       type: "spline",
       name: cleanOptionName(mainOption),
@@ -300,37 +307,43 @@ const UnSubGraph = () => {
       toolTipContent: "{name}: {x}: {y}",
       dataPoints: mainOptionPercentageDataPoints,
     });
-
+  
     for (let i = 0; i < selectedOption.length; i++) {
       const selectedOptionDataPoints = generateDataPointsForOption(selectedOption[i]);
-
+  
       // Convert negative values to positive in selectedOptionDataPoints
       const selectedOptionPositiveDataPoints = selectedOptionDataPoints.map((dataPoint) => ({
         x: dataPoint.x,
         y: Math.abs(dataPoint.y),
       }));
-
+  
       if (selectedOptionPositiveDataPoints.length > 0) {
         const selectedOptionPercentageDataPoints = selectedOptionPositiveDataPoints.map((dataPoint) => ({
           x: dataPoint.x,
           y: (dataPoint.y / mainOptionPositiveDataPoints[dataPoint.x.getDate() - 1].y) * 100,
         }));
-
+  
+        console.log(selectedOptionPercentageDataPoints);
+        console.log(mainPointLast);
+        const newDataPoints = selectedOptionPercentageDataPoints.map((dataPoint) => ({
+          x: dataPoint.x,
+          y: dataPoint.y + (mainPointLast.y - dataPoint.y),
+        }));        
+        console.log(newDataPoints);
+  
         dataSeries.push({
           type: "spline",
           name: cleanOptionName(selectedOption[i]),
           color: getRandomColor(),
           toolTipContent: "{name}: {x}: {y}",
-          dataPoints: selectedOptionPercentageDataPoints,
+          // dataPoints: selectedOptionPercentageDataPoints,
+          dataPoints: newDataPoints,
         });
       }
     }
-
     return dataSeries;
   };
-
-
-
+  
   const compareOptions = {
     title: {
       // text: "StockChart with Date Axis",
@@ -343,7 +356,7 @@ const UnSubGraph = () => {
         enabled: true,
         snapToDataPoint: true,
       },
-      valueFormatString: "DD/MM/YY",
+      valueFormatString: "DD-MM/YY",
     },
     axisY: {
       suffix: "%",

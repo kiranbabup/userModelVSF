@@ -57,3 +57,7 @@ export const dsiplayMesgStyle = {
     fontWeight: "bold", 
     color: "blue"
 }
+
+export const verylightGray = {
+    backgroundColor: "#CDCDCD"
+  }
