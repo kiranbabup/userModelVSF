@@ -60,7 +60,7 @@ const SubHeatMapPage = () => {
         }
     };
 
-    const endingDate = "23-06-2024";
+    const endingDate = "28-06-2024";
     const daysLeft = calculateDaysLeft(endingDate);
 
     useEffect(() => {
@@ -70,7 +70,8 @@ const SubHeatMapPage = () => {
             setexpiryMsg(`Subscription Expires in ${daysLeft} days`);
         }
     }, []);
-
+    console.log(resultData);
+    
     const setStatetoUse = () => {
         setIsSingleSheet(true);
         setIsBroadSheet(false);
@@ -93,7 +94,7 @@ const SubHeatMapPage = () => {
         modifiedData.map((item) => {
             var index = groupedData.findIndex((e) => e.label == item.label);
             if (index != -1) {
-                groupedData[index].data[item.month - 1].push(item.value);
+                return groupedData[index].data[item.month - 1].push(item.value);
             } else {
                 var newItem = {
                     label: item.label,
@@ -101,14 +102,14 @@ const SubHeatMapPage = () => {
                     average: Array.from({ length: months.length }, (_, i) => 0)
                 };
                 newItem.data[item.month - 1].push(item.value);
-                groupedData.push(newItem);
+                return groupedData.push(newItem);
             }
         });
         groupedData.map((item) => {
             for (var index in item.data) {
                 var sum = item.data[index].reduce((acc, val) => acc + val, 0);
                 var average = sum / item.data[index].length;
-                item.average[index] = isNaN(average) ? 0 : average;
+                item.average[index] = isNaN(average) ? 0 : parseFloat(average.toFixed(1));
             }
         })
         const truncatedData = groupedData.slice(0, groupedData.length - 10);

@@ -281,7 +281,7 @@ const UnSubGraph = () => {
     // datapoints from db
     const mainOptionDataPoints = generateDataPoints1();
     const dataSeries = [];
-    var mainPointLast = null;
+    var mainPointMedian = null;
   
     // Convert negative values to positive in mainOptionDataPoints
     const mainOptionPositiveDataPoints = mainOptionDataPoints.map((dataPoint) => ({
@@ -297,7 +297,7 @@ const UnSubGraph = () => {
     console.log(mainOptionPercentageDataPoints);
   
     if (mainOptionPercentageDataPoints.length > 0) {
-      mainPointLast = mainOptionPercentageDataPoints[mainOptionPercentageDataPoints.length - 1];
+      mainPointMedian = mainOptionPercentageDataPoints[mainOptionPercentageDataPoints.length - 1];
     }
   
     dataSeries.push({
@@ -324,11 +324,22 @@ const UnSubGraph = () => {
         }));
   
         console.log(selectedOptionPercentageDataPoints);
-        console.log(mainPointLast);
+        console.log(mainPointMedian);
+        // const newDataPoints = selectedOptionPercentageDataPoints.map((dataPoint) => ({
+        //   x: dataPoint.x,
+        //   y: dataPoint.y + (mainPointLast.y - dataPoint.y),
+        // }));
+        
         const newDataPoints = selectedOptionPercentageDataPoints.map((dataPoint) => ({
           x: dataPoint.x,
-          y: dataPoint.y + (mainPointLast.y - dataPoint.y),
-        }));        
+          y: dataPoint.y - mainPointMedian.y,
+        }));
+  
+        // Ensure the last point is set to the median value
+        if (newDataPoints.length > 0) {
+          newDataPoints[newDataPoints.length - 1].y = mainPointMedian.y;
+        }
+        
         console.log(newDataPoints);
   
         dataSeries.push({

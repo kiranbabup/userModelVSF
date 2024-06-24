@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Button, Dialog, DialogActions, DialogTitle, InputLabel, OutlinedInput, MenuItem, FormControl, Select, Checkbox, ListItemText } from "@mui/material";
 
-export default function CompareViewGraphOptions({ open, handleClose, handleDropdownChange, selectedOption, mainOption, onViewClick, onCompareClick, names }) {
+export default function CompareViewGraphOptions({ open, handleClose, handleDropdownChange, selectedOption, onCompareClick, names }) {
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const MenuProps = {
@@ -13,12 +13,17 @@ export default function CompareViewGraphOptions({ open, handleClose, handleDropd
             },
         },
     };
-
+    const clearOptionName = (option) => {
+        if (typeof option !== 'string') {
+          option = String(option);
+        }
+        return option.replace(/tri__/g, ' ').replace(/_/g, ' ');
+      };
     return (
         <div>
             <Dialog disableEscapeKeyDown open={open} onClose={()=>handleClose()}>
-                <DialogTitle>Add stocks</DialogTitle>
-                <FormControl sx={{ m: 2, width: 350 }}>
+                <DialogTitle>Compare stocks</DialogTitle>
+                <FormControl sx={{ m: 2, width: 280 }}>
                     <InputLabel id="demo-multiple-checkbox-label">Stocks</InputLabel>
                     <Select
                         labelId="demo-multiple-checkbox-label"
@@ -27,19 +32,20 @@ export default function CompareViewGraphOptions({ open, handleClose, handleDropd
                         value={selectedOption}
                         onChange={handleDropdownChange}
                         input={<OutlinedInput label="Tag" />}
-                        renderValue={(selected) => selected.join(', ')}
+                        renderValue={(selected) => selected.map(clearOptionName).join(', ')}
                         MenuProps={MenuProps}
                     >
-                        {names.filter(name => !mainOption.includes(name)).map((name) => (
+                        {/* .filter(name => !mainOption.includes(name)) */}
+                        {names.map((name) => (
                             <MenuItem key={name} value={name}>
                                 <Checkbox checked={selectedOption.indexOf(name) > -1} />
-                                <ListItemText primary={name} />
+                                <ListItemText primary={clearOptionName(name)} />
                             </MenuItem>
                         ))}
                     </Select>
                 </FormControl>
+
                 <DialogActions>
-                    <Button onClick={()=>onViewClick()}>View</Button>
                     <Button onClick={()=>onCompareClick()}>Compare</Button>
                     <Button onClick={()=>handleClose()}>Cancel</Button>
                 </DialogActions>

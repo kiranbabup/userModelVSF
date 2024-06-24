@@ -8,23 +8,23 @@ export const mediaQueries = {
 export const mainDivStyle = {
     background: 'beige',
     fontWeight: 'bold',
-    minWidth:"320px",
-    paddingBottom:"10px",
+    minWidth: "320px",
+    paddingBottom: "10px",
 }
 
-export const subDivStyle ={ 
-    padding: "12px 0px", 
-    display:"flex", 
-    alignItems:"center", 
+export const subDivStyle = {
+    padding: "12px 0px",
+    display: "flex",
+    alignItems: "center",
     justifyContent: "center",
-    flexWrap:"wrap",  
+    flexWrap: "wrap",
 }
 
 export const fieldsetStyle = {
     display: "inline-block",
     margin: "0px 3px",
     borderRadius: "10px",
-    maxWidth:"18.5%"
+    maxWidth: "18.5%"
 }
 
 export const columnStyle = {
@@ -36,28 +36,53 @@ export const columnStyle = {
 export const selectStyle = {
     outline: 'none',
     padding: "5px 2px",
-    width:"265px",
+    width: "265px",
     borderRadius: "5px",
 }
 
-export const lodButton={
-    width:"265px",
-    fontSize:"12.5px",
+export const lodButton = {
+    width: "265px",
+    fontSize: "12.5px",
 }
 
-export const loadingSpace={
-    height: "35rem", 
-    display: "flex", 
-    justifyContent: "center", 
+export const loadingSpace = {
+    height: "35rem",
+    display: "flex",
+    justifyContent: "center",
     alignItems: "center"
 }
 
 export const dsiplayMesgStyle = {
-    paddingLeft: "40px", 
-    fontWeight: "bold", 
+    paddingLeft: "40px",
+    fontWeight: "bold",
     color: "blue"
 }
 
 export const verylightGray = {
     backgroundColor: "#CDCDCD"
-  }
+}
+
+export const mainGraphDivStyle = {
+    background: "lightGray",
+    fontWeight: "bold",
+};
+
+export const selectGraphStyle = {
+    outline: 'none',
+    margin: '10px',
+    height: '25px',
+};
+
+export const loadingGraphBox ={
+    height: "500px", 
+    display: "flex", 
+    justifyContent: "center", 
+    alignItems: "center"
+}
+
+export const containerGraphStyle = {
+    width: "100%",
+    height: "auto",
+    margin: "auto",
+    paddingBottom: "10px",
+};

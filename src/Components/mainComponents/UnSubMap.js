@@ -43,6 +43,7 @@ const UnSubHeatmap = () => {
     useEffect(() => {
         fetchData();
     }, []);
+    console.log(resultData);
 
     const handleSelectChange = (selectedOption) => {
         setDisplayedOption(selectedOption.replace(/tri__/g, ' ').replace(/_Pcnt_Rank/g, ' ').replace(/_/g, ' '));
@@ -63,7 +64,11 @@ const UnSubHeatmap = () => {
             if (index != -1) {
                 return groupedData[index].data[item.month - 1].push(item.value);
             } else {
-                var newItem = { label: item.label, data: Array.from({ length: months.length }, (_, i) => []), average: Array.from({ length: months.length }, (_, i) => 0) };
+                var newItem = { 
+                    label: item.label, 
+                    data: Array.from({ length: months.length }, (_, i) => []), 
+                    average: Array.from({ length: months.length }, (_, i) => 0) 
+                };
                 newItem.data[item.month - 1].push(item.value);
                 return groupedData.push(newItem);
             }

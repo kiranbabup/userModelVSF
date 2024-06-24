@@ -3,8 +3,8 @@ import CanvasJSReact from "@canvasjs/react-stockcharts";
 import { Alert, Box, Button, Snackbar, Typography } from "@mui/material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CircularProgress from '@mui/material/CircularProgress';
-import CompareViewGraphOptions from "../CompareViewGraphOptions";
-import { graph17names } from "../../constants";
+import CompareViewGraphOptions from "../Components/CompareViewGraphOptions";
+import { graph17names } from "../constants";
 
 // const CanvasJS = CanvasJSReact.CanvasJS;
 const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
@@ -33,7 +33,7 @@ const FullGraphChart = () => {
     width: "100%",
     height: "auto",
     margin: "auto",
-    marginBottom: "200px",
+    // marginBottom: "200px",
   };
 
   const selectStyle = {
