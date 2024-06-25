@@ -13,7 +13,7 @@ const ProfilePage = () => {
     const [subscribedOnDate, setsubscribedOnDate] = useState("");
     const classes = useStyles();
 
-    const endingDate = "03-03-2025";
+    const endingDate = "25-12-2024";
 
     const daysLeft = calculateDaysLeft(endingDate);
 

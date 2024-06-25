@@ -10,12 +10,14 @@ const BlogPage = () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`https://vsfintech-adminpanel-node.onrender.com/blog-data`);
+            // const response = await fetch(`https://vsfintech-adminpanel-node.onrender.com/blog-data`);
+            const response = await fetch(`https://heatmapapi.onrender.com/getblogsdata`);
             if (!response.ok) {
                 throw new Error(`http error status: ${response.status}`);
             }
             const result = await response.json();
-            setResultData(result.results);
+            console.log(result);
+            setResultData(result.data);
         } catch (error) {
             console.error("Error fetching blog data:", error);
         }
@@ -24,7 +26,7 @@ const BlogPage = () => {
     useEffect(() => {
         fetchData();
     }, []);
-
+console.log(resultData);
     const arrayBufferToBase64 = (buffer) => {
         let binary = '';
         const bytes = new Uint8Array(buffer);

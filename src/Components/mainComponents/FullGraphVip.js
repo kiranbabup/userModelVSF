@@ -106,19 +106,19 @@ const FullGraphVip = () => {
           <option value="tri__NIFTY_SMLCAP_50" key="tri__NIFTY_SMLCAP_50">NIFTY SMLCAP 50</option>
           <option value="tri__NIFTY_LARGEMIDCAP_250" key="tri__NIFTY_LARGEMIDCAP_250">NIFTY LARGEMIDCAP 250</option>
 
-          <option value="tri__Nifty_Next_50" key="tri__Nifty_Next_50">tri - Nifty Next 50</option>
-          <option value="tri__NIFTY_MIDCAP_100" key="tri__NIFTY_MIDCAP_100">tri - NIFTY MIDCAP 100</option>
-          <option value="tri__NIFTY_SMLCAP_100" key="tri__NIFTY_SMLCAP_100">tri - NIFTY SMLCAP 100</option>
+          <option value="tri__Nifty_Next_50" key="tri__Nifty_Next_50">Nifty Next 50</option>
+          <option value="tri__NIFTY_MIDCAP_100" key="tri__NIFTY_MIDCAP_100">NIFTY MIDCAP 100</option>
+          <option value="tri__NIFTY_SMLCAP_100" key="tri__NIFTY_SMLCAP_100">NIFTY SMLCAP 100</option>
           <option value="Nifty_100" key="Nifty_100">Nifty 100</option>
           <option value="Nifty_200" key="Nifty_200">Nifty 200</option>
           <option value="NIFTY_MICROCAP_250" key="NIFTY_MICROCAP_250">NIFTY MICROCAP 250</option>
           <option value="NIFTY_TOTAL_MARKET" key="NIFTY_TOTAL_MARKET">NIFTY TOTAL MARKET</option>
-          <option value="tri__NIFTY_MIDCAP_150" key="tri__NIFTY_MIDCAP_150">tri - NIFTY MIDCAP 150</option>
-          <option value="tri__NIFTY_MIDSMALLCAP_400" key="tri__NIFTY_MIDSMALLCAP_400">tri - NIFTY MIDSMALLCAP 400</option>
+          <option value="tri__NIFTY_MIDCAP_150" key="tri__NIFTY_MIDCAP_150">NIFTY MIDCAP 150</option>
+          <option value="tri__NIFTY_MIDSMALLCAP_400" key="tri__NIFTY_MIDSMALLCAP_400">NIFTY MIDSMALLCAP 400</option>
           <option value="tri__NIFTY_500" key="tri__NIFTY_500">tri - NIFTY 500</option>
-          <option value="tri__NIFTY_SMALLCAP_250" key="tri__NIFTY_SMALLCAP_250">tri - NIFTY SMALLCAP 250</option>
-          <option value="tri__NIFTY_SMALLCAP_50" key="tri__NIFTY_SMALLCAP_50">tri - NIFTY SMALLCAP 50</option>
-          <option value="tri__NIFTY_SMALLCAP_100" key="tri__NIFTY_SMALLCAP_100">tri - NIFTY SMALLCAP 100</option>
+          <option value="tri__NIFTY_SMALLCAP_250" key="tri__NIFTY_SMALLCAP_250">NIFTY SMALLCAP 250</option>
+          <option value="tri__NIFTY_SMALLCAP_50" key="tri__NIFTY_SMALLCAP_50">NIFTY SMALLCAP 50</option>
+          <option value="tri__NIFTY_SMALLCAP_100" key="tri__NIFTY_SMALLCAP_100">NIFTY SMALLCAP 100</option>
         </select>
         <Button onClick={handleClickOpen} variant="outlined" sx={{ borderRadius: "50px" }}>Compare</Button>
         {open && <CompareViewGraphOptions names={graph17names} open={open} handleClose={handleClose} handleDropdownChange={handleDropdownChange} selectedOption={selectedOption}
