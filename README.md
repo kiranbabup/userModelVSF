@@ -25,4 +25,7 @@ Your app is ready to be deployed!
 ### `git push`
 
 # `Live in` gh-pages
-https://kiranbabup.github.io/userModelVSF/
+https://kiranbabup.github.io/userModelVSF
+
+# `Live in` amplify
+https://staging.d1rhdj4tqkimed.amplifyapp.com
