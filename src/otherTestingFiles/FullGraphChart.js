@@ -49,8 +49,7 @@ const FullGraphChart = () => {
   const fetchStockData = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("https://heatmap-node-1.onrender.com/getstockdata");
-      // const response = await fetch("https://heatmap-node-1.onrender.com/getStockGraphData");
+      const response = await fetch("https://heatmapapi.onrender.com/getstockdata");
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }

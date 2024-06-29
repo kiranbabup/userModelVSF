@@ -13,7 +13,7 @@ const SubLandingPage = ()=>{
   // const fetchData = async () => {
   //     dispatch(setIsLoadingHeatmap(true));
   //     try {
-  //         const response = await fetch(`https://heatmap-node-1.onrender.com/getheatmappcntdata`);
+  //         const response = await fetch(`https://heatmapapi.onrender.com/getheatmappcntdata`);
   //         if (!response.ok) {
   //             throw new Error(`http error status:${response.status}`);
   //         }

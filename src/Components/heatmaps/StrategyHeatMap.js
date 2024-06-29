@@ -1,8 +1,8 @@
 import { Box, Typography} from "@mui/material";
 import React, { useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
-import { dsiplayMesgStyle, loadingSpace } from "../assets/data/styles";
-import { Strategy_Compare_msg } from "../constants";
+import { dsiplayMesgStyle, loadingSpace } from "../../assets/data/styles";
+import { Strategy_Compare_msg } from "../../constants";
 import MonthlyCompareStocksHeatMap from "./MonthlyCompareStocksHeatMap";
 import { months } from "./BroadHeatMap";
 
@@ -12,7 +12,7 @@ const StrategyHeatMap = ({ isLoadingStrategyHeatMap, setIsLoadingStrategyHeatMap
     const fetchStrategyData = async () => {
         setIsLoadingStrategyHeatMap(true);
         try {
-            const response = await fetch(`https://heatmap-node-1.onrender.com/getstrategyheatmapdata`);
+            const response = await fetch(`https://heatmapapi.onrender.com/getstrategyheatmapdata`);
             if (!response.ok) {
                 throw new Error(`http error status:${response.status}`);
             }

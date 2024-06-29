@@ -6,7 +6,7 @@ import { LoadingButton } from '@mui/lab';
 import AnchorTemporaryDrawer from '../BottomDrawer';
 import { columnStyle, dsiplayMesgStyle, fieldsetStyle, loadingSpace, lodButton, mainDivStyle, mediaQueries, selectStyle, subDivStyle, verylightGray } from '../../assets/data/styles';
 import { months } from '../../constants';
-import YearlyHeatMap from '../YearlyHeatMap';
+import YearlyHeatMap from '../dataComponents/YearlyHeatMap';
 // import { useSelector } from 'react-redux';
 
 const UnSubHeatmap = () => {
@@ -26,8 +26,7 @@ const UnSubHeatmap = () => {
     const fetchData = async () => {
         setIsLoadingHeatMap(true);
         try {
-            // const response = await fetch(`https://stock-api-0mm8.onrender.com/getheatmappcntdata`);
-            const response = await fetch(`https://heatmap-node-1.onrender.com/getheatmappcntdata`);
+            const response = await fetch(`https://heatmapapi.onrender.com/getheatmappcntdata`);
             if (!response.ok) {
                 throw new Error(`http error status:${response.status}`);
             }

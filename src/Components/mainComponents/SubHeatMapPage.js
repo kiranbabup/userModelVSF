@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Box, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import BroadHeatMap from '.././BroadHeatMap';
-import StrategyHeatMap from '.././StrategyHeatMap';
-import ThematicHeatMap from '.././ThematicHeatMap';
-import SectorHeatMap from '.././SectorHeatMap';
-import AllHeatMap from '../AllHeatMap';
+import BroadHeatMap from '../heatmaps/BroadHeatMap';
+import StrategyHeatMap from '../heatmaps/StrategyHeatMap';
+import ThematicHeatMap from '../heatmaps/ThematicHeatMap';
+import SectorHeatMap from '../heatmaps/SectorHeatMap';
+import AllHeatMap from '../heatmaps/weekNmonth/AllHeatMap';
 import { columnStyle, dsiplayMesgStyle, fieldsetStyle, loadingSpace, lodButton, mainDivStyle, mediaQueries, selectStyle, subDivStyle } from '../../assets/data/styles';
 import { months } from '../../constants';
-import YearlyHeatMap from '../YearlyHeatMap';
+import YearlyHeatMap from '../dataComponents/YearlyHeatMap';
 import TopDrawer from '../TopDrawer';
 import { calculateDaysLeft } from '../../assets/data/functions';
 import { useNavigate } from 'react-router-dom';
@@ -46,7 +46,7 @@ const SubHeatMapPage = () => {
     const fetchData = async () => {
         setIsLoadingHeatMap(true);
         try {
-            const response = await fetch(`https://heatmap-node-1.onrender.com/getheatmappcntdata`);
+            const response = await fetch(`https://heatmapapi.onrender.com/getheatmappcntdata`);
             if (!response.ok) {
                 throw new Error(`http error status:${response.status}`);
             }

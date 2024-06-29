@@ -17,7 +17,7 @@ const LastMonthHeatMap = () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`https://heatmap-node-1.onrender.com/getBroadHeatMapdata`);
+            const response = await fetch(`https://heatmapapi.onrender.com/getBroadHeatMapdata`);
             if (!response.ok) {
                 throw new Error(`http error status:${response.status}`);
             }

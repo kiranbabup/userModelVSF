@@ -4,7 +4,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import CompareViewGraphOptions from "../CompareViewGraphOptions";
 import { graph17names } from "../../constants";
 import { containerGraphStyle, loadingGraphBox, mainGraphDivStyle, selectGraphStyle } from "../../assets/data/styles";
-import StockGraph2 from "../StockGraph2";
+import StockGraph2 from "../dataComponents/StockGraph2";
 
 const FullGraphVip = () => {
   const [stockData, setStockData] = useState([]);
@@ -22,7 +22,7 @@ const FullGraphVip = () => {
     const fetchStockData = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch("https://heatmap-node-1.onrender.com/getstockdata");
+        const response = await fetch("https://heatmapapi.onrender.com/getstockdata");
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -37,8 +37,6 @@ const FullGraphVip = () => {
     };
     fetchStockData();
   }, []); // Empty dependency array ensures useEffect runs only on mount
-
-  // const response = await fetch("https://heatmap-node-1.onrender.com/getStockGraphData");
 
   const cleanOptionName = (option) => {
     if (typeof option !== 'string') {

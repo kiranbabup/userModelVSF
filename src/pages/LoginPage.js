@@ -19,18 +19,15 @@ export const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginPage = ({ authSuccess }) => {
-  // const LoginPage = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false);
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      // console.log(tokenResponse);
       try {
         const result = await AuthServices.getGoogleUserInfo(tokenResponse.access_token);
         handleGoogleSubmit(result.data);
-        // console.log(result.data);
       } catch (err) {
         // showSnackbar(err.response?.data?.error ?? COMMON_ERROR_MSG, "error");
         console.log(err.response?.data?.error ?? COMMON_ERROR_MSG, "error");
@@ -48,10 +45,8 @@ const LoginPage = ({ authSuccess }) => {
       var values = { first_name: data.given_name, last_name: data.family_name, email: data.email, email_verified: data.email_verified };
 
       const response = await AuthServices.googleLoginPerson(values);
-      // console.log(response,"resp 2nd fun");
 
       const responseData = response.data?.data ?? {};
-      // console.log(responseData, "respdata 2nd");
       if (responseData.email_verified === 1 && responseData.is_subscribed === 1) {
         authSuccess(responseData);
         // console.log("nav full");
@@ -124,5 +119,4 @@ const LoginPage = ({ authSuccess }) => {
     </Box>
   );
 };
-// export default LoginPage;
 export default connect(null, { authSuccess })(LoginPage);

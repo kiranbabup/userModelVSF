@@ -5,6 +5,7 @@ const instance = axios.create({
   // baseURL: "https://scimics-api.onrender.com/scimics",
   // baseURL: "http://192.168.0.107:8080/scimics",
   // baseURL: "https://heatmap-node-1.onrender.com/",
+  // baseURL: "https://heatmapapi.onrender.com/",
   
 });
 

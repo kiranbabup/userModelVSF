@@ -3,7 +3,7 @@ import { Alert, Box, Button, Snackbar, Typography } from "@mui/material";
 import CircularProgress from '@mui/material/CircularProgress';
 import { graph4names } from "../../constants";
 import CompareViewGraphOptions from "../CompareViewGraphOptions";
-import StockGraph2 from "../StockGraph2";
+import StockGraph2 from "../dataComponents/StockGraph2";
 import { containerGraphStyle, loadingGraphBox, mainGraphDivStyle, selectGraphStyle } from "../../assets/data/styles";
 
 const UnSubscribedGraph = () => {
@@ -22,7 +22,7 @@ const UnSubscribedGraph = () => {
     const fetchStockData = async () => {
         setIsLoading(true);
         try {
-            const response = await fetch("https://heatmap-node-1.onrender.com/getstockdata");
+            const response = await fetch("https://heatmapapi.onrender.com/getstockdata");
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }

@@ -10,10 +10,8 @@ class AuthServices {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-  googleLoginPerson = (data) => instance.post("https://heatmap-node-1.onrender.com/googlelogin", data);
+  googleLoginPerson = (data) => instance.post("https://heatmapapi.onrender.com/googlelogin", data);
   
-  // googleLoginPerson = (data) => instance.post("/googlesignuporlogin", data);
-
 }
 
 export default new AuthServices();

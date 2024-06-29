@@ -1,10 +1,10 @@
 import { Box, Typography, } from "@mui/material";
 import React, { useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
-import { dsiplayMesgStyle, loadingSpace } from "../assets/data/styles";
-import { Broad_Compare_msg } from "../constants";
+import { dsiplayMesgStyle, loadingSpace } from "../../assets/data/styles";
+import { Broad_Compare_msg } from "../../constants";
 import MonthlyCompareStocksHeatMap from "./MonthlyCompareStocksHeatMap";
-import { getLast12Months} from "../assets/data/functions";
+import { getLast12Months} from "../../assets/data/functions";
 
 export const months = getLast12Months()
 
@@ -14,7 +14,7 @@ const BroadHeatMap = ({ isLoadingBroadHeatMap, setIsLoadingBroadHeatMap }) => {
     const fetchBroadData = async () => {
         setIsLoadingBroadHeatMap(true);
         try {
-            const response = await fetch(`https://heatmap-node-1.onrender.com/getbroadheatmapdata`);
+            const response = await fetch(`https://heatmapapi.onrender.com/getbroadheatmapdata`);
             if (!response.ok) {
                 throw new Error(`http error status:${response.status}`);
             }

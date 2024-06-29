@@ -62,3 +62,5 @@ export function lastMonthName() {
     let formattedDate = `${monthAbbreviation}_${date.getFullYear().toString().slice(-2)}`;
     return formattedDate;
 }
+
+export const sliceMonthWeekValue = 38;
