@@ -1,7 +1,7 @@
 import { useMediaQuery, useTheme } from '@mui/material';
 import Heatmap from 'react-heatmap-grid';
 const YearlyHeatMap = ({data, months}) => {
-    console.log(data);
+    // console.log(data);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));

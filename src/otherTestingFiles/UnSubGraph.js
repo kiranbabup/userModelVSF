@@ -294,7 +294,7 @@ const UnSubGraph = () => {
       x: dataPoint.x,
       y: (dataPoint.y / mainOptionPositiveDataPoints[dataPoint.x.getDate() - 1].y) * 100,
     }));
-    console.log(mainOptionPercentageDataPoints);
+    // console.log(mainOptionPercentageDataPoints);
   
     if (mainOptionPercentageDataPoints.length > 0) {
       mainPointMedian = mainOptionPercentageDataPoints[mainOptionPercentageDataPoints.length - 1];
@@ -323,8 +323,8 @@ const UnSubGraph = () => {
           y: (dataPoint.y / mainOptionPositiveDataPoints[dataPoint.x.getDate() - 1].y) * 100,
         }));
   
-        console.log(selectedOptionPercentageDataPoints);
-        console.log(mainPointMedian);
+        // console.log(selectedOptionPercentageDataPoints);
+        // console.log(mainPointMedian);
         // const newDataPoints = selectedOptionPercentageDataPoints.map((dataPoint) => ({
         //   x: dataPoint.x,
         //   y: dataPoint.y + (mainPointLast.y - dataPoint.y),
@@ -340,7 +340,7 @@ const UnSubGraph = () => {
           newDataPoints[newDataPoints.length - 1].y = mainPointMedian.y;
         }
         
-        console.log(newDataPoints);
+        // console.log(newDataPoints);
   
         dataSeries.push({
           type: "spline",

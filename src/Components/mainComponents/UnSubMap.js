@@ -42,7 +42,7 @@ const UnSubHeatmap = () => {
     useEffect(() => {
         fetchData();
     }, []);
-    console.log(resultData);
+    // console.log(resultData);
 
     const handleSelectChange = (selectedOption) => {
         setDisplayedOption(selectedOption.replace(/tri__/g, ' ').replace(/_Pcnt_Rank/g, ' ').replace(/_/g, ' '));

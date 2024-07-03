@@ -116,8 +116,8 @@
                         const series = generateDataPoints(mainOption);
                     
                     
-                        console.log(series2);
-                        console.log(series);
+                        // console.log(series2);
+                        // console.log(series);
                     
                     
                         useEffect(() => {

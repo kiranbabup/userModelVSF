@@ -21,7 +21,7 @@ const BlogPage = () => {
                     throw new Error(`http error status: ${response.status}`);
                 }
                 const result = await response.json();
-                console.log(result);
+                // console.log(result);
                 setResultData(result.data);
             } catch (error) {
                 console.error("Error fetching blog data:", error);
@@ -31,7 +31,7 @@ const BlogPage = () => {
         };
         fetchData();
     }, []);
-    console.log(resultData);
+    // console.log(resultData);
     const arrayBufferToBase64 = (buffer) => {
         let binary = '';
         const bytes = new Uint8Array(buffer);
@@ -82,6 +82,7 @@ const BlogPage = () => {
                                             sx={{
                                                 width: { xs: "100%", sm: "50%" },
                                                 borderRadius: "10px",
+                                                maxHeight:"20rem"
                                             }}
                                             component="img"
                                             src={`data:image/jpeg;base64,${arrayBufferToBase64(item.image.data)}`}

@@ -70,7 +70,7 @@ const SubHeatMapPage = () => {
             setexpiryMsg(`Subscription Expires in ${daysLeft} days`);
         }
     }, []);
-    console.log(resultData);
+    // console.log(resultData);
     
     const setStatetoUse = () => {
         setIsSingleSheet(true);

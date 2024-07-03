@@ -4,21 +4,40 @@ import CardComponent from "../Components/CardComponent";
 import SubscribeCard from "../Components/SubscribeCard";
 import HeaderComponent from "../Components/mainComponents/HeaderComponent";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 const SubscriptionPage = () => {
+    const [plans, setPlans] = useState([]);
     // const [isLoading, setLoading] = React.useState(false);
     const navigate = useNavigate();
     // window.open("https://rzp.io/l/SQ6riaQK2", "_blank");
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`https://heatmapapi.onrender.com/getPlans`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error status: ${response.status}`);
+                }
+                const result = await response.json();
+                // console.log(result.data);
+                setPlans(result.data);
+            } catch (error) {
+                console.error("Error fetching plans data:", error);
+            } 
+        };
+        fetchData();
+    }, []);
     const onSubscribeClickHandle = (titleType, code) => {
         let url = '/paybyrazorpay';
         if (titleType === "Subcribe for 3-months") {
-            console.log(titleType, "t1", code);
+            // console.log(titleType, "t1", code);
             navigate(url);
         } else if (titleType === "Subcribe for 6-months") {
-            console.log(titleType, "t2", code);
+            // console.log(titleType, "t2", code);
             navigate(url);
         } else {
-            console.log(titleType, "t3", code);
+            // console.log(titleType, "t3", code);
             navigate(url);
         }
     }
@@ -33,6 +52,7 @@ const SubscriptionPage = () => {
         // handleClick();
         // window.location.reload();
         // }, 8000);
+
     return (
         <Box>
             <HeaderComponent />
@@ -45,9 +65,17 @@ const SubscriptionPage = () => {
                 <Box p={1} />
                 <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", pb: 2, mb: 2, justifyContent: "center" }}>
                     <CardComponent />
-                    <SubscribeCard titleType={"Subcribe for 3-months"} onSubscribeClickHandle={onSubscribeClickHandle} />
-                    <SubscribeCard titleType={"Subcribe for 6-months"} onSubscribeClickHandle={onSubscribeClickHandle} />
-                    <SubscribeCard titleType={"Subcribe for an Year"} onSubscribeClickHandle={onSubscribeClickHandle} />
+                    {
+                        plans.map((plan,index)=>{
+                            return(
+                                <SubscribeCard key={index} titleType={`Subcribe for ${plan.months}-months`} prices={plan.amount} onSubscribeClickHandle={onSubscribeClickHandle} />
+
+                            )
+                        })
+                    }
+                    {/* <SubscribeCard titleType={"Subcribe for 3-months"} onSubscribeClickHandle={onSubscribeClickHandle} /> */}
+                    {/* <SubscribeCard titleType={"Subcribe for 6-months"} onSubscribeClickHandle={onSubscribeClickHandle} /> */}
+                    {/* <SubscribeCard titleType={"Subcribe for an Year"} onSubscribeClickHandle={onSubscribeClickHandle} /> */}
                 </Box>
             </Box>
         </Box>

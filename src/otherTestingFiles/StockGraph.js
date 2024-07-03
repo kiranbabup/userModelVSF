@@ -31,7 +31,7 @@ const StockGraph = () => {
 
         fetchData();
     }, []); // Empty dependency array ensures useEffect runs only on mount
-    console.log(series);
+    // console.log(series);
 
     useEffect(() => {
         // Create the chart once series data is updated

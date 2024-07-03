@@ -21,7 +21,7 @@ const AllHeatMap = ({ isLoadingAllHeatMap, setIsLoadingAllHeatMap }) => {
     // console.log(xlabel);
 
         const fetchAllData = async () => {
-            console.log("AllHeatMap");
+            // console.log("AllHeatMap");
             setIsLoadingAllHeatMap(true);
             try {
                 const response = await fetch(`https://heatmapapi.onrender.com/getMonthAndWeekData`);
@@ -29,7 +29,7 @@ const AllHeatMap = ({ isLoadingAllHeatMap, setIsLoadingAllHeatMap }) => {
                     throw new Error(`http error status:${response.status}`);
                 }
                 const result = await response.json();
-                console.log(result);
+                // console.log(result);
                 // setResultDataA(result)
                 setResultDataA(result.slice(0, sliceMonthWeekValue));
 
@@ -48,11 +48,11 @@ const AllHeatMap = ({ isLoadingAllHeatMap, setIsLoadingAllHeatMap }) => {
 
     useEffect(() => {
         fetchAllData();
-        console.log("month");
+        // console.log("month");
 
     }, []);
 
-    console.log(resultDataA);
+    // console.log(resultDataA);
     return (
         <Box>
             {
