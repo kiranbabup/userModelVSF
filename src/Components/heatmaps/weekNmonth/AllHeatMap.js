@@ -6,18 +6,13 @@ import { All_Compare_msg } from "../../../constants";
 import LastMonthandWeekHeatMap from "./LastMonthandWeekHeatMap";
 import { getLast12Months, lastMonthName, sliceMonthWeekValue } from "../../../assets/data/functions";
 
-// const verticalLine = [
-//     'Nifty Auto', 'Nifty Bank', 'Nifty Fin Service', 'NIFTY FINSRV25 50', 'Nifty Financial Services Ex-Bank', 'Nifty FMCG',
-//     'NIFTY HEALTHCARE', 'Nifty IT', 'Nifty Pharma', 'Nifty Metal', 'Nifty Media', 'Nifty Pvt Bank', 'Nifty PSU Bank', 'Nifty Realty',
-//     'NIFTY CONSR DURBL', 'Nifty MidSmall Financial Services', 'Nifty MidSmall Healthcare', 'Nifty MidSmall IT & Telecom'
-// ];
 const AllHeatMap = ({ isLoadingAllHeatMap, setIsLoadingAllHeatMap }) => {
     const [resultDataA, setResultDataA] = useState([]);
     const [resultDataB, setResultDataB] = useState([]);
     // const months = getLast12Months();
 
     const lastMonth = lastMonthName();
-    const months = [lastMonth, "current_week"];
+    const months = [lastMonth, "Prev_week"];
     // console.log(xlabel);
 
         const fetchAllData = async () => {
