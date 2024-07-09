@@ -1,7 +1,8 @@
 import React from "react";
 import HeaderComponent from "../Components/mainComponents/HeaderComponent";
-import SubHeatMapPage from "../Components/mainComponents/SubHeatMapPage";
+// import SubHeatMapPage from "../Components/mainComponents/SubHeatMapPage";
 import FullGraphVip from "../Components/mainComponents/FullGraphVip";
+import VipHeatMapPage from "../Components/mainComponents/VipHeatMapPage";
 
 // import { useEffect } from "react";
 // import { useDispatch } from 'react-redux';
@@ -35,7 +36,7 @@ const SubLandingPage = ()=>{
     return(
         <div>
             <HeaderComponent/>
-            <SubHeatMapPage/>
+            <VipHeatMapPage />
             <FullGraphVip/>
         </div>
     )

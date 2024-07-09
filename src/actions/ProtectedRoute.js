@@ -10,7 +10,7 @@ const ProtectedRoute = ({ auth, type }) => {
   }else if(auth.email_verified === 1 && auth.is_subscribed === 1){
     return type === "sub" ? <Outlet /> : <Navigate to="/404" replace />;
   }else{
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/120/login" replace />;
   }
 };
 

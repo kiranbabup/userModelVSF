@@ -30,7 +30,7 @@ export default function AnchorTemporaryDrawer({ isDrawerOpen, onClose }) {
   );
 
   const onSubscribeClickHandle = () => {
-    navigate("/subscription")
+    navigate("/120/subscription")
   }
 
   const list = (

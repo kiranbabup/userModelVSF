@@ -31,7 +31,7 @@ export default function TopDrawer({ isDrawerOpen, onClose, expiryMsg }) {
   );
 
   const onSubscribeClickHandle = () => {
-    navigate("/subscription")
+    navigate("/120/subscription")
   }
 
   const list = (

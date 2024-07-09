@@ -3,13 +3,13 @@ import bgstrip from "../assets/images/bgstrip.jpg"
 import CardComponent from "../Components/CardComponent";
 import SubscribeCard from "../Components/SubscribeCard";
 import HeaderComponent from "../Components/mainComponents/HeaderComponent";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+// import { useNavigate } from "react-router-dom";
 
 const SubscriptionPage = () => {
     const [plans, setPlans] = useState([]);
     // const [isLoading, setLoading] = React.useState(false);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     // window.open("https://rzp.io/l/SQ6riaQK2", "_blank");
 
     useEffect(() => {
@@ -28,30 +28,6 @@ const SubscriptionPage = () => {
         };
         fetchData();
     }, []);
-    const onSubscribeClickHandle = (titleType, code) => {
-        let url = '/paybyrazorpay';
-        if (titleType === "Subcribe for 3-months") {
-            // console.log(titleType, "t1", code);
-            navigate(url);
-        } else if (titleType === "Subcribe for 6-months") {
-            // console.log(titleType, "t2", code);
-            navigate(url);
-        } else {
-            // console.log(titleType, "t3", code);
-            navigate(url);
-        }
-    }
-
-        // setLoading(true);
-        //link to Payment
-        // window.open("https://rzp.io/l/SQ6riaQK2", "_blank");
-
-        // setTimeout(() => {
-        // setLoading(false);
-        // onClose();
-        // handleClick();
-        // window.location.reload();
-        // }, 8000);
 
     return (
         <Box>
@@ -68,7 +44,7 @@ const SubscriptionPage = () => {
                     {
                         plans.map((plan,index)=>{
                             return(
-                                <SubscribeCard key={index} titleType={`Subcribe for ${plan.months}-months`} prices={plan.amount} onSubscribeClickHandle={onSubscribeClickHandle} />
+                                <SubscribeCard key={index} titleType={`Subcribe for ${plan.months}-months`} prices={plan.amount} months={plan.months} />
 
                             )
                         })

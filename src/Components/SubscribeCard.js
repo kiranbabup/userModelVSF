@@ -1,10 +1,13 @@
 import * as React from 'react';
-import { Box, Button, Card, CardActions, CardContent, Checkbox, IconButton, TextField, Typography } from '@mui/material';
+import { Box, Button, Card, CardActions, CardContent, Checkbox, TextField, Typography } from '@mui/material';
 import CustomButton from './CustomButton';
 import { useState, useEffect } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import bgstrip from "../assets/images/bgstrip.jpg";
+import { getTimeStamp } from '../assets/data/functions';
+import LsService from "../services/localstorage";
+import AuthServices from '../services/AuthServices';
 
 const bull = (
     <Box
@@ -15,16 +18,19 @@ const bull = (
     </Box>
 );
 
-export default function SubscribeCard({ titleType, onSubscribeClickHandle, prices }) {
+export default function SubscribeCard({ titleType, prices, months }) {
     const [isHavingCC, setIsHavingCC] = useState(false);
     const [couponApplied, setCouponApplied] = useState("");
     const [isCodeApplied, setIsCodeApplied] = useState(false);
     const [isWrongCode, setIsWrongCode] = useState(false);
     const [isEmptyCode, setIsEmptyCode] = useState(false);
     const [isPriceChanged, setIsPriceChanged] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [CCprice, setCCPrice] = useState(0);
     const [codesData, setCodesData] = useState([]);
-    const [discountValue,setDiscountValue] = useState(0);
+    const [discountValue, setDiscountValue] = useState(0);
+    const [user, setUser] = useState();
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -39,19 +45,21 @@ export default function SubscribeCard({ titleType, onSubscribeClickHandle, price
             }
         };
         fetchData();
+        let userdata = LsService.getCurrentUser();
+        setUser(userdata)
     }, []);
 
     const handleCheckboxChange = () => {
         setIsHavingCC(!isHavingCC);
         setIsCodeApplied(false);
     };
-    
-    const onChangeCode = ()=>{
+
+    const onChangeCode = () => {
         setCouponApplied("");
         setIsPriceChanged(false);
         handleCheckboxChange();
     }
-    
+
     const onApplyClickHandle = (couponApplied) => {
         if (couponApplied === "") {
             setIsEmptyCode(true);
@@ -59,7 +67,7 @@ export default function SubscribeCard({ titleType, onSubscribeClickHandle, price
         } else {
             const matchedCode = codesData.find(code => code.coupon_code === couponApplied);
 
-             if (!matchedCode) {
+            if (!matchedCode) {
                 setIsWrongCode(true);
                 setIsEmptyCode(false);
             } else if (matchedCode.status === 0) {
@@ -76,6 +84,48 @@ export default function SubscribeCard({ titleType, onSubscribeClickHandle, price
                 const discountedPrice = prices - discount;
                 setCCPrice(discountedPrice);
             }
+        }
+    }
+    const timestamp = getTimeStamp();
+
+    // let url = '/120/paybyphonepe';
+    // if (titleType === "Subcribe for 3-months") {
+    //     // console.log(titleType, "t1", code);
+    //     navigate(url);
+    // } else if (titleType === "Subcribe for 6-months") {
+    //     // console.log(titleType, "t2", code);
+    //     navigate(url);
+    // } else {
+    //     // console.log(titleType, "t3", code);
+    //     navigate(url);
+    // }
+
+    const onSubscribeClickHandle = async() => {
+        const data = {
+            months: months,
+            amount: isCodeApplied ? CCprice : prices,
+            phone: user.phone_no,
+            transactionid: `MT${timestamp}`,
+            muid: `MUID${timestamp}`,
+        };
+        console.log("subscribe data:", data);
+        try {
+            setLoading(true);
+            const response = await AuthServices.makeOrder(data);
+            setLoading(false);
+            if (response.status != "200") {
+                console.log({ text: response.data ?? "error" });
+                alert({ text: response.data ?? "error" });
+                return;
+            }
+
+            const redirect = response.data.data.instrumentResponse.redirectInfo.url;
+
+            window.location.href = redirect;
+        } catch (error) {
+            console.log(error);
+            alert({ text: error });
+            setLoading(false);
         }
     }
 
@@ -143,15 +193,15 @@ export default function SubscribeCard({ titleType, onSubscribeClickHandle, price
 
                 {isCodeApplied && (
                     <>
-                        <Box sx={{display: "flex", alignItems: "center", justifyContent:"center" }}>
+                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                             <Typography>Applied Code : {couponApplied}</Typography>
                         </Box>
                         <Box sx={{ display: "flex", alignItems: "center", pl: 1 }}>
                             <CheckCircleIcon color='success' />
                             <Typography sx={{ fontSize: "12px" }}> Code Applied Successfully.</Typography>
                         </Box>
-                        <Box sx={{display:"flex", justifyContent:"center"}}>
-                            <Button onClick={()=>onChangeCode()}>Change code</Button>
+                        <Box sx={{ display: "flex", justifyContent: "center" }}>
+                            <Button onClick={() => onChangeCode()}>Change code</Button>
                         </Box>
                     </>
                 )}
@@ -172,7 +222,8 @@ export default function SubscribeCard({ titleType, onSubscribeClickHandle, price
             <CardActions sx={{ p: 2 }}>
                 <CustomButton
                     title="Subscribe"
-                    onPressed={() => onSubscribeClickHandle(titleType, couponApplied)}
+                    loading={loading}
+                    onPressed={() => onSubscribeClickHandle()}
                     sx={{ backgroundColor: "white", color: "black" }}
                     hoverColor="green"
                     fullWidth

@@ -2,7 +2,7 @@ import axios from "axios";
 import instance from "./axios";
 
 class AuthServices {
-  loginPerson = (data) => instance.post("/login", data);
+  loginPerson = (data) => instance.post("/120/login", data);
   // signupPerson = (data) => instance.post("/signup", data);
 
   getGoogleUserInfo = (token) =>
@@ -12,6 +12,7 @@ class AuthServices {
 
   googleLoginPerson = (data) => instance.post("https://heatmapapi.onrender.com/googlelogin", data);
   
+  makeOrder =(data) => instance.post("/120/paybyphonepe", data);
 }
 
 export default new AuthServices();

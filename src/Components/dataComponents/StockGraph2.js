@@ -3,6 +3,7 @@ import Highcharts from 'highcharts/highstock';
 import HighchartsExporting from 'highcharts/modules/exporting';
 import HighchartsExportData from 'highcharts/modules/export-data';
 import HighchartsAccessibility from 'highcharts/modules/accessibility';
+import { cleanOptionName } from '../../assets/data/functions';
 
 // Initialize Highcharts modules
 HighchartsExporting(Highcharts);
@@ -12,12 +13,6 @@ HighchartsAccessibility(Highcharts);
 const StockGraph2 = ({options, stockData }) => {
     const [series, setSeries] = useState([]);
     useEffect(()=>{
-    const cleanOptionName = (option) => {
-        if (typeof option !== 'string') {
-            option = String(option);
-        }
-        return option.replace(/tri__/g, '').replace(/_/g, '');
-    };
 
     const generateDataPoints = (options) => {
         const seriesData = options.map(option => {
@@ -25,7 +20,7 @@ const StockGraph2 = ({options, stockData }) => {
             if (stockData.length > 0) {
                 for (let i = 0; i < stockData.length; i++) {
                     const dataPoint = [
-                        new Date(stockData[i].date).getTime(),
+                        new Date(stockData[i].DATE).getTime(),
                         stockData[i][option]
                     ];
                     dps.push(dataPoint);

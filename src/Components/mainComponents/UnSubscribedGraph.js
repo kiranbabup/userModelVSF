@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Alert, Box, Button, Snackbar, Typography } from "@mui/material";
 import CircularProgress from '@mui/material/CircularProgress';
-import { graph4names } from "../../constants";
+import { graph5names } from "../../constants";
 import CompareViewGraphOptions from "../CompareViewGraphOptions";
 import StockGraph2 from "../dataComponents/StockGraph2";
 import { containerGraphStyle, loadingGraphBox, mainGraphDivStyle, selectGraphStyle } from "../../assets/data/styles";
+import { cleanOptionName } from "../../assets/data/functions";
 
 const UnSubscribedGraph = () => {
   const [stockData, setStockData] = useState([]);
-  const [mainOption, setMainOption] = useState(["tri__Nifty_50"]);
+  const [mainOption, setMainOption] = useState(["GNFT50"]);
   const [open, setOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState([]);
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -18,35 +19,62 @@ const UnSubscribedGraph = () => {
   const [isCompare, setIsCompare] = useState(false);
   const [isLoading, setIsLoading] = useState(false);  
 
-  useEffect(() => {
-    const fetchStockData = async () => {
-        setIsLoading(true);
-        try {
-            const response = await fetch("https://heatmapapi.onrender.com/getstockdata");
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            const data = await response.json();
-            const reversedData = data.message.reverse(); // Reverse the data here
-            setStockData(reversedData);
-        } catch (error) {
-            console.error("Error fetching stock data:", error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-    fetchStockData();
-
-}, []); // Empty dependency array ensures useEffect runs only on mount
-
-  const cleanOptionName = (option) => {
-    if (typeof option !== 'string') {
-      option = String(option);
+  const handleSelectChange = async (selectedOptions) => {
+    const dateString = "DATE"
+    setIsLoading(true);
+    try {
+      const response = await fetch('https://heatmapapi.onrender.com/getselectedheatmapdata', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ "data": [dateString, selectedOptions] }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        // console.log(data);
+        setStockData(data.data);
+      }
+      if (!response.ok) {
+        throw new Error('Failed to get data');
+      }
+      setIsLoading(false);
+    } catch (err) {
+      console.error('Error getting data:', err);
+      setIsLoading(false);
     }
-    return option.replace(/tri__/g, ' ').replace(/_/g, ' ');
   };
 
+//   useEffect(() => {
+//     const fetchStockData = async () => {
+//         setIsLoading(true);
+//         try {
+//             const response = await fetch("https://heatmapapi.onrender.com/getstockdata");
+//             if (!response.ok) {
+//                 throw new Error(`HTTP error! Status: ${response.status}`);
+//             }
+//             const data = await response.json();
+//             const reversedData = data.message.reverse(); // Reverse the data here
+//             setStockData(reversedData);
+//         } catch (error) {
+//             console.error("Error fetching stock data:", error);
+//         } finally {
+//             setIsLoading(false);
+//         }
+//     };
+//     fetchStockData();
+
+// }, []); // Empty dependency array ensures useEffect runs only on mount
+useEffect(()=>{
+  handleSelectChange(mainOption);
+  setMainOption([mainOption]);
+  setIsMainOption(true);
+  setIsCompare(false);
+  setSelectedOption([]);
+},[]);
+
   const handleDropdownChange1 = (event) => {
+    handleSelectChange(event.target.value);
     setMainOption([event.target.value]);
     setIsMainOption(true);
     setIsCompare(false);
@@ -60,9 +88,6 @@ const UnSubscribedGraph = () => {
   const handleClose = (event, reason) => {
     if (reason !== 'backdropClick') {
       setOpen(false);
-      // setIsCompare(false);
-      // setSelectedOption([]);
-      // setIsMainOption(true);
     }
   };
 
@@ -72,13 +97,13 @@ const UnSubscribedGraph = () => {
 
   const handleDropdownChange = (event) => {
     const { target: { value } } = event;
-    if (value.length <= 4) {
+    handleSelectChange(value);
+    if (value.length <= 5) {
       setSelectedOption(typeof value === "string" ? value.split(",") : value);
     } else {
       setSnackbarMessage("You can only select upto 4 stocks");
       setOpenSnackbar(true);
     }
-    // setIsMainOption(false);
     setIsCompare(false);
   };
 
@@ -99,13 +124,14 @@ const UnSubscribedGraph = () => {
     <div style={mainGraphDivStyle}>
       <div>
         <select value={mainOption} onChange={handleDropdownChange1} style={selectGraphStyle}>
-          <option value="tri__Nifty_50" key="tri__Nifty_50">Nifty 50</option>
-          <option value="tri__Nifty_Midcap_50" key="tri__Nifty_Midcap_50">Nifty Midcap 50</option>
-          <option value="tri__NIFTY_SMLCAP_50" key="tri__NIFTY_SMLCAP_50">NIFTY SMLCAP 50</option>
-          <option value="tri__NIFTY_LARGEMIDCAP_250" key="tri__NIFTY_LARGEMIDCAP_250">NIFTY LARGEMIDCAP 250</option>
+        <option value="GNFT50" key="GNFT50" >NFT50</option>
+        <option value="GNFTMC50" key="GNFTMC50">NFTMC50</option>
+        <option value="GNFTSC50" key="GNFTSC50">NFTSC50</option>
+        <option value="GNFTLMC250" key="GNFTLMC250">NFTLMC250</option>
+        <option value="GNFTBANK" key="GNFTBANK">NFTBANK</option>
         </select>
         <Button onClick={handleClickOpen} variant="outlined" sx={{borderRadius:"50px"}}>Compare</Button>
-        {open && <CompareViewGraphOptions names={graph4names} open={open} handleClose={handleClose} 
+        {open && <CompareViewGraphOptions names={graph5names} open={open} handleClose={handleClose} 
           handleDropdownChange={handleDropdownChange} selectedOption={selectedOption} 
           onCompareClick={onCompareClick} />}
       </div>
