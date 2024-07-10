@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/userModelVSF/static/css/main.49b7ef7b.css",
-    "main.js": "/userModelVSF/static/js/main.f0995c48.js",
+    "main.js": "/userModelVSF/static/js/main.bae46dd9.js",
     "static/js/453.bea66239.chunk.js": "/userModelVSF/static/js/453.bea66239.chunk.js",
     "static/media/vsfintechLogo.png": "/userModelVSF/static/media/vsfintechLogo.8b9738ffe69bed38bb4d.png",
     "static/media/bgstrip.jpg": "/userModelVSF/static/media/bgstrip.65ad21b931647dcde4e0.jpg",
@@ -10,11 +10,11 @@
     "static/media/homeSheet1.xlsx": "/userModelVSF/static/media/homeSheet1.5ce95dac00c0b2a29985.xlsx",
     "index.html": "/userModelVSF/index.html",
     "main.49b7ef7b.css.map": "/userModelVSF/static/css/main.49b7ef7b.css.map",
-    "main.f0995c48.js.map": "/userModelVSF/static/js/main.f0995c48.js.map",
+    "main.bae46dd9.js.map": "/userModelVSF/static/js/main.bae46dd9.js.map",
     "453.bea66239.chunk.js.map": "/userModelVSF/static/js/453.bea66239.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.49b7ef7b.css",
-    "static/js/main.f0995c48.js"
+    "static/js/main.bae46dd9.js"
   ]
 }
