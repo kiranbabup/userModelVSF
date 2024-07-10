@@ -100,7 +100,7 @@ export default function SubscribeCard({ titleType, prices, months }) {
 
     const onSubscribeClickHandle = async() => {
         const data = {
-            months: months,
+            planname: months,
             amount: isCodeApplied ? CCprice : prices,
             phone: user.phone_no,
             id: user.id,
