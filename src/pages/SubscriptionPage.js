@@ -4,6 +4,7 @@ import CardComponent from "../Components/CardComponent";
 import SubscribeCard from "../Components/SubscribeCard";
 import HeaderComponent from "../Components/mainComponents/HeaderComponent";
 import { useEffect, useState } from "react";
+import instance from "../services/axios";
 // import { useNavigate } from "react-router-dom";
 
 const SubscriptionPage = () => {
@@ -15,13 +16,9 @@ const SubscriptionPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`https://heatmapapi.onrender.com/getPlans`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error status: ${response.status}`);
-                }
-                const result = await response.json();
-                // console.log(result.data);
-                setPlans(result.data);
+                const response = await instance.get(`/getPlans`);
+                // console.log(response.data);
+                setPlans(response.data.data);
             } catch (error) {
                 console.error("Error fetching plans data:", error);
             } 

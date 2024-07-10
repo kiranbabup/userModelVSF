@@ -75,7 +75,7 @@ const SubHeatMapPage = () => {
         }
         
     }, []);
-    console.log(daysLeft);
+    // console.log(daysLeft);
     
     const setStatetoUse = () => {
         setIsSingleSheet(true);

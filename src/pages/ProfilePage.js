@@ -95,7 +95,7 @@ const ProfilePage = () => {
             setPhone(userdata.phone_no);
         }
     }, []);
-    console.log(user);
+    // console.log(user);
 
     const validatePhoneNumber = (number) => {
         const phoneRegex = /^\d{10}$/;

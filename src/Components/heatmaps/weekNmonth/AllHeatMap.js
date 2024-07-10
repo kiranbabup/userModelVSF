@@ -4,35 +4,28 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { dsiplayMesgStyle, loadingSpace } from "../../../assets/data/styles";
 import { All_Compare_msg } from "../../../constants";
 import LastMonthandWeekHeatMap from "./LastMonthandWeekHeatMap";
-import { getLast12Months, lastMonthName, sliceMonthWeekValue } from "../../../assets/data/functions";
+import { lastMonthName, sliceMonthWeekValue } from "../../../assets/data/functions";
+import instance from "../../../services/axios";
 
 const AllHeatMap = ({ isLoadingAllHeatMap, setIsLoadingAllHeatMap }) => {
     const [resultDataA, setResultDataA] = useState([]);
     const [resultDataB, setResultDataB] = useState([]);
-    // const months = getLast12Months();
 
     const lastMonth = lastMonthName();
     const months = [lastMonth, "Prev_week"];
-    // console.log(xlabel);
 
         const fetchAllData = async () => {
-            // console.log("AllHeatMap");
             setIsLoadingAllHeatMap(true);
             try {
-                const response = await fetch(`https://heatmapapi.onrender.com/getMonthAndWeekData`);
-                if (!response.ok) {
-                    throw new Error(`http error status:${response.status}`);
-                }
-                const result = await response.json();
+                // const response = await fetch(`https://heatmapapi.onrender.com/getMonthAndWeekData`);
+                const responseA = await instance.get(`/getMonthAndWeekData`);
+                // console.log(responseA);
+                // console.log(responseA.data);
+                // const result = await response.json();
+                const result = responseA.data;
                 // console.log(result);
                 // setResultDataA(result)
                 setResultDataA(result.slice(0, sliceMonthWeekValue));
-
-                const responseB = await fetch(`https://heatmapapi.onrender.com/getMonthAndWeekData`);
-                if (!responseB.ok) {
-                    throw new Error(`http error status:${responseB.status}`);
-                }
-                const resultB = await responseB.json();
                 setResultDataB(result.slice(sliceMonthWeekValue));
             } catch (error) {
                 console.error("Error fetching stock data:", error);

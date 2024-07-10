@@ -8,6 +8,7 @@ import bgstrip from "../assets/images/bgstrip.jpg";
 import { getTimeStamp } from '../assets/data/functions';
 import LsService from "../services/localstorage";
 import AuthServices from '../services/AuthServices';
+import instance from '../services/axios';
 
 const bull = (
     <Box
@@ -34,12 +35,9 @@ export default function SubscribeCard({ titleType, prices, months }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`https://heatmapapi.onrender.com/couponcodestatus`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error status: ${response.status}`);
-                }
-                const result = await response.json();
-                setCodesData(result.data);
+                const response = await instance.get(`/couponcodestatus`);
+                setCodesData(response.data.data);
+                // console.log(response.data.data);
             } catch (error) {
                 console.error("Error fetching plans data:", error);
             }
@@ -105,25 +103,26 @@ export default function SubscribeCard({ titleType, prices, months }) {
             months: months,
             amount: isCodeApplied ? CCprice : prices,
             phone: user.phone_no,
+            id: user.id,
             transactionid: `MT${timestamp}`,
             muid: `MUID${timestamp}`,
         };
-        console.log("subscribe data:", data);
+        // console.log("subscribe data:", data);
         try {
             setLoading(true);
             const response = await AuthServices.makeOrder(data);
             setLoading(false);
             if (response.status != "200") {
-                console.log({ text: response.data ?? "error" });
+                // console.log({ text: response.data ?? "error" });
                 alert({ text: response.data ?? "error" });
                 return;
             }
 
             const redirect = response.data.data.instrumentResponse.redirectInfo.url;
-
+            // console.log(redirect);
             window.location.href = redirect;
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             alert({ text: error });
             setLoading(false);
         }

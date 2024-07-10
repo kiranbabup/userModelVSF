@@ -37,14 +37,15 @@ const LoginPage = ({ authSuccess }) => {
         setgoogleLoginMsg("Authenticating with Google...")
         const result = await AuthServices.getGoogleUserInfo(tokenResponse.access_token);
         handleGoogleSubmit(result.data);
-        console.log(result.data);
+        // console.log(result.data);
       } catch (err) {
         // showSnackbar(err.response?.data?.error ?? COMMON_ERROR_MSG, "error");
-        console.log(err.response?.data?.error ?? COMMON_ERROR_MSG, "error");
+        // console.log(err.response?.data?.error ?? COMMON_ERROR_MSG, "error");
+      setgoogleLoginMsg("Authentication Failed.");
       }
     },
     onError: () => {
-      console.log("Login Failed");
+      // console.log("Login Failed");
       setgoogleLoginMsg("Authentication Failed.");
     },
   });
@@ -52,28 +53,27 @@ const LoginPage = ({ authSuccess }) => {
   const handleGoogleSubmit = async (data) => {
     setLoading(true);
     // console.log(data);
-    setgoogleLoginMsg("Authentication Successful.");
+    setgoogleLoginMsg("Logging in... Please wait...");
     try {
       var values = { first_name: data.given_name, last_name: data.family_name, email: data.email, email_verified: data.email_verified, is_subscribed: data.is_subscribed };
 
       const response = await AuthServices.googleLoginPerson(values);
       // console.log(response);
-      setgoogleLoginMsg("Logging in...");
       const responseData = response.data?.data ?? {};
-      console.log(responseData);
+      // console.log(responseData);
       if (responseData.email_verified === 1 && responseData.is_subscribed === 1) {
         authSuccess(responseData);
-        console.log("nav full");
+        // console.log("nav full");
         navigate("/120/viphome", { replace: true });
       } else if (responseData.email_verified === 1 && responseData.is_subscribed === 0) {
         authSuccess(responseData);
-        console.log("nav unsub");
+        // console.log("nav unsub");
         navigate("/120/home", { replace: true });
       }
       setLoading(false);
     } catch (err) {
       //   showSnackbar(err.response?.data?.error ?? COMMON_ERROR_MSG, "error");
-      console.log(err.response?.data?.error ?? COMMON_ERROR_MSG, "error");
+      // console.log(err.response?.data?.error ?? COMMON_ERROR_MSG, "error");
       setgoogleLoginMsg("Authentication Failed.");
       setLoading(false);
     }
@@ -105,7 +105,7 @@ const LoginPage = ({ authSuccess }) => {
         let values;
 
         if (isEmail) {
-      setLoginMsg("Validating E-Mail ID...");
+          setLoginMsg("Validating E-Mail ID...");
 
           const [firstName] = loginWordString.split("@");
           values = {
@@ -162,7 +162,7 @@ const LoginPage = ({ authSuccess }) => {
 
         let validateUserResponse;
         if (isEmail) {
-      setLoginMsg("Validating Phone number...");
+          setLoginMsg("Validating Phone number...");
           validateUserResponse = await fetch('https://heatmapapi.onrender.com/emailvalidateuser', {
             method: 'POST',
             headers: {
@@ -230,11 +230,11 @@ const LoginPage = ({ authSuccess }) => {
         <TextField id="outlined-basic" label="Enter Phone Number: 0000000000" variant="outlined" fullWidth onChange={(e) => setLoginWordString(e.target.value)} />
         {
           loginErrorMsg !== "" &&
-          <Typography sx={{ color: "red", fontSize:"12px" }}>{loginErrorMsg}</Typography>
+          <Typography sx={{ color: "red", fontSize: "12px" }}>{loginErrorMsg}</Typography>
         }
         {
           loginMsg !== "" &&
-          <Typography sx={{ color: "blue", fontSize:"12px" }}>{loginMsg}</Typography>
+          <Typography sx={{ color: "blue", fontSize: "12px" }}>{loginMsg}</Typography>
         }
         <Box p={1} />
         <CustomButton title="Login"
@@ -269,7 +269,7 @@ const LoginPage = ({ authSuccess }) => {
         />
         {
           googleLoginMsg !== "" &&
-          <Typography sx={{ color: "blue", fontSize:"12px" }}>{googleLoginMsg}</Typography>
+          <Typography sx={{ color: "blue", fontSize: "12px" }}>{googleLoginMsg}</Typography>
         }
       </Card>
     </Box>

@@ -9,7 +9,7 @@ const initialState = {
 
 const actionReducer = (state = initialState, action) => {
     const { type, payload } = action;
-    console.log("Action received in reducer:", type, payload);
+    // console.log("Action received in reducer:", type, payload);
     switch (type) {
         case SET_RESULT_DATA:
             return {

@@ -45,26 +45,6 @@ const UnSubscribedGraph = () => {
     }
   };
 
-//   useEffect(() => {
-//     const fetchStockData = async () => {
-//         setIsLoading(true);
-//         try {
-//             const response = await fetch("https://heatmapapi.onrender.com/getstockdata");
-//             if (!response.ok) {
-//                 throw new Error(`HTTP error! Status: ${response.status}`);
-//             }
-//             const data = await response.json();
-//             const reversedData = data.message.reverse(); // Reverse the data here
-//             setStockData(reversedData);
-//         } catch (error) {
-//             console.error("Error fetching stock data:", error);
-//         } finally {
-//             setIsLoading(false);
-//         }
-//     };
-//     fetchStockData();
-
-// }, []); // Empty dependency array ensures useEffect runs only on mount
 useEffect(()=>{
   handleSelectChange(mainOption);
   setMainOption([mainOption]);

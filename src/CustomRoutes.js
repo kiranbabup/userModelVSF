@@ -7,12 +7,13 @@ import ProtectedRoute from "./actions/ProtectedRoute";
 import SubscriptionPage from "./pages/SubscriptionPage";
 import ProfilePage from "./pages/ProfilePage";
 import BlogPage from "./pages/BlogPage";
-import RazorPayPage from "./pages/RazorPayPage";
 import AccountExpiredPage from "./pages/AccountExpiredPage";
 import HomePage from "./pages/HomePage";
 import VerificationPage from "./pages/VerificationPage";
 import PhoneVerificationPage from "./pages/PhoneVerificationPage";
 import EmailVerificationPage from "./pages/EmailVerificationPage";
+import PaymentSuccessful from "./pages/PaymentSuccessful";
+import PaymentFailed from "./pages/PaymentFailed";
 // import LastMonthHeatMap from "./otherTestingFiles/LastMonthHeatMap";
 
 const CustomeRoutes = () => {
@@ -32,7 +33,9 @@ const CustomeRoutes = () => {
           <Route path="120/subscription" element={<SubscriptionPage />} />
           <Route path="120/profile" element={<ProfilePage/>}/>
           <Route path="120/blog" element={<BlogPage/>}/>
-          <Route path="120/paybyphonepe" element={<RazorPayPage />} />
+          <Route path="120/paymentsuccessful" element={<PaymentSuccessful/>}/>
+          <Route path="120/paymentfailed" element={<PaymentFailed/>}/>
+
       </Route>
 
       <Route path="/" element={<ProtectedRoute type="sub" />} >

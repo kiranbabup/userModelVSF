@@ -5,6 +5,7 @@ import { dsiplayMesgStyle, loadingSpace } from "../../assets/data/styles";
 import { months } from "./BroadHeatMap";
 import MonthlyCompareStocksHeatMap from "./MonthlyCompareStocksHeatMap";
 import { Sector_Compare_msg } from "../../constants";
+import instance from "../../services/axios";
 
 // const verticalLine = [
 //     'Nifty Auto', 'Nifty Bank', 'Nifty Fin Service', 'NIFTY FINSRV25 50', 'Nifty Financial Services Ex-Bank', 'Nifty FMCG',
@@ -17,13 +18,9 @@ const SectorHeatMap = ({ isLoadingSectorHeatMap, setIsLoadingSectorHeatMap }) =>
     const fetchSectorData = async () => {
         setIsLoadingSectorHeatMap(true);
         try {
-            const response = await fetch(`https://heatmapapi.onrender.com/getsectorheatmapdata`);
-            if (!response.ok) {
-                throw new Error(`http error status:${response.status}`);
-            }
-            const result = await response.json();
-            console.log(result.data);
-            setresultSectorData(result.data);
+            const response = await instance.get(`/getsectorheatmapdata`);
+            // console.log(response.data.data);
+            setresultSectorData(response.data.data);
         } catch (error) {
             console.error("Error fetching stock data:", error);
         } finally {

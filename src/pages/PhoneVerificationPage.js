@@ -94,7 +94,7 @@ const PhoneVerificationPage = ({ authSuccess }) => {
 
       if (response.ok) {
         const data = usersData.find(u => u.phone_no === loginWord);
-        console.log("data:", data);
+        // console.log("data:", data);
         
         if (data.email_verified === 1 && data.is_subscribed === 1) {
           authSuccess(data);

@@ -58,7 +58,7 @@ const VipHeatMapPage = () => {
             });
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
+                // console.log(data);
                 const arr = data.data.reverse();
                 const modifiedData = arr.map((item) => {
                     const year = new Date(item.DATE).getFullYear().toString().slice(-2);
@@ -66,7 +66,7 @@ const VipHeatMapPage = () => {
                     const value = item[selectedOption];
                     return { label: year, month, value: value };
                 });
-                console.log(modifiedData);
+                // console.log(modifiedData);
                 const groupedData = [];
 
                 modifiedData.forEach((item) => {
@@ -83,7 +83,7 @@ const VipHeatMapPage = () => {
                         return groupedData.push(newItem);
                     }
                 });
-                console.log(groupedData);
+                // console.log(groupedData);
                 groupedData.forEach((item) => {
                     for (var index in item.data) {
                         var sum = item.data[index].reduce((acc, val) => acc + val, 0);

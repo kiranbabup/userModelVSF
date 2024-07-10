@@ -15,7 +15,7 @@ const initialState = {
 
 export default function authReducer(state = initialState, action) {
   const { type, payload } = action;
-  console.log(payload);
+  // console.log(payload);
   switch (type) {
     case "LOGIN_SUCCESS":
       LsService.setCurrentUser(payload);

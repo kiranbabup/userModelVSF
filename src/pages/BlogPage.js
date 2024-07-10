@@ -5,6 +5,7 @@ import bgstrip from "../assets/images/bgstrip.jpg";
 import { useStyles } from "./LoginPage";
 import CircularProgress from '@mui/material/CircularProgress';
 import { loadingSpace } from "../assets/data/styles";
+import instance from "../services/axios";
 
 const BlogPage = () => {
     const classes = useStyles();
@@ -15,14 +16,9 @@ const BlogPage = () => {
         const fetchData = async () => {
             setIsLoadingBlogs(true);
             try {
-                // const response = await fetch(`https://vsfintech-adminpanel-node.onrender.com/blog-data`);
-                const response = await fetch(`https://heatmapapi.onrender.com/getblogsdata`);
-                if (!response.ok) {
-                    throw new Error(`http error status: ${response.status}`);
-                }
-                const result = await response.json();
-                // console.log(result);
-                setResultData(result.data);
+                const response = await instance.get(`/getblogsdata`);
+                // console.log(response);
+                setResultData(response.data.data);
             } catch (error) {
                 console.error("Error fetching blog data:", error);
             } finally {

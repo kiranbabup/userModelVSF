@@ -12,7 +12,7 @@ class AuthServices {
 
   googleLoginPerson = (data) => instance.post("https://heatmapapi.onrender.com/googlelogin", data);
   
-  makeOrder =(data) => instance.post("/120/paybyphonepe", data);
+  makeOrder =(data) => instance.post("https://heatmapapi.onrender.com/makeorder", data);
 }
 
 export default new AuthServices();

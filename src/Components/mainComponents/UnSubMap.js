@@ -23,68 +23,6 @@ const UnSubHeatmap = () => {
     const [displayedOption, setDisplayedOption] = useState("");
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-    // const fetchData = async () => {
-    //     setIsLoadingHeatMap(true);
-    //     try {
-    //         const response = await fetch(`https://heatmapapi.onrender.com/getheatmappcntdata`);
-    //         if (!response.ok) {
-    //             throw new Error(`http error status:${response.status}`);
-    //         }
-    //         const result = await response.json();
-    //         setResultData(result.data);
-    //     } catch (error) {
-    //         console.error("Error fetching stock data:", error);
-    //     } finally {
-    //         setIsLoadingHeatMap(false);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     fetchData();
-    // }, []);
-    // // console.log(resultData);
-
-    // const handleSelectChange = (selectedOption) => {
-    //     setDisplayedOption(selectedOption.replace(/tri__/g, ' ').replace(/_Pcnt_Rank/g, ' ').replace(/_/g, ' '));
-
-    //     const modifiedData = resultData.map((item) => {
-    //         const year = new Date(item.DATE).getFullYear().toString().slice(-2);
-    //         const month = new Date(item.DATE).getMonth() + 1;
-    //         if (selectedOption === "tri__Nifty_50_Pcnt_Rank" || selectedOption === "tri__Nifty_Midcap_50_Pcnt_Rank" || selectedOption === "tri__NIFTY_SMALLCAP_50_Pcnt_Rank" || selectedOption === "tri__NIFTY_LARGEMID250_Pcnt_Rank" || selectedOption === "tri__Nifty_Bank_Pcnt_Rank" || selectedOption === " ") {
-    //             var value = item[selectedOption];
-    //         } else {
-    //             setIsDrawerOpen(true)
-    //         }
-    //         return { label: year, month, value: value };
-    //     });
-    //     const groupedData = [];
-    //     modifiedData.map((item) => {
-    //         var index = groupedData.findIndex((e) => e.label == item.label);
-    //         if (index != -1) {
-    //             return groupedData[index].data[item.month - 1].push(item.value);
-    //         } else {
-    //             var newItem = { 
-    //                 label: item.label, 
-    //                 data: Array.from({ length: months.length }, (_, i) => []), 
-    //                 average: Array.from({ length: months.length }, (_, i) => 0) 
-    //             };
-    //             newItem.data[item.month - 1].push(item.value);
-    //             return groupedData.push(newItem);
-    //         }
-    //     });
-    //     groupedData.map((item) => {
-    //         for (var index in item.data) {
-    //             var sum = item.data[index].reduce((acc, val) => acc + val, 0);
-    //             var average = sum / item.data[index].length;
-    //             item.average[index] = isNaN(average) ? 0 : parseFloat(average.toFixed(1));
-    //         }
-    //     })
-    //     // const truncatedData = groupedData;
-    //     // const truncatedData = groupedData.slice(0, 12);
-    //     const truncatedData = groupedData.slice(0, groupedData.length - 10);
-    //     setData(truncatedData);
-    // }
-
     const handleSelectChange = async (selectedOption) => {
         const dateString = "DATE"
         setDisplayedOption(selectedOption);
@@ -99,7 +37,7 @@ const UnSubHeatmap = () => {
             });
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
+                // console.log(data);
                 const arr = data.data.reverse();
                 const modifiedData = arr.map((item) => {
                     const year = new Date(item.DATE).getFullYear().toString().slice(-2);
@@ -111,7 +49,7 @@ const UnSubHeatmap = () => {
                     }
                     return { label: year, month, value: value };
                 });
-                console.log(modifiedData);
+                // console.log(modifiedData);
                 const groupedData = [];
 
                 modifiedData.forEach((item) => {
@@ -128,7 +66,7 @@ const UnSubHeatmap = () => {
                         return groupedData.push(newItem);
                     }
                 });
-                console.log(groupedData);
+                // console.log(groupedData);
                 groupedData.forEach((item) => {
                     for (var index in item.data) {
                         var sum = item.data[index].reduce((acc, val) => acc + val, 0);
