@@ -102,12 +102,12 @@ export default function SubscribeCard({ titleType, prices, months }) {
         const data = {
             planname: months,
             amount: isCodeApplied ? CCprice : prices,
-            phone: user.phone_no,
+            phone: user.phone_no === null ? 9999999999 :  user.phone_no,
             id: user.id,
             transactionid: `MT${timestamp}`,
             muid: `MUID${timestamp}`,
         };
-        // console.log("subscribe data:", data);
+        console.log("subscribe data:", data);
         try {
             setLoading(true);
             const response = await AuthServices.makeOrder(data);

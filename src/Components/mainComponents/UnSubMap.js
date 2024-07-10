@@ -129,7 +129,10 @@ const UnSubHeatmap = () => {
                     <Box style={columnStyle}>
                         <select value={selectedOptionStock1} onChange={(e) => {setSelectedOptionStock1(e.target.value); handleBroadStocksChange(e.target.value); }} style={selectStyle}>
                             <option >Select Broad Stock</option>
-                            <option value="NFT50" key="NFT50"  style={{ backgroundColor:"#98FF98" }} >NFT50</option>
+                            <option value="NFT50" key="NFT50"  style={{ backgroundColor:{xs: "#98FF98"  }, background: "#98FF98" }} >NFT50</option>
+                            <option value="NFTMC50" key="NFTMC50" style={{ backgroundColor:{xs: "#98FF98" }, background: "#98FF98" }} >NFTMC50</option>
+                            <option value="NFTSC50" key="NFTSC50" style={{ backgroundColor:{xs: "#98FF98" }, background: "#98FF98" }} >NFTSC50</option>
+                            <option value="NFTLMC250" key="NFTLMC250" style={{ backgroundColor:{xs: "#98FF98" }, background: "#98FF98" }} >NFTLMC250</option>
                             <option value="NFTN50" key="NFTN50" style={verylightGray} >NFTN50</option>
                             <option value="NFT100" key="NFT100" style={verylightGray} >NFT100</option>
                             <option value="NFT200" key="NFT200" style={verylightGray} >NFT200</option>
@@ -138,14 +141,11 @@ const UnSubHeatmap = () => {
                             <option value="NFT500MC50_25_25" key="NFT500MC50_25_25" style={verylightGray} >NFT500MC50_25_25</option>
                             <option value="NFT500LGMSEQLCAPWTD" key="NFT500LGMSEQLCAPWTD" style={verylightGray} >NFT500LGMSEQLCAPWTD</option>
                             <option value="NFTMC150" key="NFTMC150" style={verylightGray} >NFTMC150</option>
-                            <option value="NFTMC50" key="NFTMC50" style={{ backgroundColor:"#98FF98" }} >NFTMC50</option>
                             <option value="NFTMCSEL" key="NFTMCSEL" style={verylightGray} >NFTMCSEL</option>
                             <option value="NFTMC100" key="NFTMC100" style={verylightGray} >NFTMC100</option>
                             <option value="NFTSC250" key="NFTSC250" style={verylightGray} >NFTSC250</option>
-                            <option value="NFTSC50" key="NFTSC50" style={{ backgroundColor:"#98FF98" }} >NFTSC50</option>
                             <option value="NFTFSC100" key="NFTFSC100" style={verylightGray} >NFTFSC100</option>
                             <option value="NFTMC250" key="NFTMC250" style={verylightGray} >NFTMC250</option>
-                            <option value="NFTLMC250" key="NFTLMC250" style={{ backgroundColor:"#98FF98" }} >NFTLMC250</option>
                             <option value="NFTMSC400" key="NFTMSC400" style={verylightGray} >NFTMSC400</option>
                         </select>
                         <LoadingButton disabled variant="contained" style={lodButton}>Compare All Broad Stocks</LoadingButton>
@@ -248,8 +248,8 @@ const UnSubHeatmap = () => {
                     <Box style={columnStyle}>
                         <select value={selectedOptionStock4} onChange={(e) => { setSelectedOptionStock4(e.target.value); handleSectorStocksChange(e.target.value);}} style={selectStyle}>
                             <option >Select Sector  Stock</option>
+                            <option value="NFTBANK" key="NFTBANK" style={{ backgroundColor:{xs: "#98FF98" }, background: "#98FF98" }} >NFTBANK</option>
                             <option value="NFTAUTO" key="NFTAUTO" style={verylightGray} >NFTAUTO</option>
-                            <option value="NFTBANK" key="NFTBANK" style={{ backgroundColor:"#98FF98" }} >NFTBANK</option>
                             <option value="NFTFINSERV" key="NFTFINSERV" style={verylightGray} >NFTFINSERV</option>
                             <option value="NFTFINSERV25_50" key="NFTFINSERV25_50" style={verylightGray} >NFTFINSERV25_50</option>
                             <option value="NFTFINSERVEB" key="NFTFINSERVEB" style={verylightGray} >NFTFINSERVEB</option>
