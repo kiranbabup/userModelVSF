@@ -1,9 +1,8 @@
 {
   "files": {
     "main.css": "/userModelVSF/static/css/main.49b7ef7b.css",
-    "main.js": "/userModelVSF/static/js/main.7d7631fd.js",
+    "main.js": "/userModelVSF/static/js/main.f8081005.js",
     "static/js/453.bea66239.chunk.js": "/userModelVSF/static/js/453.bea66239.chunk.js",
-    "static/media/razorpayImage.jpg": "/userModelVSF/static/media/razorpayImage.1db772aac9e3629965dd.jpg",
     "static/media/vsfintechLogo.png": "/userModelVSF/static/media/vsfintechLogo.8b9738ffe69bed38bb4d.png",
     "static/media/bgstrip.jpg": "/userModelVSF/static/media/bgstrip.65ad21b931647dcde4e0.jpg",
     "static/media/GoogleGLogo.png": "/userModelVSF/static/media/GoogleGLogo.81fdb134397492b14f45.png",
@@ -11,11 +10,11 @@
     "static/media/homeSheet1.xlsx": "/userModelVSF/static/media/homeSheet1.5ce95dac00c0b2a29985.xlsx",
     "index.html": "/userModelVSF/index.html",
     "main.49b7ef7b.css.map": "/userModelVSF/static/css/main.49b7ef7b.css.map",
-    "main.7d7631fd.js.map": "/userModelVSF/static/js/main.7d7631fd.js.map",
+    "main.f8081005.js.map": "/userModelVSF/static/js/main.f8081005.js.map",
     "453.bea66239.chunk.js.map": "/userModelVSF/static/js/453.bea66239.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.49b7ef7b.css",
-    "static/js/main.7d7631fd.js"
+    "static/js/main.f8081005.js"
   ]
 }
