@@ -77,10 +77,10 @@ const ProfilePage = () => {
     useEffect(() => {
         let userdata = LsService.getCurrentUser();
         setUser(userdata);
-        setNewFN(userdata.first_name || "");
-        setNewLN(userdata.last_name || "");
-        setNewEM(userdata.email || "");
-        setNewPhone(userdata.phone_no || "");
+        // setNewFN(userdata.first_name || "");
+        // setNewLN(userdata.last_name || "");
+        // setNewEM(userdata.email || "");
+        // setNewPhone(userdata.phone_no || "");
 
         if (userdata.is_subscribed === 0) {
             setsubscriptionStatus("Not Subscribed");
