@@ -1,6 +1,7 @@
 export function getLast12Months() {
     let dates = [];
     let currentDate = new Date();
+    currentDate.setMonth(currentDate.getMonth() - 1); // Adjust to the previous month
     for (let i = 0; i < 12; i++) {
         let prevMonthDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
         let prevMonth = prevMonthDate.toLocaleString('default', { month: 'short' });
@@ -63,7 +64,13 @@ export function lastMonthName() {
     return formattedDate;
 }
 
-export const sliceMonthWeekValue = 57;
+// (0, 18);
+// (92); // last 21 elements (93 to 113)
+// (57, 92); // elements from 58 to 92
+// (18, 57); // elements from 19 to 57
+export const sliceMonthWeekValueA = 18;
+export const sliceMonthWeekValueB = 57;
+export const sliceMonthWeekValueC = 92;
 
 // export function getTimeStamp (){
 //     const now = new Date();
@@ -84,7 +91,29 @@ export const getTimeStamp = () => {
 
 export const cleanOptionName = (option) => {
     if (typeof option !== 'string') {
-      option = String(option);
+        option = String(option);
     }
     return option.replace(/GNFT/g, 'NFT');
-  };
+};
+
+const truncateToTwoDecimals = (num) => {
+    return Math.floor(num * 100) / 100;
+};
+
+export const processResult = (data) => {
+    return data.map(item => ({
+        ...item,
+        Jan: truncateToTwoDecimals(item.Jan),
+        Feb: truncateToTwoDecimals(item.Feb),
+        Mar: truncateToTwoDecimals(item.Mar),
+        Apr: truncateToTwoDecimals(item.Apr),
+        May: truncateToTwoDecimals(item.May),
+        Jun: truncateToTwoDecimals(item.Jun),
+        Jul: truncateToTwoDecimals(item.Jul),
+        Aug: truncateToTwoDecimals(item.Aug),
+        Sep: truncateToTwoDecimals(item.Sep),
+        Oct: truncateToTwoDecimals(item.Oct),
+        Nov: truncateToTwoDecimals(item.Nov),
+        Dec: truncateToTwoDecimals(item.Dec),
+    }));
+};

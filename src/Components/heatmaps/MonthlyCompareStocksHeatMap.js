@@ -44,7 +44,7 @@ const MonthlyCompareStocksHeatMap = ({ data, months }) => {
                     justifyContent: "center",
                     alignItems: "center",
                 })}
-                cellRender={(value) => value && `${value.toFixed(2)}`}
+                cellRender={(value) => value }
             />
         </Box>
     )

@@ -6,6 +6,7 @@ import { Thematic_Compare_msg } from "../../constants";
 import MonthlyCompareStocksHeatMap from "./MonthlyCompareStocksHeatMap";
 import { months } from "./BroadHeatMap";
 import instance from "../../services/axios";
+import { processResult } from "../../assets/data/functions";
 
 const ThematicHeatMap = ({ isLoadingThematicHeatMap, setIsLoadingThematicHeatMap }) => {
     const [resultThematicData, setresultThematicData] = useState([]);
@@ -15,7 +16,8 @@ const ThematicHeatMap = ({ isLoadingThematicHeatMap, setIsLoadingThematicHeatMap
         try {
             const response = await instance.get(`/getthematicheatmapdata`);
             // console.log(result.data);
-            setresultThematicData(response.data.data);
+            let result = processResult(response.data.data);
+            setresultThematicData(result);
         } catch (error) {
             console.error("Error fetching stock data:", error);
         } finally {

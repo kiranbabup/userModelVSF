@@ -303,7 +303,7 @@ const VipHeatMapPage = () => {
                             <option value="NFT100EESG" key="NFT100EESG" >NFT100EESG</option>
                             <option value="NFT100ESGSL" key="NFT100ESGSL" >NFT100ESGSL</option>
                             <option value="NFTCONS" key="NFTCONS" >NFTCONS</option>
-                            <option value="NFTINDCONS" key="NFTINDCONS" >NFTINDCONS</option>
+                            <option value="NFTDEF" key="NFTDEF" >NFTDEF</option>
                             <option value="NFTINDDIG" key="NFTINDDIG" >NFTINDDIG</option>
                             <option value="NFTINDMFG" key="NFTINDMFG" >NFTINDMFG</option>
                             <option value="NFTINDTR" key="NFTINDTR" >NFTINDTR</option>

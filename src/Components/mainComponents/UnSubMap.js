@@ -129,11 +129,13 @@ const UnSubHeatmap = () => {
                     <Box style={columnStyle}>
                         <select value={selectedOptionStock1} onChange={(e) => {setSelectedOptionStock1(e.target.value); handleBroadStocksChange(e.target.value); }} style={selectStyle}>
                             <option >Select Broad Stock</option>
-                            <option value="NFT50" key="NFT50"  style={{ backgroundColor:{xs: "#98FF98"  }, background: "#98FF98" }} >NFT50</option>
-                            <option value="NFTMC50" key="NFTMC50" style={{ backgroundColor:{xs: "#98FF98" }, background: "#98FF98" }} >NFTMC50</option>
-                            <option value="NFTSC50" key="NFTSC50" style={{ backgroundColor:{xs: "#98FF98" }, background: "#98FF98" }} >NFTSC50</option>
-                            <option value="NFTLMC250" key="NFTLMC250" style={{ backgroundColor:{xs: "#98FF98" }, background: "#98FF98" }} >NFTLMC250</option>
-                            <option value="NFTN50" key="NFTN50" style={verylightGray} >NFTN50</option>
+                            <option value="NFT50" key="NFT50"  style={{ backgroundColor: "#98FF98" }} >NFT50</option>
+                            {/* <option value="NFT50" key="NFT50"  style={{ backgroundColor:{xs: "#98FF98"  }, background: "#98FF98" }} >NFT50</option> */}
+                            <option value="NFTMC50" key="NFTMC50" style={{ backgroundColor: "#98FF98" }} >NFTMC50</option>
+                            <option value="NFTSC50" key="NFTSC50" style={{ backgroundColor: "#98FF98" }} >NFTSC50</option>
+                            <option value="NFTLMC250" key="NFTLMC250" style={{ backgroundColor: "#98FF98" }} >NFTLMC250</option>
+                            <option value="NFT100" key="NFT100" style={verylightGray} >Subscribe-For-Rest</option>
+                            {/* <option value="NFTN50" key="NFTN50" style={verylightGray} >NFTN50</option>
                             <option value="NFT100" key="NFT100" style={verylightGray} >NFT100</option>
                             <option value="NFT200" key="NFT200" style={verylightGray} >NFT200</option>
                             <option value="NFTTTLMAR" key="NFTTTLMAR" style={verylightGray} >NFTTTLMAR</option>
@@ -146,7 +148,7 @@ const UnSubHeatmap = () => {
                             <option value="NFTSC250" key="NFTSC250" style={verylightGray} >NFTSC250</option>
                             <option value="NFTFSC100" key="NFTFSC100" style={verylightGray} >NFTFSC100</option>
                             <option value="NFTMC250" key="NFTMC250" style={verylightGray} >NFTMC250</option>
-                            <option value="NFTMSC400" key="NFTMSC400" style={verylightGray} >NFTMSC400</option>
+                            <option value="NFTMSC400" key="NFTMSC400" style={verylightGray} >NFTMSC400</option> */}
                         </select>
                         <LoadingButton disabled variant="contained" style={lodButton}>Compare All Broad Stocks</LoadingButton>
                     </Box>
@@ -215,7 +217,7 @@ const UnSubHeatmap = () => {
                             <option value="NFT100EESG" key="NFT100EESG"  style={verylightGray} >NFT100EESG</option>
                             <option value="NFT100ESGSL" key="NFT100ESGSL"  style={verylightGray} >NFT100ESGSL</option>
                             <option value="NFTCONS" key="NFTCONS"  style={verylightGray} >NFTCONS</option>
-                            <option value="NFTINDCONS" key="NFTINDCONS"  style={verylightGray} >NFTINDCONS</option>
+                            <option value="NFTDEF" key="NFTDEF"  style={verylightGray} >NFTDEF</option>
                             <option value="NFTINDDIG" key="NFTINDDIG"  style={verylightGray} >NFTINDDIG</option>
                             <option value="NFTINDMFG" key="NFTINDMFG"  style={verylightGray} >NFTINDMFG</option>
                             <option value="NFTINDTR" key="NFTINDTR"  style={verylightGray} >NFTINDTR</option>
@@ -248,8 +250,9 @@ const UnSubHeatmap = () => {
                     <Box style={columnStyle}>
                         <select value={selectedOptionStock4} onChange={(e) => { setSelectedOptionStock4(e.target.value); handleSectorStocksChange(e.target.value);}} style={selectStyle}>
                             <option >Select Sector  Stock</option>
-                            <option value="NFTBANK" key="NFTBANK" style={{ backgroundColor:{xs: "#98FF98" }, background: "#98FF98" }} >NFTBANK</option>
-                            <option value="NFTAUTO" key="NFTAUTO" style={verylightGray} >NFTAUTO</option>
+                            <option value="NFTBANK" key="NFTBANK" style={{ backgroundColor: "#98FF98" }} >NFTBANK</option>
+                            <option value="NFTBANK" key="NFTBANK" style={verylightGray} >Subscribe-For-Rest</option>
+                            {/* <option value="NFTAUTO" key="NFTAUTO" style={verylightGray} >NFTAUTO</option>
                             <option value="NFTFINSERV" key="NFTFINSERV" style={verylightGray} >NFTFINSERV</option>
                             <option value="NFTFINSERV25_50" key="NFTFINSERV25_50" style={verylightGray} >NFTFINSERV25_50</option>
                             <option value="NFTFINSERVEB" key="NFTFINSERVEB" style={verylightGray} >NFTFINSERVEB</option>
@@ -268,7 +271,7 @@ const UnSubHeatmap = () => {
                             <option value="NFTMSHC" key="NFTMSHC" style={verylightGray} >NFTMSHC</option>
                             <option value="NFTMSITTEL" key="NFTMSITTEL" style={verylightGray} >NFTMSITTEL</option>
                             <option value="NFT50USD" key="NFT50USD" style={verylightGray} >NFT50USD</option>
-                            <option value="NFTVIX" key="NFTVIX" style={verylightGray} >NFTVIX</option>
+                            <option value="NFTVIX" key="NFTVIX" style={verylightGray} >NFTVIX</option> */}
                             </select>
                         <LoadingButton disabled variant="contained" style={lodButton}>Compare All Sector Stocks</LoadingButton>
                     </Box>

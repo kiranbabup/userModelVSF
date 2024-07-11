@@ -7,16 +7,16 @@ const LastMonthandWeekHeatMap = ({ data, months }) => {
     const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
     const isLaptop = useMediaQuery(theme.breakpoints.between('md', 'lg'));
 
-    const cellFontSize = isMobile ? '11px' : (isTablet ? '13px' : (isLaptop ? '14px' : '16px'));
-    const cellminwidth = isMobile && '30px';
-    const ywidth = isMobile ? 140 : 355;
+    const cellFontSize = isMobile ? '13px' : (isTablet ? '13px' : (isLaptop ? '14px' : '15px'));
+    const cellminwidth = isMobile && '25px';
+    const ywidth = isMobile ? 150 : 240;
     const cellMaxWidth = isMobile ? "100px" : "100%";
 
     return (
-        <Box sx={{ width: {xs:"90%", md:'50%'}, fontSize:{xs:"10px", md:"16px"}, px:2 }}>
+        <Box sx={{ width: { xs: "90%", md: '24%' }, fontSize: { xs: "10px", md: "16px" }, px: 2 }}>
             <Heatmap
-                        data={data.map((entry) => Object.values(entry).slice(1))}
-                xLabels={months}
+                data={data.map((entry) => Object.values(entry).slice(1))}
+                xLabels={months.slice(0,1)}
                 yLabels={data.map((e) => e.stocks)}
                 yLabelWidth={ywidth}
                 yLabelTextAlign="left"

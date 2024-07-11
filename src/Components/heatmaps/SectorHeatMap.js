@@ -6,6 +6,7 @@ import { months } from "./BroadHeatMap";
 import MonthlyCompareStocksHeatMap from "./MonthlyCompareStocksHeatMap";
 import { Sector_Compare_msg } from "../../constants";
 import instance from "../../services/axios";
+import { processResult } from "../../assets/data/functions";
 
 // const verticalLine = [
 //     'Nifty Auto', 'Nifty Bank', 'Nifty Fin Service', 'NIFTY FINSRV25 50', 'Nifty Financial Services Ex-Bank', 'Nifty FMCG',
@@ -20,7 +21,8 @@ const SectorHeatMap = ({ isLoadingSectorHeatMap, setIsLoadingSectorHeatMap }) =>
         try {
             const response = await instance.get(`/getsectorheatmapdata`);
             // console.log(response.data.data);
-            setresultSectorData(response.data.data);
+            let result = processResult(response.data.data);
+            setresultSectorData(result);
         } catch (error) {
             console.error("Error fetching stock data:", error);
         } finally {

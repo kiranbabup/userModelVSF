@@ -6,6 +6,7 @@ import { Strategy_Compare_msg } from "../../constants";
 import MonthlyCompareStocksHeatMap from "./MonthlyCompareStocksHeatMap";
 import { months } from "./BroadHeatMap";
 import instance from "../../services/axios";
+import { processResult } from "../../assets/data/functions";
 
 const StrategyHeatMap = ({ isLoadingStrategyHeatMap, setIsLoadingStrategyHeatMap }) => {
     const [resultStrategyData, setresultStrategyData] = useState([]);
@@ -15,7 +16,8 @@ const StrategyHeatMap = ({ isLoadingStrategyHeatMap, setIsLoadingStrategyHeatMap
         try {
             const response = await instance.get(`/getstrategyheatmapdata`);
             // console.log(response.data.data);
-            setresultStrategyData(response.data.data);
+            let result = processResult(response.data.data);
+            setresultStrategyData(result);
         } catch (error) {
             console.error("Error fetching stock data:", error);
         } finally {

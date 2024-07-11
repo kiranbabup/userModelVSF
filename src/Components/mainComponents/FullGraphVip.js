@@ -173,7 +173,7 @@ useEffect(()=>{
           <option value="GNFT100EESG" key="GNFT100EESG" >NFT100EESG</option>
           <option value="GNFT100ESGSL" key="GNFT100ESGSL" >NFT100ESGSL</option>
           <option value="GNFTCONS" key="GNFTCONS" >NFTCONS</option>
-          <option value="GNFTINDCONS" key="GNFTINDCONS" >NFTINDCONS</option>
+          <option value="GNFTDEF" key="GNFTDEF" >NFTDEF</option>
           <option value="GNFTINDDIG" key="GNFTINDDIG" >NFTINDDIG</option>
           <option value="GNFTINDMFG" key="GNFTINDMFG" >NFTINDMFG</option>
           <option value="GNFTINDTR" key="GNFTINDTR" >NFTINDTR</option>

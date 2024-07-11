@@ -96,7 +96,7 @@ export const graph113names = [
     "GNFT100EESG",
     "GNFT100ESGSL",
     "GNFTCONS",
-    "GNFTINDCONS",
+    "GNFTDEF",
     "GNFTINDDIG",
     "GNFTINDMFG",
     "GNFTINDTR",

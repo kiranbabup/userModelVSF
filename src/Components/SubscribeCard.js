@@ -107,7 +107,7 @@ export default function SubscribeCard({ titleType, prices, months }) {
             transactionid: `MT${timestamp}`,
             muid: `MUID${timestamp}`,
         };
-        console.log("subscribe data:", data);
+        // console.log("subscribe data:", data);
         try {
             setLoading(true);
             const response = await AuthServices.makeOrder(data);
