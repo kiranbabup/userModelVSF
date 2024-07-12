@@ -61,11 +61,11 @@ const LoginPage = ({ authSuccess }) => {
       // console.log(response);
       const responseData = response.data?.data ?? {};
       // console.log(responseData);
-      if (responseData.email_verified === 1 && responseData.is_subscribed === 1) {
+      if ((responseData.email_verified === 1 || responseData.email_verified === true) && (responseData.is_subscribed === 1 || responseData.is_subscribed === true)) {
         authSuccess(responseData);
         // console.log("nav full");
         navigate("/120/viphome", { replace: true });
-      } else if (responseData.email_verified === 1 && responseData.is_subscribed === 0) {
+      } else if ((responseData.email_verified === 1 || responseData.email_verified === true) && (responseData.is_subscribed === 0 || responseData.is_subscribed === false)) {
         authSuccess(responseData);
         // console.log("nav unsub");
         navigate("/120/home", { replace: true });

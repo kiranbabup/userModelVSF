@@ -55,7 +55,6 @@ ${desktopStyles}
 
 const ProfilePage = () => {
     const [user, setUser] = useState([]);
-    const [usersDBData, setUsersDBData] = useState([]);
     const [subscriptionStatus, setsubscriptionStatus] = useState("");
     const [phone, setPhone] = useState("");
     const [daysLeft, setDaysLeft] = useState("");
@@ -84,7 +83,7 @@ const ProfilePage = () => {
         // setNewEM(userdata.email || "");
         // setNewPhone(userdata.phone_no || "");
 
-        if (userdata.is_subscribed === 0) {
+        if (userdata.is_subscribed === 0 || userdata.is_subscribed === false) {
             setsubscriptionStatus("Not Subscribed");
         } else {
             setsubscriptionStatus("Subscribed");
@@ -97,20 +96,18 @@ const ProfilePage = () => {
             setPhone(userdata.phone_no);
         }
     }, []);
-    // console.log(user);
-    useEffect(()=>{
-        const fetchPersonalData = async () => {
-            try {
-                const response = await instance.get(`/getuserbyid/${user.id}`,);
-                console.log(response.data);
-                // console.log(response.data.data);
-                // setUsersDBData();
-              } catch (err) {
-                console.error('Error getting data:', err);
-              }
-          };
-          fetchPersonalData();
-    },[user]);
+
+    const handlePhoneChange = (e) => {
+        const onlyNums = e.target.value.replace(/[^0-9]/g, '');
+        setNewPhone(onlyNums);
+    };
+
+    const handlePhoneKeyPress = (e) => {
+        const charCode = e.charCode;
+        if (charCode < 48 || charCode > 57) {
+            e.preventDefault();
+        }
+    };
 
     const validatePhoneNumber = (number) => {
         const phoneRegex = /^\d{10}$/;
@@ -123,94 +120,87 @@ const ProfilePage = () => {
     };
 
     const handleSave = async (field) => {
-        let updatedUser = { ...user };
-
+        // let updatedUser = { ...user };
+        let first_name;
+        let last_name;
+        let email;
+        let phone_no;
         switch (field) {
             case 'first_name':
-                updatedUser.first_name = newFN;
-                updatedUser.last_name = user.last_name;
-                updatedUser.email = user.email;
-                updatedUser.phone_no = user.phone_no;
+                first_name = newFN;
+                last_name = user.last_name;
+                email = user.email;
+                phone_no = user.phone_no;
                 break;
             case 'last_name':
-                updatedUser.last_name = newLN;
-                updatedUser.first_name = user.first_name;
-                updatedUser.email = user.email;
-                updatedUser.phone_no = user.phone_no;
+                last_name = newLN;
+                first_name = user.first_name;
+                email = user.email;
+                phone_no = user.phone_no;
                 break;
             case 'email':
                 if (!validateEmail(newEM)) {
                     alert("Please enter a valid email address.");
                     return;
                 }
-                updatedUser.first_name = user.first_name;
-                updatedUser.last_name = user.last_name;
-                updatedUser.email = newEM;
-                updatedUser.phone_no = user.phone_no;
+                first_name = user.first_name;
+                last_name = user.last_name;
+                email = newEM;
+                phone_no = user.phone_no;
                 break;
             case 'phone_no':
                 if (!validatePhoneNumber(newPhone)) {
                     alert("Please enter a valid 10-digit phone number.");
                     return;
                 }
-                updatedUser.first_name = user.first_name;
-                updatedUser.last_name = user.last_name;
-                updatedUser.email = user.email;
-                updatedUser.phone_no = newPhone;
+                first_name = user.first_name;
+                last_name = user.last_name;
+                email = user.email;
+                phone_no = newPhone;
                 break;
             default:
                 return;
         }
         setDisableIConBtn(true);
         try {
-            console.log(updatedUser);
-            console.log(updatedUser.first_name);
-            console.log(updatedUser.last_name);
-            console.log(updatedUser.phone_no);
-            let first_name = updatedUser.first_name;
-            let last_name = updatedUser.last_name;
-            let email = updatedUser.email;
-            let phone_no = updatedUser.phone_no;
+            // let first_name = updatedUser.first_name;
+            // let last_name = updatedUser.last_name;
+            // let email = updatedUser.email;
+            // let phone_no = updatedUser.phone_no;
             const response = await fetch(`https://heatmapapi.onrender.com/updateuser/${user.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({first_name, last_name, email, phone_no}),
+                body: JSON.stringify({ first_name, last_name, email, phone_no }),
             });
-            setDisableIConBtn(false);
-            console.log(response);
             console.log(response.ok);
             if (response.ok) {
-                LsService.updateCurrentUser(updatedUser);
+                try {
+                    const response = await instance.get(`/getuserbyid/${user.id}`,);
+                    console.log(response.data.data);
+                    LsService.updateCurrentUser(response.data.data);
+                } catch (err) {
+                    console.error('Error getting data:', err);
+                }
                 setIsEditFN(false);
                 setIsEditLN(false);
                 setIsEditE(false);
                 setIsEditP(false);
+                setDisableIConBtn(false);
                 window.location.reload();
             } else {
                 alert('Something went wrong. Please try again later');
             }
         } catch (error) {
             console.error('Error editing Profile:', error.message);
+            setDisableIConBtn(false);
             alert('Something went wrong. Please try again later');
             setIsEditFN(false);
             setIsEditLN(false);
             setIsEditE(false);
             setIsEditP(false);
             window.location.reload();
-        }
-    };
-
-    const handlePhoneChange = (e) => {
-        const onlyNums = e.target.value.replace(/[^0-9]/g, '');
-        setNewPhone(onlyNums);
-    };
-
-    const handlePhoneKeyPress = (e) => {
-        const charCode = e.charCode;
-        if (charCode < 48 || charCode > 57) {
-            e.preventDefault();
         }
     };
 
@@ -320,7 +310,7 @@ const ProfilePage = () => {
                                 <TableHeader >Subcription Status:</TableHeader>
                                 <TableData >{subscriptionStatus}</TableData>
                             </tr>
-                            {user.is_subscribed === 1 && (
+                            {(user.is_subscribed === 1 || user.is_subscribed === true) && (
                                 <React.Fragment>
                                     <tr>
                                         <TableHeader >Subcribed On:</TableHeader>

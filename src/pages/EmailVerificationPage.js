@@ -97,11 +97,11 @@ const EmailVerificationPage = ({ authSuccess }) => {
         const data = usersData.find(u => u.email === loginWord);
         // console.log("data:", data);
         
-        if (data.email_verified === 1 && data.is_subscribed === 1) {
+        if ((data.email_verified === 1 || data.email_verified === true) && (data.is_subscribed === 1 || data.is_subscribed === true)) {
           authSuccess(data);
           // console.log("nav full");
           navigate("/120/viphome", { replace: true });
-        } else if (data.email_verified === 1 && data.is_subscribed === 0) {
+        } else if ((data.email_verified === 1 || data.email_verified === true) && (data.is_subscribed === 0 || data.is_subscribed === false)) {
           authSuccess(data);
           // console.log("nav unsub");
           navigate("/120/home", { replace: true });

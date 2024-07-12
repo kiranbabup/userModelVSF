@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> QVT Data Display</title>
+</head>
+
+<body>
+    <p id="input"></p>
+    <!-- <div style="display: flex; justify-content: space-around;"> -->
+    <center>
+        <div id="filteredData" style="font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; ">
+        </div>
+
+        <div id="embedContainer">
+        </div>
+    </center>
+
+    <!-- </div> -->
+    <script>
+        let values = [];
+
+        fetch('https://sheets.googleapis.com/v4/spreadsheets/1Vyx0O5atvsSMg9lqK-sH65Tb7vT3mcbyiNZ4A_ci_r8/values/Embed?alt=json&key=AIzaSyAq3ypn4xpDpaquusYVJ3e00OHhLnH7__k')
+            .then(response => response.json())
+            .then(response => {
+                values = response.values.slice(1);
+                console.log(values);
+                let input = '';
+                input = input + '<input type="text" id="searchBar" placeholder="Enter search term">';
+                document.getElementById('input').innerHTML = input;
+                document.getElementById('searchBar').addEventListener('input', filterAndDisplay);
+
+
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+
+        function filterAndDisplay() {
+            if (document.getElementById('searchBar').value == "") {
+                document.getElementById('filteredData').innerHTML = "";
+            }
+            console.log(document.getElementById('searchBar').value)
+
+            const searchTerm = document.getElementById('searchBar').value.toLowerCase().trim();
+
+            const filteredValues = values.filter(row => {
+                return row.some(cell => cell.toLowerCase().includes(searchTerm));
+            });
+            console.log(filteredValues);
+
+            const filteredDataDiv = document.getElementById('filteredData');
+            filteredDataDiv.innerHTML = '';
+            if (document.getElementById('searchBar').value == "") {
+                filteredDataDiv.innerHTML = '<p>No matching data found.</p>';
+                document.getElementById('embedContainer').innerHTML = "";
+            } else {
+
+                let tableHTML = '<table border="1">';
+                filteredValues.forEach(row => {
+                    tableHTML += '<tr>';
+                    tableHTML += '<td onclick="handleCellClick(\'' + row[1] + ',' + row[0] + '\')">' + row[0] + '</td>';
+                    tableHTML += '</tr>';
+                });
+                tableHTML += '</table>';
+                filteredDataDiv.innerHTML = tableHTML;
+            }
+        }
+
+        function handleCellClick(cell, row) {
+            document.getElementById('filteredData').innerHTML = cell.split(',')[1];
+            console.log('Clicked value:', cell.split(',')[0]);
+
+
+            let str = ''
+            str += '<blockquote class="trendlyne-widgets" ' +
+                'data-get-url="https://trendlyne.com/web-widget/qvt-widget/Poppins/' + cell.split(',')[0] + '/?posCol=00A25B&primaryCol=006AFF&negCol=EB3B00&neuCol=F7941E" ' +
+                'data-theme="light">' +
+                '</blockquote>';
+
+            const scriptElement = document.createElement('script');
+            scriptElement.src = 'https://cdn-static.trendlyne.com/static/js/webwidgets/tl-widgets.js';
+            scriptElement.async = true;
+            scriptElement.charset = 'utf-8';
+
+            document.body.appendChild(scriptElement);
+            document.getElementById('embedContainer').innerHTML = str;
+
+        }
+
+    </script>
+</body>
+
+</html>

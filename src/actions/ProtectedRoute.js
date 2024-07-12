@@ -5,9 +5,9 @@ import { Navigate, Outlet } from "react-router-dom";
 const ProtectedRoute = ({ auth, type }) => {
   // console.log(auth.email_verified);
   // console.log(auth);
-  if(auth.email_verified === 1 && auth.is_subscribed === 0){
+  if((auth.email_verified === 1 || auth.email_verified === true ) && (auth.is_subscribed === 0 || auth.is_subscribed === false)){
     return type === "unsub" ? <Outlet /> : <Navigate to="/404" replace />;
-  }else if(auth.email_verified === 1 && auth.is_subscribed === 1){
+  }else if((auth.email_verified === 1 || auth.email_verified === true) && (auth.is_subscribed === 1 || auth.is_subscribed === true)){
     return type === "sub" ? <Outlet /> : <Navigate to="/404" replace />;
   }else{
     return <Navigate to="/120/login" replace />;

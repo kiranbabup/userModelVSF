@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import LsService from "../../services/localstorage";
 
 const drawerWidth = 240;
-const navItems = ['Home', 'Heatmap', 'Blog', 'Profile', 'Logout'];
+const navItems = ['Home', 'Heatmap', 'stock2', 'Blog', 'Profile', 'Logout'];
 
 const HeaderComponent = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -29,9 +29,19 @@ const HeaderComponent = () => {
   };
 
   const handleHeatmap = () => {
-    if (user ? user.email_verified === 1 && user.is_subscribed === 0 : 0) {
+    if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 0 || user.is_subscribed === false) : 0) {
       nav("/120/heatmap");
-    } else if (user ? user.email_verified === 1 && user.is_subscribed === 1 : 0) {
+    } else if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 1 || user.is_subscribed === true) : 0) {
+      nav('/120/vipheatmap');
+    } else {
+      nav("/404")
+    }
+  }
+
+  const handleStock2 = () => {
+    if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 0 || user.is_subscribed === false) : 0) {
+      nav("/120/subscription");
+    } else if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 1 || user.is_subscribed === true) : 0) {
       nav('/120/vipheatmap');
     } else {
       nav("/404")
@@ -39,9 +49,9 @@ const HeaderComponent = () => {
   }
 
   const handleHome = () => {
-    if (user ? user.email_verified === 1 && user.is_subscribed === 0 : 0) {
+    if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 0 || user.is_subscribed === false) : 0) {
       nav("/120/home");
-    } else if (user ? user.email_verified === 1 && user.is_subscribed === 1 : 0) {
+    } else if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 1 || user.is_subscribed === true) : 0) {
       nav('/120/viphome');
     } else {
       nav("/404")
@@ -49,9 +59,9 @@ const HeaderComponent = () => {
   }
 
   const handleProfile = () => {
-    if (user ? user.email_verified === 1 && user.is_subscribed === 0 : 0) {
+    if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 0 || user.is_subscribed === false) : 0) {
       nav("/120/profile");
-    } else if (user ? user.email_verified === 1 && user.is_subscribed === 1 : 0) {
+    } else if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 1 || user.is_subscribed === true) : 0) {
       nav("/120/vipprofile");
     } else {
       nav("/404")
@@ -59,9 +69,9 @@ const HeaderComponent = () => {
   }
 
   const handleBlog = () => {
-    if (user ? user.email_verified === 1 && user.is_subscribed === 0 : 0) {
+    if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 0 || user.is_subscribed === false) : 0) {
       nav("/120/blog");
-    } else if (user ? user.email_verified === 1 && user.is_subscribed === 1 : 0) {
+    } else if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 1 || user.is_subscribed === true) : 0) {
       nav("/120/vipblog");
     } else {
       nav("/404")
@@ -77,6 +87,8 @@ const HeaderComponent = () => {
       handleProfile();
     } else if (item === "Heatmap") {
       handleHeatmap();
+    } else if (item === "stock2") {
+      handleStock2();
     } else {
       handleBlog();
     }
@@ -89,6 +101,7 @@ const HeaderComponent = () => {
   const getNavPath = (item) => {
     if (item === 'Home') return user ? (user.is_subscribed ? '/120/viphome' : '/120/home') : '/404';
     if (item === 'Heatmap') return user ? (user.is_subscribed ? '/120/vipheatmap' : '/120/heatmap') : '/404';
+    if (item === 'stock2') return user ? (user.is_subscribed ? '/120/vipheatmap' : '/120/subscription') : '/404';
     if (item === 'Blog') return user ? (user.is_subscribed ? '/120/vipblog' : '/120/blog') : '/404';
     if (item === 'Profile') return user ? (user.is_subscribed ? '/120/vipprofile' : '/120/profile') : '/404';
     if (item === 'Logout') return '/120/login';

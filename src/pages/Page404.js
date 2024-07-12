@@ -1,7 +1,18 @@
-import { Link as RouterLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button, Typography, Container, Box } from "@mui/material";
+import { useDispatch } from 'react-redux';
+import { authLogout } from "../actions/auth";
 
 export default function Page404() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(authLogout());
+    localStorage.clear();
+    navigate('/120/login');
+  };
+  
   return (
     <Box>
       <Container>
@@ -15,7 +26,7 @@ export default function Page404() {
           <Box p={2} />
 
           <div>
-            <Button to="/" size="large" variant="contained" component={RouterLink}>
+            <Button size="large" variant="contained" onClick={()=>handleLogout()} >
               Go to Login
             </Button>
           </div>
