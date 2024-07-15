@@ -12,6 +12,7 @@ import gicon from "../assets/images/GoogleGLogo.png";
 import vsfintechLogo from "../assets/images/vsfintechLogo.png";
 import { useDispatch } from 'react-redux';
 import { setLoginWord } from '../actions/actions';
+import emailjs from "@emailjs/browser";
 // import { useSelector } from 'react-redux';
 
 export const useStyles = makeStyles((theme) => ({
@@ -41,7 +42,7 @@ const LoginPage = ({ authSuccess }) => {
       } catch (err) {
         // showSnackbar(err.response?.data?.error ?? COMMON_ERROR_MSG, "error");
         // console.log(err.response?.data?.error ?? COMMON_ERROR_MSG, "error");
-      setgoogleLoginMsg("Authentication Failed.");
+        setgoogleLoginMsg("Authentication Failed.");
       }
     },
     onError: () => {
@@ -79,21 +80,33 @@ const LoginPage = ({ authSuccess }) => {
     }
   };
 
+  function getOTP(length) {
+    const charset = "0123456789";
+    let otpPassword = "";
+
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * charset.length);
+      otpPassword += charset[randomIndex];
+    }
+
+    return otpPassword;
+  }
+
   const handleLogin = async () => {
     if (loginWordString === "") {
-      setLoginErrorMsg("Please fill Phone Number");
-      // setLoginErrorMsg("Please fill email-ID or Phone Number");
+      // setLoginErrorMsg("Please fill Phone Number");
+      setLoginErrorMsg("Please fill email-ID or Phone Number");
     } else {
       const isEmail = /\S+@\S+\.\S+/.test(loginWordString);
       const isPhoneNumber = /^\d{10}$/.test(loginWordString);
 
       if (!isEmail && !isPhoneNumber) {
         if (/^\d{1,9}$/.test(loginWordString)) {
-          setLoginErrorMsg("Please enter valid 10 digits phone number or use Gmail login instead");
-          // setLoginErrorMsg("Please enter valid 10 digits phone number or use an email instead");
+          // setLoginErrorMsg("Please enter valid 10 digits phone number or use Gmail login instead");
+          setLoginErrorMsg("Please enter valid 10 digits phone number or use an email instead");
         } else {
-          setLoginErrorMsg("Please enter valid Phone Number as email service unavailabe or use Gmail login");
-          // setLoginErrorMsg("Please enter valid email id or use a phone number instead");
+          // setLoginErrorMsg("Please enter valid Phone Number as email service unavailabe or use Gmail login");
+          setLoginErrorMsg("Please enter valid email id or use a phone number instead");
         }
         return;
       }
@@ -162,21 +175,35 @@ const LoginPage = ({ authSuccess }) => {
 
         let validateUserResponse;
         if (isEmail) {
-          setLoginMsg("Validating Phone number...");
-          validateUserResponse = await fetch('https://heatmapapi.onrender.com/emailvalidateuser', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email: loginWordString }),
-          });
+          setLoginMsg("Sending OTP to email id...");
+          let otp = getOTP(6);
 
+          const params = {
+            to_email: loginWordString,
+            from: "kiraninvtechnologies@gmail.com",
+            pageText: "Your OTP for VS FINTECH Login.",
+            html: "Test",
+            to_name: values.first_name,
+            from_name: "VS FINTECH",
+            message: otp
+          };
+
+          validateUserResponse = await emailjs.send(
+            "service_wq61tqr",
+            "template_4trtaca",
+            params,
+            "W820ReHOtXXQIx0dp"
+          );
+          console.log(validateUserResponse);
           if (validateUserResponse.ok) {
             navigate("/120/emailotpverification");
-            // navigate("/120/verification");
+          } else {
+            setLoginMsg("OTP sending Failed.");
+            throw new Error('OTP sending failed');
           }
         } else {
           setLoginMsg("Sending OTP to Phone number...");
+
           validateUserResponse = await fetch('https://heatmapapi.onrender.com/mobilevalidateuser', {
             method: 'POST',
             headers: {
@@ -184,17 +211,18 @@ const LoginPage = ({ authSuccess }) => {
             },
             body: JSON.stringify({ phone_no: loginWordString }),
           });
-
+          console.log(validateUserResponse);
           if (validateUserResponse.ok) {
             navigate("/120/phoneotpverification");
+          } else {
+            setLoginMsg("OTP sending Failed.");
+            throw new Error('OTP sending failed');
           }
         }
-
-        if (!validateUserResponse.ok) {
-          setLoginMsg("OTP sending failed.");
-          throw new Error('OTP sending failed');
-        }
-
+          if(!validateUserResponse.ok){
+            setLoginMsg("OTP sending Failed.");
+            throw new Error('OTP sending failed');
+          }
       } catch (error) {
         console.error('Error Sending OTP:', error.message);
         alert('Something went wrong. Please try again later.');
@@ -227,7 +255,7 @@ const LoginPage = ({ authSuccess }) => {
         </Typography>
         <Box p={1} />
         {/* email-id: email@email.com or */}
-        <TextField id="outlined-basic" label="Enter Phone Number: 0000000000" variant="outlined" fullWidth onChange={(e) => setLoginWordString(e.target.value)} />
+        <TextField id="outlined-basic" label="Enter Email-id or Phone Number" variant="outlined" fullWidth onChange={(e) => setLoginWordString(e.target.value)} />
         {
           loginErrorMsg !== "" &&
           <Typography sx={{ color: "red", fontSize: "12px" }}>{loginErrorMsg}</Typography>

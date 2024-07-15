@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import LsService from "../../services/localstorage";
 
 const drawerWidth = 240;
-const navItems = ['Home', 'Heatmap', 'stock2', 'Blog', 'Profile', 'Logout'];
+const navItems = ['Home', 'Heatmap', 'stock1', 'stock2', 'Mutual Funds', 'Blog', 'Profile', 'Logout'];
 
 const HeaderComponent = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -38,11 +38,31 @@ const HeaderComponent = () => {
     }
   }
 
+  const handleStock1 = () => {
+    if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 0 || user.is_subscribed === false) : 0) {
+      nav("/120/subscription");
+    } else if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 1 || user.is_subscribed === true) : 0) {
+      nav('/120/stock1');
+    } else {
+      nav("/404")
+    }
+  }
+
   const handleStock2 = () => {
     if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 0 || user.is_subscribed === false) : 0) {
       nav("/120/subscription");
     } else if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 1 || user.is_subscribed === true) : 0) {
-      nav('/120/vipheatmap');
+      nav('/120/stock2');
+    } else {
+      nav("/404")
+    }
+  }
+
+  const handleMutualFunds = () => {
+    if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 0 || user.is_subscribed === false) : 0) {
+      nav("/120/subscription");
+    } else if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 1 || user.is_subscribed === true) : 0) {
+      nav('/120/mutual_funds');
     } else {
       nav("/404")
     }
@@ -87,8 +107,12 @@ const HeaderComponent = () => {
       handleProfile();
     } else if (item === "Heatmap") {
       handleHeatmap();
+    } else if (item === "stock1") {
+      handleStock1();
     } else if (item === "stock2") {
       handleStock2();
+    } else if (item === "Mutual Funds") {
+      handleMutualFunds();
     } else {
       handleBlog();
     }
@@ -101,7 +125,9 @@ const HeaderComponent = () => {
   const getNavPath = (item) => {
     if (item === 'Home') return user ? (user.is_subscribed ? '/120/viphome' : '/120/home') : '/404';
     if (item === 'Heatmap') return user ? (user.is_subscribed ? '/120/vipheatmap' : '/120/heatmap') : '/404';
-    if (item === 'stock2') return user ? (user.is_subscribed ? '/120/vipheatmap' : '/120/subscription') : '/404';
+    if (item === 'stock1') return user ? (user.is_subscribed ? '/120/stock1' : '/120/subscription') : '/404';
+    if (item === 'stock2') return user ? (user.is_subscribed ? '/120/stock2' : '/120/subscription') : '/404';
+    if (item === 'Mutual Funds') return user ? (user.is_subscribed ? '/120/mutual_funds' : '/120/subscription') : '/404';
     if (item === 'Blog') return user ? (user.is_subscribed ? '/120/vipblog' : '/120/blog') : '/404';
     if (item === 'Profile') return user ? (user.is_subscribed ? '/120/vipprofile' : '/120/profile') : '/404';
     if (item === 'Logout') return '/120/login';
@@ -123,10 +149,10 @@ const HeaderComponent = () => {
       <List>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
-            <ListItemButton 
-              sx={{ 
-                textAlign: 'center', 
-                color: location.pathname === getNavPath(item) ? 'blue' : 'black' 
+            <ListItemButton
+              sx={{
+                textAlign: 'center',
+                color: location.pathname === getNavPath(item) ? 'blue' : 'black'
               }}
               onClick={() => onListItemButtonClick(item)}
             >
@@ -151,11 +177,11 @@ const HeaderComponent = () => {
       />
       <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
         {navItems.map((item) => (
-          <Button 
-            key={item} 
-            sx={{ 
-              color: location.pathname === getNavPath(item) ? 'blue' : 'black' 
-            }} 
+          <Button
+            key={item}
+            sx={{
+              color: location.pathname === getNavPath(item) ? 'blue' : 'black'
+            }}
             onClick={() => onListItemButtonClick(item)}
           >
             {item}

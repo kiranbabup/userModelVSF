@@ -14,6 +14,9 @@ import PhoneVerificationPage from "./pages/PhoneVerificationPage";
 import EmailVerificationPage from "./pages/EmailVerificationPage";
 import PaymentSuccessful from "./pages/PaymentSuccessful";
 import PaymentFailed from "./pages/PaymentFailed";
+import Stock2 from "./pages/sub-Pages/stock2/Stock2";
+import Stock1 from "./pages/sub-Pages/stock1/Stock1";
+import MutualFunds from "./pages/sub-Pages/mutual/MutualFunds";
 // import LastMonthHeatMap from "./otherTestingFiles/LastMonthHeatMap";
 
 const CustomeRoutes = () => {
@@ -43,6 +46,9 @@ const CustomeRoutes = () => {
         <Route path="120/vipheatmap" element={<SubLandingPage />} />
         <Route path="120/vipprofile" element={<ProfilePage/>}/>
         <Route path="120/vipblog" element={<BlogPage/>}/>
+        <Route path="120/stock1" element={<Stock1/>}/>
+        <Route path="120/stock2" element={<Stock2/>}/>
+        <Route path="120/mutual_funds" element={<MutualFunds/>}/>
         <Route path="120/subscriptionexpired" element={<AccountExpiredPage />} />
       </Route>
     </Routes>
