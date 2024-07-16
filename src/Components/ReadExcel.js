@@ -91,21 +91,21 @@ const ReadExcel = ({ file, name }) => {
         {data.length > 0 && (
           <Table {...getTableProps()} >
             <thead>
-              {headerGroups.map((headerGroup) => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <Th {...column.getHeaderProps()}>{column.render('Header')}</Th>
+              {headerGroups.map((headerGroup, i) => (
+                <tr {...headerGroup.getHeaderGroupProps()} key={i}>
+                  {headerGroup.headers.map((column, index) => (
+                    <Th {...column.getHeaderProps()} key={index} >{column.render('Header')}</Th>
                   ))}
                 </tr>
               ))}
             </thead>
             <tbody {...getTableBodyProps()}>
-              {rows.map((row) => {
+              {rows.map((row, ind) => {
                 prepareRow(row);
                 return (
-                  <tr {...row.getRowProps()}>
-                    {row.cells.map((cell) => (
-                      <Td {...cell.getCellProps()}>{cell.render('Cell')}</Td>
+                  <tr {...row.getRowProps()} key={ind}>
+                    {row.cells.map((cell, inde) => (
+                      <Td {...cell.getCellProps()} key={inde} >{cell.render('Cell')}</Td>
                     ))}
                   </tr>
                 );

@@ -9,15 +9,11 @@ import ProfilePage from "./pages/ProfilePage";
 import BlogPage from "./pages/BlogPage";
 import AccountExpiredPage from "./pages/AccountExpiredPage";
 import HomePage from "./pages/HomePage";
-import VerificationPage from "./pages/VerificationPage";
-import PhoneVerificationPage from "./pages/PhoneVerificationPage";
-import EmailVerificationPage from "./pages/EmailVerificationPage";
 import PaymentSuccessful from "./pages/PaymentSuccessful";
 import PaymentFailed from "./pages/PaymentFailed";
 import Stock2 from "./pages/sub-Pages/stock2/Stock2";
 import Stock1 from "./pages/sub-Pages/stock1/Stock1";
 import MutualFunds from "./pages/sub-Pages/mutual/MutualFunds";
-// import LastMonthHeatMap from "./otherTestingFiles/LastMonthHeatMap";
 
 const CustomeRoutes = () => {
   return (
@@ -25,10 +21,6 @@ const CustomeRoutes = () => {
       <Route path="/" element={<Navigate to="/120/login" />} />
       <Route path="/404" element={<Page404 />} />
       <Route path="/120/login" element={<LoginPage />} />
-      <Route path="/120/verification" element={<VerificationPage />} />
-      
-      <Route path="/120/phoneotpverification" element={<PhoneVerificationPage />} />
-      <Route path="/120/emailotpverification" element={<EmailVerificationPage />} />
 
       <Route path="/" element={<ProtectedRoute type="unsub" />} >
           <Route path="120/home" element={<HomePage />} />

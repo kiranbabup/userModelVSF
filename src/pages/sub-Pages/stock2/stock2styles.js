@@ -1,3 +1,5 @@
+export const apiKey = "AIzaSyAq3ypn4xpDpaquusYVJ3e00OHhLnH7__k";
+
 export const firstBox = {
     border: "1px dashed black", 
     width: "90%", 

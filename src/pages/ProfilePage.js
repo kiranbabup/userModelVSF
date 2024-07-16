@@ -174,11 +174,11 @@ const ProfilePage = () => {
                 },
                 body: JSON.stringify({ first_name, last_name, email, phone_no }),
             });
-            console.log(response.ok);
+            // console.log(response.ok);
             if (response.ok) {
                 try {
                     const response = await instance.get(`/getuserbyid/${user.id}`,);
-                    console.log(response.data.data);
+                    // console.log(response.data.data);
                     LsService.updateCurrentUser(response.data.data);
                 } catch (err) {
                     console.error('Error getting data:', err);

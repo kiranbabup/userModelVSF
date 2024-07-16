@@ -2,7 +2,7 @@
 // export const MAXWIDTH = "1328px";
 
 export const LOGIN_SUCCESS_MSG = "Thank you, User registration successfully completed";
-export const COMMON_ERROR_MSG = "Something went wrong";
+export const COMMON_ERROR_MSG = "Something went wrong. Please try again later.";
 
 export const LOGIN_DISPLAY_MSG = "Login to view Heatmap";
 export const months = [

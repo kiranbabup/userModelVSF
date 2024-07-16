@@ -61,7 +61,6 @@
         var myArray = [];
         const keyValuePairs = {};
 
-        // fetch('https://sheets.googleapis.com/v4/spreadsheets/1AMJIekwmTduIjNvExBDT3MjuV8gtOUFL-cofVR9gF5Y/values/totalmarketcap?alt=json&key=AIzaSyAq3ypn4xpDpaquusYVJ3e00OHhLnH7__k')
         fetch('https://sheets.googleapis.com/v4/spreadsheets/18IDm-Ut2i3zXsLSxLU5h-Ox9Xm0Bxi1kK9qVrPLR2dA/values/Latest_values?alt=json&key=AIzaSyAq3ypn4xpDpaquusYVJ3e00OHhLnH7__k')
             .then(response => response.json())
             .then(response => {
@@ -116,8 +115,6 @@
                         counted++
                     }
                 });
-                // console.log(`Number of values less than 0.8: ${count}`);
-                // console.log(`Number of values greater than 0.8: ${counted}`);
 
                 let str1 = '';
                 str1 = str1 + '<table border=1>';
@@ -334,7 +331,6 @@
                 }
                 str1 = str1 + "</table>";
 
-                // document.getElementById("reset").innerHTML = button
                 document.getElementById("table1").innerHTML = str1;
             }
 
@@ -351,11 +347,9 @@
 
             mySet.delete(index1);
             console.log(mySet)
-            // console.log(arrr)
 
             let arrr = Array.from(mySet);
             console.log(arrr + 'arrr')
-            // console.log(arrr[0].split(',')[1] + "arrr");
             for (j = 0; j < arrr.length; j++) {
                 arrr1 = arrr1 + (+ arrr[j].split(',')[0])
             }
@@ -385,7 +379,6 @@
             }
             str1 = str1 + "</table>";
 
-            // document.getElementById("reset").innerHTML = button
             document.getElementById("table1").innerHTML = str1;
 
 
@@ -395,16 +388,8 @@
 
         }
 
-        // function reseting() {
-        //     document.getElementById("table1").innerHTML = "";
-        //     document.getElementById("reset").innerHTML = "";
-        //     mySet = new Set();
-
-        // }
-
         function myfun() {
 
-            // console.log(values[0][4])
             let str = '';
             console.log(sort)
             sort.sort((a, b) => a - b);
@@ -428,28 +413,6 @@
                     if (myArray[i] == sort1[j].split(',,')[1]) {
                         str = str + '<tr>';
                         str = str + '<td onclick="myfunn(\'' + myArray[i] + ",," + sort1[j].split(',,')[0] + '\')">' + sort1[j].split(',,')[0] + '</td>';
-
-                        // if (myArray[i] >= 0 && myArray[i] <= 0.4) {
-                        //     str = str + '<td class="darkgreen-value">' + myArray[i] + '</td>';
-                        // }
-                        // else if (myArray[i] > 0.4 && myArray[i] <= 0.8) {
-                        //     str = str + '<td class="lightgreen-value">' + myArray[i] + '</td>';
-
-                        // }
-                        // else if (myArray[i] > 0.8 && myArray[i] <= 1.2) {
-                        //     str = str + '<td class="yellow-value">' + myArray[i] + '</td>';
-
-                        // }
-                        // else if (myArray[i] > 1.2 && myArray[i] <= 1.6) {
-                        //     str = str + '<td class="orange-value">' + myArray[i] + '</td>';
-
-                        // }
-
-
-                        // else {
-                        //     str = str + '<td class="vlow-value">' + myArray[i] + '</td>';
-                        // }
-
 
                         if (myArray[i] > 2.5 && myArray[i] <= 10) {
                             str = str + '<td class="darkgreen-value">' + myArray[i] + '</td>';
@@ -534,7 +497,6 @@
                         }
 
 
-                        // str = str + '<td>' + myArray[i] + '</td>';
                         str = str + '<td><center><button onclick="myfunn1(\'' + myArray[i] + ",," + sort1[j].split(',,')[0] + '\')">+</button></center></td>';
                         str = str + '</tr>';
                     }
@@ -542,7 +504,6 @@
             }
             str = str + '</table>';
             document.getElementById('table').innerHTML = str;
-            // '<td onclick="myfun(\'' + filteredData[j] + '\')">'
         }
 
         function myfunn(index) {

@@ -5,10 +5,10 @@ import SwotAnalysis from "./SwotAnalysis";
 import Checklist from "./Checklist";
 import Technicals from "./Technicals";
 import QVT from "./QVT";
+import { apiKey } from "./stock2styles";
 
 const Stock2 = () => {
     const [values, setValues] = useState([]);
-    const apiKey = 'AIzaSyAq3ypn4xpDpaquusYVJ3e00OHhLnH7__k';
 
     useEffect(() => {
         fetch(`https://sheets.googleapis.com/v4/spreadsheets/1Vyx0O5atvsSMg9lqK-sH65Tb7vT3mcbyiNZ4A_ci_r8/values/Embed?alt=json&key=${apiKey}`)

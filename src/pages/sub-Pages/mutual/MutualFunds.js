@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Box, TextField, } from "@mui/material"
 import HeaderComponent from "../../../Components/mainComponents/HeaderComponent";
+import { apiKey } from '../stock2/stock2styles';
 
 const MutualFunds = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [data, setData] = useState([]);
     const [selectedItems, setSelectedItems] = useState(new Set());
-
-    const apiKey = 'AIzaSyAq3ypn4xpDpaquusYVJ3e00OHhLnH7__k';
 
     useEffect(() => {
         if (searchTerm.trim() !== '') {
@@ -15,7 +14,7 @@ const MutualFunds = () => {
                 .then(response => response.json())
                 .then(response => {
                     const valuesSheet = response.values.slice(1);
-                    console.log('Data from Sheet 1:', valuesSheet);
+                    // console.log('Data from Sheet 1:', valuesSheet);
                     const filteredData = valuesSheet.filter(row => row[2].toLowerCase().includes(searchTerm.toLowerCase()));
                     setData(filteredData);
                 })
@@ -89,7 +88,7 @@ const MutualFunds = () => {
                                             <td>{item.name}</td>
                                             <td>{((item.value / total) * 100).toFixed(1)}</td>
                                             <td>
-                                                <button style={{width:"1.5rem"}} onClick={() => handleDeleteItem(`${item.name},,${item.value}`)}>-</button>
+                                                <button style={{width: "1.5rem", cursor: 'pointer'}} onClick={() => handleDeleteItem(`${item.name},,${item.value}`)}>-</button>
                                             </td>
                                         </tr>
                                     ))}
@@ -108,7 +107,7 @@ const MutualFunds = () => {
                                         <td>{row[10]}</td>
                                         <td>{row[11]}</td>
                                         <td>
-                                            <button style={{width:"1.5rem"}} onClick={() => handleAddItem(`${row[2]},,${row[9]}`)}>+</button>
+                                            <button style={{width: "1.5rem", cursor: 'pointer'}} onClick={() => handleAddItem(`${row[2]},,${row[9]}`)}>+</button>
                                         </td>
                                     </tr>
                                 ))}

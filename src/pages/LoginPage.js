@@ -1,19 +1,17 @@
 import { Typography, Box, Card, TextField, } from "@mui/material";
 import { COMMON_ERROR_MSG, LOGIN_DISPLAY_MSG } from "../constants";
 import CustomButton from "../Components/CustomButton";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import AuthServices from "../services/AuthServices";
 import { connect } from "react-redux";
 import { authSuccess } from "../actions/auth";
 import { useGoogleLogin } from "@react-oauth/google";
 import { makeStyles } from "@mui/styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import gicon from "../assets/images/GoogleGLogo.png";
 import vsfintechLogo from "../assets/images/vsfintechLogo.png";
-import { useDispatch } from 'react-redux';
-import { setLoginWord } from '../actions/actions';
 import emailjs from "@emailjs/browser";
-// import { useSelector } from 'react-redux';
+import PinInput from "react-pin-input";
 
 export const useStyles = makeStyles((theme) => ({
   card: {
@@ -25,12 +23,30 @@ export const useStyles = makeStyles((theme) => ({
 const LoginPage = ({ authSuccess }) => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [isLoading, setLoading] = useState(false);
-  const [loginWordString, setLoginWordString] = useState("");
+  const [googleLoginMsg, setgoogleLoginMsg] = useState("");
   const [loginErrorMsg, setLoginErrorMsg] = useState("");
   const [loginMsg, setLoginMsg] = useState("");
-  const [googleLoginMsg, setgoogleLoginMsg] = useState("");
+  const [loginWordString, setLoginWordString] = useState("");
+  const [mailORphone, setmailORphone] = useState("");
+  const [otp, setOtp] = useState("");
+  const [saveOtp, setSaveOtp] = useState("");
+  const [value, setValue] = useState({});
+  const [timer, setTimer] = useState(120);
+  const [isLoading, setLoading] = useState(false);
+  const [isOtpsent, setIsOtpsent] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    let interval;
+    if (timer > 0 && !isActive && isOtpsent) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000); // 1000
+    } else if (timer === 0 && !isActive) {
+      setIsActive(true);
+    }
+    return () => clearInterval(interval);
+  }, [timer, isActive, isOtpsent]);
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -92,9 +108,8 @@ const LoginPage = ({ authSuccess }) => {
     return otpPassword;
   }
 
-  const handleLogin = async () => {
+  const handleSendOtp = async () => {
     if (loginWordString === "") {
-      // setLoginErrorMsg("Please fill Phone Number");
       setLoginErrorMsg("Please fill email-ID or Phone Number");
     } else {
       const isEmail = /\S+@\S+\.\S+/.test(loginWordString);
@@ -102,131 +117,269 @@ const LoginPage = ({ authSuccess }) => {
 
       if (!isEmail && !isPhoneNumber) {
         if (/^\d{1,9}$/.test(loginWordString)) {
-          // setLoginErrorMsg("Please enter valid 10 digits phone number or use Gmail login instead");
           setLoginErrorMsg("Please enter valid 10 digits phone number or use an email instead");
         } else {
-          // setLoginErrorMsg("Please enter valid Phone Number as email service unavailabe or use Gmail login");
           setLoginErrorMsg("Please enter valid email id or use a phone number instead");
         }
         return;
+      } else if (isPhoneNumber) {
+        setLoginErrorMsg("");
+        setmailORphone("phone");
+        const now = new Date();
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = now.getFullYear();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const uniqueEmail = `email${day}${month}${year}${hours}${minutes}${seconds}@gmail.com`;
+        setValue({
+          first_name: "first_name",
+          last_name: "last_name",
+          email: uniqueEmail,
+          phone_no: loginWordString,
+        });
+        resendOtptoPhone();
+      } else if (isEmail) {
+        setLoginErrorMsg("");
+        setmailORphone("email");
+        const [firstName] = loginWordString.split("@");
+        setValue({
+          first_name: firstName,
+          last_name: "last_name",
+          email: loginWordString,
+          phone_no: null,
+        });
+        resendOtptoEmail();
       }
+    };
+  }
 
-      setLoginErrorMsg(""); // Clear any previous error messages
-      dispatch(setLoginWord(loginWordString));
-      setLoading(true);
-      try {
-        let values;
+  const resendOtptoPhone = async () => {
+    setLoading(true);
+    setLoginMsg("Validating Phone number...");
+    
+    setLoginMsg("Sending OTP to Phone number...");
 
-        if (isEmail) {
-          setLoginMsg("Validating E-Mail ID...");
+    try {
+      // console.log(value);
 
-          const [firstName] = loginWordString.split("@");
-          values = {
-            first_name: firstName,
-            last_name: "last_name",
-            email: loginWordString,
-            phone_no: "0000000000",
-          };
-        } else {
-          setLoginMsg("Validating Phone number...");
-          const now = new Date();
-          const day = String(now.getDate()).padStart(2, '0');
-          const month = String(now.getMonth() + 1).padStart(2, '0');
-          const year = now.getFullYear();
-          const hours = String(now.getHours()).padStart(2, '0');
-          const minutes = String(now.getMinutes()).padStart(2, '0');
-          const seconds = String(now.getSeconds()).padStart(2, '0');
+      const resendResponse = await fetch('https://heatmapapi.onrender.com/mobilevalidateuser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ phone_no: loginWordString }),
+      });
 
-          const uniqueEmail = `email${day}${month}${year}${hours}${minutes}${seconds}@gmail.com`;
+      // console.log(resendResponse);
+      const messageData = await resendResponse.json();
+      // console.log(messageData);
 
-          values = {
-            first_name: "first_name",
-            last_name: "last_name",
-            email: uniqueEmail,
-            phone_no: loginWordString,
-          };
-        }
+      if (!resendResponse.ok) {
+        throw new Error('Failed to send OTP');
+      } else {
+        setIsOtpsent(true);
+        setLoginMsg("");
+        setSaveOtp(messageData.otp);
+      }
+      setLoading(false);
 
+    } catch (err) {
+      console.error('Error sending OTP:', err);
+      setLoginErrorMsg('Error sending OTP');
+      setLoginMsg("");
+      setLoading(false);
+    }
+  };
+
+  const resendOtptoEmail = async () => {
+    setLoading(true);
+    setLoginMsg("Validating Email-Id...");
+    setLoginMsg("Sending OTP to email id...");
+
+    try {
+      let otp = getOTP(6);
+      setSaveOtp(otp);
+      // console.log(value);
+      const params = {
+        to_email: loginWordString,
+        reply_to: "noreply@vsfintech.com",
+        pageText: "Your OTP for VS FINTECH Login.",
+        html: "Test",
+        to_name: "User",
+        from_name: "VS Fintech Private Limited",
+        message: otp
+      };
+      // console.log(params);
+      const resendResponse = await emailjs.send(
+        "service_3w6exqr",
+        "template_rc2n9go",
+        // "service_wq61tqr",
+        // "template_4trtaca",
+        params,
+        "s39s25uz1KRlVhw4j"
+        // "W820ReHOtXXQIx0dp"
+      );
+
+
+      if (resendResponse.text === "OK") {
+        setIsOtpsent(true);
+        setLoginMsg("");
+      } else {
+        throw new Error('Failed to send OTP');
+      }
+      setLoading(false);
+    } catch (err) {
+      console.error('Error sending OTP:', err);
+      setLoading(false);
+      setLoginErrorMsg('Error sending OTP');
+      setLoginMsg("");
+    }
+  };
+
+  const handleResend = (e) => {
+    e.preventDefault();
+    setLoginErrorMsg("");
+    setOtp("");
+    if (isActive) {
+      if (mailORphone === "phone") {
+        resendOtptoPhone();
+      } else {
+        resendOtptoEmail();
+      }
+      setIsActive(false);
+      setTimer(120);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (otp.length !== 6) {
+      setLoginErrorMsg("Please enter a valid 6-digit OTP.");
+      return;
+    }
+    setLoginErrorMsg("");
+    setLoading(true);
+    setLoginMsg("Validating OTP...");
+
+    if (mailORphone === "phone") {
+      if (saveOtp === otp) {
+        // console.log("phone otp Matched");
         try {
+          // console.log(value);
+          setLoginMsg("Logging in... Please wait...");
           const createUserResponse = await fetch('https://heatmapapi.onrender.com/createuser', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(values),
+            body: JSON.stringify(value),
           });
+          // console.log(createUserResponse);
 
+          const errorData = await createUserResponse.json();
+          // console.log(errorData);
           if (!createUserResponse.ok) {
-            const errorData = await createUserResponse.json();
             if (errorData.message === "User already exists") {
+
+              const responseData = errorData.data;
+              if ((responseData.email_verified === 1 || responseData.email_verified === true) && (responseData.is_subscribed === 1 || responseData.is_subscribed === true)) {
+                authSuccess(responseData);
+                navigate("/120/viphome", { replace: true });
+              } else if ((responseData.email_verified === 1 || responseData.email_verified === true) && (responseData.is_subscribed === 0 || responseData.is_subscribed === false)) {
+                authSuccess(responseData);
+                navigate("/120/home", { replace: true });
+              }
               throw new Error('User already exists');
-            } else {
-              throw new Error('User creation failed');
+            }
+          } else {
+            // console.log('User created successfully');
+            const responseData = errorData.data;
+            // console.log(responseData);
+
+            if ((responseData.email_verified === 1 || responseData.email_verified === true) && (responseData.is_subscribed === 1 || responseData.is_subscribed === true)) {
+              authSuccess(responseData);
+              navigate("/120/viphome", { replace: true });
+            } else if ((responseData.email_verified === 1 || responseData.email_verified === true) && (responseData.is_subscribed === 0 || responseData.is_subscribed === false)) {
+              authSuccess(responseData);
+              navigate("/120/home", { replace: true });
             }
           }
-
-          // alert('User created successfully');
-
         } catch (error) {
           if (error.message !== 'User already exists') {
+            // console.log(error.message);
+            setLoginErrorMsg(COMMON_ERROR_MSG);
+            setLoginMsg("");
             throw error;
           }
         }
+        setLoading(false);
+      } else {
+        setLoading(false);
+        setLoginErrorMsg('Invalid OTP. Please try again.');
+        setLoginMsg("");
+      }
+    } else {
+      // console.log("email");
+      if (saveOtp === otp) {
+        // console.log("otp Matched");
 
-        let validateUserResponse;
-        if (isEmail) {
-          setLoginMsg("Sending OTP to email id...");
-          let otp = getOTP(6);
-
-          const params = {
-            to_email: loginWordString,
-            from: "kiraninvtechnologies@gmail.com",
-            pageText: "Your OTP for VS FINTECH Login.",
-            html: "Test",
-            to_name: values.first_name,
-            from_name: "VS FINTECH",
-            message: otp
-          };
-
-          validateUserResponse = await emailjs.send(
-            "service_wq61tqr",
-            "template_4trtaca",
-            params,
-            "W820ReHOtXXQIx0dp"
-          );
-          console.log(validateUserResponse);
-          if (validateUserResponse.ok) {
-            navigate("/120/emailotpverification");
-          } else {
-            setLoginMsg("OTP sending Failed.");
-            throw new Error('OTP sending failed');
-          }
-        } else {
-          setLoginMsg("Sending OTP to Phone number...");
-
-          validateUserResponse = await fetch('https://heatmapapi.onrender.com/mobilevalidateuser', {
+        try {
+          setLoginMsg("Logging in... Please wait...");
+          // console.log(value);
+          const createUserResponse = await fetch('https://heatmapapi.onrender.com/createuser', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ phone_no: loginWordString }),
+            body: JSON.stringify(value),
           });
-          console.log(validateUserResponse);
-          if (validateUserResponse.ok) {
-            navigate("/120/phoneotpverification");
+          // console.log(createUserResponse);
+          // console.log(createUserResponse.ok);
+
+          const errorData = await createUserResponse.json();
+          // console.log(errorData);
+
+          if (!createUserResponse.ok) {
+            if (errorData.message === "User already exists") {
+              // console.log(errorData);
+
+              const responseData = errorData.data;
+              if ((responseData.email_verified === 1 || responseData.email_verified === true) && (responseData.is_subscribed === 1 || responseData.is_subscribed === true)) {
+                authSuccess(responseData);
+                navigate("/120/viphome", { replace: true });
+              } else if ((responseData.email_verified === 1 || responseData.email_verified === true) && (responseData.is_subscribed === 0 || responseData.is_subscribed === false)) {
+                authSuccess(responseData);
+                navigate("/120/home", { replace: true });
+              }
+              throw new Error('User already exists');
+            }
           } else {
-            setLoginMsg("OTP sending Failed.");
-            throw new Error('OTP sending failed');
+            // console.log('User created successfully');
+            const responseData = errorData.data;
+            // console.log(responseData);
+
+            if ((responseData.email_verified === 1 || responseData.email_verified === true) && (responseData.is_subscribed === 1 || responseData.is_subscribed === true)) {
+              authSuccess(responseData);
+              navigate("/120/viphome", { replace: true });
+            } else if ((responseData.email_verified === 1 || responseData.email_verified === true) && (responseData.is_subscribed === 0 || responseData.is_subscribed === false)) {
+              authSuccess(responseData);
+              navigate("/120/home", { replace: true });
+            }
+          }
+        } catch (error) {
+          if (error.message !== 'User already exists') {
+            // console.log(error.message);
+            setLoginErrorMsg(COMMON_ERROR_MSG);
+            setLoginMsg("");
+            throw error;
           }
         }
-          if(!validateUserResponse.ok){
-            setLoginMsg("OTP sending Failed.");
-            throw new Error('OTP sending failed');
-          }
-      } catch (error) {
-        console.error('Error Sending OTP:', error.message);
-        alert('Something went wrong. Please try again later.');
         setLoading(false);
+      } else {
+        setLoading(false);
+        setLoginErrorMsg('Invalid OTP. Please try again.');
+        setLoginMsg("");
       }
     }
   };
@@ -254,50 +407,111 @@ const LoginPage = ({ authSuccess }) => {
           {LOGIN_DISPLAY_MSG}
         </Typography>
         <Box p={1} />
-        {/* email-id: email@email.com or */}
-        <TextField id="outlined-basic" label="Enter Email-id or Phone Number" variant="outlined" fullWidth onChange={(e) => setLoginWordString(e.target.value)} />
-        {
-          loginErrorMsg !== "" &&
-          <Typography sx={{ color: "red", fontSize: "12px" }}>{loginErrorMsg}</Typography>
-        }
-        {
-          loginMsg !== "" &&
-          <Typography sx={{ color: "blue", fontSize: "12px" }}>{loginMsg}</Typography>
-        }
-        <Box p={1} />
-        <CustomButton title="Login"
-          // disabled
-          loading={isLoading}
-          onPressed={handleLogin}
-          fullWidth
-        />
 
-        <Box p={1} />
-        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <Box sx={{ width: "40%" }}><hr /></Box>
-          <Typography sx={{ color: "gray" }}>or</Typography>
-          <Box sx={{ width: "40%" }}><hr /></Box>
-        </Box>
-
-        <Box p={1} />
-        <CustomButton
-          title="Login with Google"
-          loading={isLoading}
-          onPressed={handleGoogleLogin}
-          fullWidth
-          sx={{ color: "black", backgroundColor: "white", fontSize: { md: 16, sm: 15, xs: 12 }, px: { xs: 0 }, py: { xs: 0, sm: 1 } }}
-          hoverColor="primary"
-          hoverTxtColor="white"
-          startIcon={
-            <Box component="img"
-              alt="VSFINTECH"
-              src={gicon}
-              sx={{ width: 32 }}
-            />}
-        />
         {
-          googleLoginMsg !== "" &&
-          <Typography sx={{ color: "blue", fontSize: "12px" }}>{googleLoginMsg}</Typography>
+          !isOtpsent ?
+            (
+              <Box>
+                <TextField
+                  id="outlined-basic"
+                  label="Enter Email-id or Phone Number"
+                  variant="outlined"
+                  fullWidth
+                  onChange={(e) => setLoginWordString(e.target.value)}
+                  value={loginWordString}
+                />
+                {
+                  loginErrorMsg !== "" &&
+                  <Typography sx={{ color: "red", fontSize: "12px" }}>{loginErrorMsg}</Typography>
+                }
+                {
+                  loginMsg !== "" &&
+                  <Typography sx={{ color: "blue", fontSize: "12px" }}>{loginMsg}</Typography>
+                }
+                <Box p={1} />
+                <CustomButton
+                  title="send otp"
+                  loading={isLoading}
+                  onPressed={handleSendOtp}
+                  fullWidth
+                />
+                <Box p={1} />
+                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <Box sx={{ width: "40%" }}><hr /></Box>
+                  <Typography sx={{ color: "gray" }}>or</Typography>
+                  <Box sx={{ width: "40%" }}><hr /></Box>
+                </Box>
+
+                <Box p={1} />
+
+                <CustomButton
+                  title="Login with Google"
+                  loading={isLoading}
+                  onPressed={handleGoogleLogin}
+                  fullWidth
+                  sx={{ color: "black", backgroundColor: "white", fontSize: { md: 16, sm: 15, xs: 12 }, px: { xs: 0 }, py: { xs: 0, sm: 1 } }}
+                  hoverColor="primary"
+                  hoverTxtColor="white"
+                  startIcon={
+                    <Box component="img"
+                      alt="VSFINTECH"
+                      src={gicon}
+                      sx={{ width: 32 }}
+                    />}
+                />
+                {
+                  googleLoginMsg !== "" &&
+                  <Typography sx={{ color: "blue", fontSize: "12px" }}>{googleLoginMsg}</Typography>
+                }
+              </Box>
+            ) : (
+              <Box>
+                <Typography sx={{ textAlign: "center", fontWeight: "bold" }}> {loginWordString} </Typography>
+                <Box p={1} />
+                <PinInput
+                  length={6}
+                  type="numeric"
+                  inputMode="number"
+                  onComplete={(value) => setOtp(value)}
+                  style={{ width: "95%", display: "flex", justifyContent: "space-between" }}
+                  inputStyle={{ backgroundColor: "#2C2D3C", borderColor: "#2C2D3C", borderRadius: "6px", color: "white", fontSize: 18 }}
+                />
+
+                <Box p={1} />
+
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  {isActive ? (
+                    <Link onClick={(e) => handleResend(e)} style={{ color: "#CED765" }}>
+                      Resend Code
+                    </Link>
+                  ) : (
+                    <Typography style={{ color: "#CED765" }}>Resend Code in {timer}s</Typography>
+                  )}
+                  <Link onClick={() => { setIsOtpsent(false); setLoginMsg(""); setLoginErrorMsg("") }} style={{ color: "#CED765" }}>
+                    ReEnter Details
+                  </Link>
+
+                </Box>
+
+                {
+                  loginErrorMsg !== "" &&
+                  <Typography sx={{ color: "red", fontSize: "12px" }}>{loginErrorMsg}</Typography>
+                }
+                {
+                  loginMsg !== "" &&
+                  <Typography sx={{ color: "blue", fontSize: "12px" }}>{loginMsg}</Typography>
+                }
+                <Box p={1} />
+
+                <CustomButton
+                  title="Login"
+                  loading={isLoading}
+                  onPressed={handleSubmit}
+                  fullWidth
+                />
+
+              </Box>
+            )
         }
       </Card>
     </Box>
