@@ -1,20 +1,25 @@
 {
   "files": {
-    "main.css": "/userModelVSF/static/css/main.49b7ef7b.css",
-    "main.js": "/userModelVSF/static/js/main.dee8807f.js",
+    "main.css": "/userModelVSF/static/css/main.4d7d79a1.css",
+    "main.js": "/userModelVSF/static/js/main.6677ef98.js",
     "static/js/453.bea66239.chunk.js": "/userModelVSF/static/js/453.bea66239.chunk.js",
     "static/media/vsfintechLogo.png": "/userModelVSF/static/media/vsfintechLogo.8b9738ffe69bed38bb4d.png",
     "static/media/bgstrip.jpg": "/userModelVSF/static/media/bgstrip.65ad21b931647dcde4e0.jpg",
+    "static/media/risk3.png": "/userModelVSF/static/media/risk3.b56962f5bbfcbb513367.png",
+    "static/media/risk1.png": "/userModelVSF/static/media/risk1.015ac70eb7402b6c5a1a.png",
+    "static/media/risk4.png": "/userModelVSF/static/media/risk4.0993b810a3569b2ab3cf.png",
+    "static/media/risk5.png": "/userModelVSF/static/media/risk5.7ead5bea4ecfed72ff11.png",
+    "static/media/risk2.png": "/userModelVSF/static/media/risk2.ba1b452bbb0fd1879539.png",
     "static/media/GoogleGLogo.png": "/userModelVSF/static/media/GoogleGLogo.81fdb134397492b14f45.png",
     "static/media/homeSheet2.xlsx": "/userModelVSF/static/media/homeSheet2.435dce08e7592186eb65.xlsx",
     "static/media/homeSheet1.xlsx": "/userModelVSF/static/media/homeSheet1.5ce95dac00c0b2a29985.xlsx",
     "index.html": "/userModelVSF/index.html",
-    "main.49b7ef7b.css.map": "/userModelVSF/static/css/main.49b7ef7b.css.map",
-    "main.dee8807f.js.map": "/userModelVSF/static/js/main.dee8807f.js.map",
+    "main.4d7d79a1.css.map": "/userModelVSF/static/css/main.4d7d79a1.css.map",
+    "main.6677ef98.js.map": "/userModelVSF/static/js/main.6677ef98.js.map",
     "453.bea66239.chunk.js.map": "/userModelVSF/static/js/453.bea66239.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.49b7ef7b.css",
-    "static/js/main.dee8807f.js"
+    "static/css/main.4d7d79a1.css",
+    "static/js/main.6677ef98.js"
   ]
 }
