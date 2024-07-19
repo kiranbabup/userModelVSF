@@ -8,7 +8,7 @@ import ThematicHeatMap from '../heatmaps/ThematicHeatMap';
 import SectorHeatMap from '../heatmaps/SectorHeatMap';
 import AllHeatMap from '../heatmaps/weekNmonth/AllHeatMap';
 import { columnStyle, dsiplayMesgStyle, fieldsetStyle, loadingSpace, lodButton, mainDivStyle, selectStyle, subDivStyle } from '../../assets/data/styles';
-import { months } from '../../constants';
+import { broadStocksNames, months, sectorStockName, strategyStockName, thematicStockName } from '../../constants';
 import YearlyHeatMap from '../dataComponents/YearlyHeatMap';
 import TopDrawer from '../TopDrawer';
 import { calculateDaysLeft } from '../../assets/data/functions';
@@ -217,24 +217,11 @@ const VipHeatMapPage = () => {
                     <Box style={columnStyle}>
                         <select value={selectedOptionStock1} onChange={(e) => { setSelectedOptionStock1(e.target.value); handleBroadStocksChange(e.target.value); }} style={selectStyle}>
                             <option >Select Broad Stock</option>
-                            <option value="NFT50" key="NFT50" >NFT50</option>
-                            <option value="NFTN50" key="NFTN50">NFTN50</option>
-                            <option value="NFT100" key="NFT100">NFT100</option>
-                            <option value="NFT200" key="NFT200">NFT200</option>
-                            <option value="NFTTTLMAR" key="NFTTTLMAR">NFTTTLMAR</option>
-                            <option value="NFT500" key="NFT500">NFT500</option>
-                            <option value="NFT500MC50_25_25" key="NFT500MC50_25_25">NFT500MC50_25_25</option>
-                            <option value="NFT500LGMSEQLCAPWTD" key="NFT500LGMSEQLCAPWTD">NFT500LGMSEQLCAPWTD</option>
-                            <option value="NFTMC150" key="NFTMC150">NFTMC150</option>
-                            <option value="NFTMC50" key="NFTMC50">NFTMC50</option>
-                            <option value="NFTMCSEL" key="NFTMCSEL">NFTMCSEL</option>
-                            <option value="NFTMC100" key="NFTMC100">NFTMC100</option>
-                            <option value="NFTSC250" key="NFTSC250">NFTSC250</option>
-                            <option value="NFTSC50" key="NFTSC50">NFTSC50</option>
-                            <option value="NFTFSC100" key="NFTFSC100">NFTFSC100</option>
-                            <option value="NFTMC250" key="NFTMC250">NFTMC250</option>
-                            <option value="NFTLMC250" key="NFTLMC250">NFTLMC250</option>
-                            <option value="NFTMSC400" key="NFTMSC400">NFTMSC400</option>
+                            {broadStocksNames.map((e)=>{
+                                return(
+                                    <option value={e.shortName} key={e.shortName} title={e.fullName}>{e.shortName}</option>
+                                )
+                            })}
                         </select>
                         <LoadingButton loading={isLoadingBroadHeatMap} variant="contained" style={lodButton} onClick={() => onBroadHandle()}>Compare All Broad Stocks</LoadingButton>
                     </Box>
@@ -244,45 +231,11 @@ const VipHeatMapPage = () => {
                     <Box style={columnStyle}>
                         <select value={selectedOptionStock2} onChange={(e) => { setSelectedOptionStock2(e.target.value); handleStrategyStocksChange(e.target.value); }} style={selectStyle}>
                             <option >Select Strategy Stock</option>
-                            <option value="NFT100EQLWGT" key="NFT100EQLWGT" >NFT100EQLWGT</option>
-                            <option value="NFT100LVLT30" key="NFT100LVLT30" >NFT100LVLT30</option>
-                            <option value="NFT50A" key="NFT50A" >NFT50A</option>
-                            <option value="NFT50FPR" key="NFT50FPR" >NFT50FPR</option>
-                            <option value="NFT50FTR" key="NFT50FTR" >NFT50FTR</option>
-                            <option value="NFT200MOM30" key="NFT200MOM30" >NFT200MOM30</option>
-                            <option value="NFT200AL30" key="NFT200AL30" >NFT200AL30</option>
-                            <option value="NFT100AL30" key="NFT100AL30" >NFT100AL30</option>
-                            <option value="NFTAL50" key="NFTAL50" >NFTAL50</option>
-                            <option value="NFTALVLT30" key="NFTALVLT30" >NFTALVLT30</option>
-                            <option value="NFTAQLTLVLT30" key="NFTAQLTLVLT30" >NFTAQLTLVLT30</option>
-                            <option value="NFTAQLTVLLVLT30" key="NFTAQLTVLLVLT30" >NFTAQLTVLLVLT30</option>
-                            <option value="NFTDO50" key="NFTDO50" >NFTDO50</option>
-                            <option value="NFTGRTHSEC15" key="NFTGRTHSEC15" >NFTGRTHSEC15</option>
-                            <option value="NFTHBETA50" key="NFTHBETA50" >NFTHBETA50</option>
-                            <option value="NFTLVLT50" key="NFTLVLT50" >NFTLVLT50</option>
-                            <option value="NFTT10EQLWGT" key="NFTT10EQLWGT" >NFTT10EQLWGT</option>
-                            <option value="NFT100QLT30" key="NFT100QLT30" >NFT100QLT30</option>
-                            <option value="NFTMC150MOM50" key="NFTMC150MOM50" >NFTMC150MOM50</option>
-                            <option value="NFT500MOM50" key="NFT500MOM50" >NFT500MOM50</option>
-                            <option value="NFTMC150QLT50" key="NFTMC150QLT50" >NFTMC150QLT50</option>
-                            <option value="NFTSC250QLT50" key="NFTSC250QLT50" >NFTSC250QLT50</option>
-                            <option value="NFTMSC400MOMQLT100" key="NFTMSC400MOMQLT100" >NFTMSC400MOMQLT100</option>
-                            <option value="NFTSC250MOMQLT100" key="NFTSC250MOMQLT100" >NFTSC250MOMQLT100</option>
-                            <option value="NFTQLTLVLT30" key="NFTQLTLVLT30" >NFTQLTLVLT30</option>
-                            <option value="NFT50DIVPNT" key="NFT50DIVPNT" >NFT50DIVPNT</option>
-                            <option value="NFT50EW" key="NFT50EW" >NFT50EW</option>
-                            <option value="NFT50PR1XINVS" key="NFT50PR1XINVS" >NFT50PR1XINVS</option>
-                            <option value="NFT50PR2XLVG" key="NFT50PR2XLVG" >NFT50PR2XLVG</option>
-                            <option value="NFT50TR1XINVS" key="NFT50TR1XINVS" >NFT50TR1XINVS</option>
-                            <option value="NFT50TR2XLVG" key="NFT50TR2XLVG" >NFT50TR2XLVG</option>
-                            <option value="NFT50VL20" key="NFT50VL20" >NFT50VL20</option>
-                            <option value="NFT200VL30" key="NFT200VL30" >NFT200VL30</option>
-                            <option value="NFT500VL50" key="NFT500VL50" >NFT500VL50</option>
-                            <option value="NFT500EQLWGT" key="NFT500EQLWGT" >NFT500EQLWGT</option>
-                            <option value="NFT200QLT30" key="NFT200QLT30" >NFT200QLT30</option>
-                            <option value="NFT50SRTDURDEBTDYNP_B" key="NFT50SRTDURDEBTDYNP_B" >NFT50SRTDURDEBTDYNP_B</option>
-                            <option value="NFT50SRTDURDEBTDYNP_E" key="NFT50SRTDURDEBTDYNP_E" >NFT50SRTDURDEBTDYNP_E</option>
-                            <option value="NFTEQTSAV" key="NFTEQTSAV" >NFTEQTSAV</option>
+                            {strategyStockName.map((e)=>{
+                                return(
+                                    <option value={e.shortName} key={e.shortName} title={e.fullName}>{e.shortName}</option>
+                                )
+                            })}
                         </select>
                         <LoadingButton loading={isLoadingStrategyHeatMap} variant="contained" style={lodButton} onClick={() => onStrategyHandle()}>Compare All Strategy Stocks</LoadingButton>
                     </Box>
@@ -292,41 +245,11 @@ const VipHeatMapPage = () => {
                     <Box style={columnStyle}>
                         <select value={selectedOptionStock3} onChange={(e) => { setSelectedOptionStock3(e.target.value); handleThematicStocksChange(e.target.value); }} style={selectStyle}>
                             <option >Select Thematic Stock</option>
-                            <option value="NFTCORPGRPIABG" key="NFTCORPGRPIABG" >NFTCORPGRPIABG</option>
-                            <option value="NFTCOMM" key="NFTCOMM" >NFTCOMM</option>
-                            <option value="NFTCH" key="NFTCH" >NFTCH</option>
-                            <option value="NFTCPSE" key="NFTCPSE" >NFTCPSE</option>
-                            <option value="NFTENG" key="NFTENG" >NFTENG</option>
-                            <option value="NFTEVNAAMT" key="NFTEVNAAMT" >NFTEVNAAMT</option>
-                            <option value="NFTHOUS" key="NFTHOUS" >NFTHOUS</option>
-                            <option value="NFT100ESG" key="NFT100ESG" >NFT100ESG</option>
-                            <option value="NFT100EESG" key="NFT100EESG" >NFT100EESG</option>
-                            <option value="NFT100ESGSL" key="NFT100ESGSL" >NFT100ESGSL</option>
-                            <option value="NFTCONS" key="NFTCONS" >NFTCONS</option>
-                            <option value="NFTDEF" key="NFTDEF" >NFTDEF</option>
-                            <option value="NFTINDDIG" key="NFTINDDIG" >NFTINDDIG</option>
-                            <option value="NFTINDMFG" key="NFTINDMFG" >NFTINDMFG</option>
-                            <option value="NFTINDTR" key="NFTINDTR" >NFTINDTR</option>
-                            <option value="NFTINFS" key="NFTINFS" >NFTINFS</option>
-                            <option value="NFTINDCORPGRPIMG" key="NFTINDCORPGRPIMG" >NFTINDCORPGRPIMG</option>
-                            <option value="NFTMCL15" key="NFTMCL15" >NFTMCL15</option>
-                            <option value="NFTMSINDCON" key="NFTMSINDCON" >NFTMSINDCON</option>
-                            <option value="NFTMNC" key="NFTMNC" >NFTMNC</option>
-                            <option value="NFTMOB" key="NFTMOB" >NFTMOB</option>
-                            <option value="NFTPSE" key="NFTPSE" >NFTPSE</option>
-                            <option value="NFTRI" key="NFTRI" >NFTRI</option>
-                            <option value="NFTNCC" key="NFTNCC" >NFTNCC</option>
-                            <option value="NFTSERSEC" key="NFTSERSEC" >NFTSERSEC</option>
-                            <option value="NFTSH25" key="NFTSH25" >NFTSH25</option>
-                            <option value="NFTINDCORPGRPITG" key="NFTINDCORPGRPITG" >NFTINDCORPGRPITG</option>
-                            <option value="NFTINDCORPGRPITG25PC" key="NFTINDCORPGRPITG25PC" >NFTINDCORPGRPITG25PC</option>
-                            <option value="NFTTRANSLOG" key="NFTTRANSLOG" >NFTTRANSLOG</option>
-                            <option value="NFT100L15" key="NFT100L15" >NFT100L15</option>
-                            <option value="NFT50SH" key="NFT50SH" >NFT50SH</option>
-                            <option value="NFT500SH" key="NFT500SH" >NFT500SH</option>
-                            <option value="NFT500MULCINDMFG50_30_20" key="NFT500MULCINDMFG50_30_20" >NFT500MULCINDMFG50_30_20</option>
-                            <option value="NFT500MULCINFS50_30_20" key="NFT500MULCINFS50_30_20" >NFT500MULCINFS50_30_20</option>
-                            <option value="NFTSMEEMG" key="NFTSMEEMG" >NFTSMEEMG</option>
+                            {thematicStockName.map((e)=>{
+                                return(
+                                    <option value={e.shortName} key={e.shortName} title={e.fullName}>{e.shortName}</option>
+                                )
+                            })}
                         </select>
                         <LoadingButton loading={isLoadingThematicHeatMap} variant="contained" style={lodButton} onClick={() => onThematicHandle()}>Compare All Thematic Stocks</LoadingButton>
                     </Box>
@@ -336,27 +259,11 @@ const VipHeatMapPage = () => {
                     <Box style={columnStyle}>
                         <select value={selectedOptionStock4} onChange={(e) => { setSelectedOptionStock4(e.target.value); handleSectorStocksChange(e.target.value); }} style={selectStyle}>
                             <option >Select Sector  Stock</option>
-                            <option value="NFTAUTO" key="NFTAUTO">NFTAUTO</option>
-                            <option value="NFTBANK" key="NFTBANK">NFTBANK</option>
-                            <option value="NFTFINSERV" key="NFTFINSERV">NFTFINSERV</option>
-                            <option value="NFTFINSERV25_50" key="NFTFINSERV25_50">NFTFINSERV25_50</option>
-                            <option value="NFTFINSERVEB" key="NFTFINSERVEB">NFTFINSERVEB</option>
-                            <option value="NFTFMCG" key="NFTFMCG">NFTFMCG</option>
-                            <option value="NFTHLTC" key="NFTHLTC">NFTHLTC</option>
-                            <option value="NFTIT" key="NFTIT">NFTIT</option>
-                            <option value="NFTMEDIA" key="NFTMEDIA">NFTMEDIA</option>
-                            <option value="NFTMETAL" key="NFTMETAL">NFTMETAL</option>
-                            <option value="NFTPHARMA" key="NFTPHARMA">NFTPHARMA</option>
-                            <option value="NFTPVTB" key="NFTPVTB">NFTPVTB</option>
-                            <option value="NFTPSUB" key="NFTPSUB">NFTPSUB</option>
-                            <option value="NFTREAL" key="NFTREAL">NFTREAL</option>
-                            <option value="NFTCD" key="NFTCD">NFTCD</option>
-                            <option value="NFTOG" key="NFTOG">NFTOG</option>
-                            <option value="NFTMSFS" key="NFTMSFS">NFTMSFS</option>
-                            <option value="NFTMSHC" key="NFTMSHC">NFTMSHC</option>
-                            <option value="NFTMSITTEL" key="NFTMSITTEL">NFTMSITTEL</option>
-                            <option value="NFT50USD" key="NFT50USD">NFT50USD</option>
-                            <option value="NFTVIX" key="NFTVIX">NFTVIX</option>
+                            {sectorStockName.map((e)=>{
+                                return(
+                                    <option value={e.shortName} key={e.shortName} title={e.fullName}>{e.shortName}</option>
+                                )
+                            })}
                         </select>
                         <LoadingButton loading={isLoadingSectorHeatMap} variant="contained" style={lodButton} onClick={() => onSectorHandle()}>Compare All Sector Stocks</LoadingButton>
                     </Box>

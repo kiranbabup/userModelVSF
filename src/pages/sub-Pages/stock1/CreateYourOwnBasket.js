@@ -11,6 +11,7 @@ const CreateYourOwnBasket = () => {
     const [stockInfo, setStockInfo] = useState({ name: '', image: '' });
     const [isBasket, setIsBasket] = useState(false);
     const [sortOrder, setSortOrder] = useState('asc');
+    // const [isTable1, setisTable1] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,6 +49,9 @@ const CreateYourOwnBasket = () => {
     const handleDeleteFromBasket = (item) => {
         basket.delete(item);
         setBasket(new Set(basket));
+        if (basket.size === 0) {
+            setIsBasket(false);
+        }
     };
 
     const handleStockClick = (stock) => {
@@ -91,7 +95,7 @@ const CreateYourOwnBasket = () => {
                                 <td>{index + 1}</td>
                                 <td>{stock}</td>
                                 <td>{((value / total) * 100).toFixed(1)}</td>
-                                <td>
+                                <td style={{ textAlign: "center" }}>
                                     <button style={{ width: "1.5rem", cursor: 'pointer' }} onClick={() => handleDeleteFromBasket(item)}>-</button>
                                 </td>
                             </tr>
@@ -118,7 +122,7 @@ const CreateYourOwnBasket = () => {
                 <thead>
                     <tr>
                         <th>Stocks</th>
-                        <td>
+                        <td style={{ textAlign: "center" }}>
                             <button style={{ width: "2.5rem", cursor: 'pointer' }} onClick={() => handleSort()}>%</button>
                         </td>
                         {/* <th onClick={handleSort} style={{ cursor: 'pointer' }}>%</th> */}
@@ -129,17 +133,46 @@ const CreateYourOwnBasket = () => {
                 </thead>
                 <tbody>
                     {sortedData.map((row, index) => {
-                        const qualityClass = row[4] > 2.5 ? 'darkgreen-value' :
+                        const qualityData = row[4] > 2.5 ? 'darkgreen-value' :
                             row[4] > 1.3 ? 'lightgreen-value' :
                                 row[4] > 0.8 ? 'yellow-value' :
                                     row[4] > 0.4 ? 'orange-value' : 'vlow-value';
+                        const qualityValue = parseFloat(row[5]);
+                        const growthValue = parseFloat(row[6]);
+
+                        let qualityClass = '';
+                        let growthClass = '';
+
+                        if (qualityValue > 80 && qualityValue <= 100) {
+                            qualityClass = 'darkgreen-value';
+                        } else if (qualityValue > 60 && qualityValue <= 80) {
+                            qualityClass = 'lightgreen-value';
+                        } else if (qualityValue > 40 && qualityValue <= 60) {
+                            qualityClass = 'yellow-value';
+                        } else if (qualityValue > 20 && qualityValue <= 40) {
+                            qualityClass = 'orange-value';
+                        } else {
+                            qualityClass = 'vlow-value';
+                        }
+
+                        if (growthValue > 80 && growthValue <= 100) {
+                            growthClass = 'darkgreen-value';
+                        } else if (growthValue > 60 && growthValue <= 80) {
+                            growthClass = 'lightgreen-value';
+                        } else if (growthValue > 40 && growthValue <= 60) {
+                            growthClass = 'yellow-value';
+                        } else if (growthValue > 20 && growthValue <= 40) {
+                            growthClass = 'orange-value';
+                        } else {
+                            growthClass = 'vlow-value';
+                        }
                         return (
                             <tr key={index}>
                                 <td onClick={() => handleStockClick(row)} >{row[0]}</td>
-                                <td className={qualityClass} >{row[4]}</td>
-                                <td>{row[5]}</td>
-                                <td>{row[6]}</td>
-                                <td>
+                                <td className={qualityData} >{row[4]}</td>
+                                <td className={qualityClass}>{row[5]}</td>
+                                <td className={growthClass}>{row[6]}</td>
+                                <td style={{ textAlign: "center" }}>
                                     <button style={{ width: "1.5rem", cursor: 'pointer' }} onClick={() => handleAddToBasket(row)}>+</button>
                                 </td>
                             </tr>
@@ -151,14 +184,15 @@ const CreateYourOwnBasket = () => {
     };
 
     const handleSerachterm = (e) => {
-        setSearchTerm(e.target.value);  
-        if( searchTerm.length === 0){
-            setStockInfo({ name: '', image: '' })
+        setSearchTerm(e.target.value);
+        if (searchTerm.length === 0) {
+            setStockInfo({ name: '', image: '' });
         }
     }
     return (
         <Box style={firstBox}>
             <Typography style={headerTypo}>Create Your Own Basket</Typography>
+            <Box p={1} />
             {
                 isBasket &&
                 <div>
@@ -177,21 +211,19 @@ const CreateYourOwnBasket = () => {
             <Box p={1} />
             <Box sx={{
                 width: "100%", display: "flex",
-                flexDirection: { xs: "column", md: "row" },
-                alignItems: { xs: 'center', md:"start" },
+                flexDirection: { xs: "column-reverse", md: "row" },
+                alignItems: { xs: 'center', md: "start" },
                 justifyContent: { md: "space-evenly" },
                 gap: { xs: 2, md: 0 }, flexWrap: { md: "wrap", lg: "nowrap", }
             }}>
+                {renderStockTable()}
+                <Box p={2} />
                 {(stockInfo.name && searchTerm.length > 0) && (
-                    <Box sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+                    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                         <h3>{stockInfo.name}</h3>
                         <img src={stockInfo.image} alt={stockInfo.name} />
                     </Box>
                 )}
-                <Box p={2} />
-                <div>
-                    {renderStockTable()}
-                </div>
             </Box>
         </Box>
     );

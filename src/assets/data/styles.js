@@ -36,12 +36,12 @@ export const columnStyle = {
 export const selectStyle = {
     outline: 'none',
     padding: "5px 2px",
-    width: "265px",
+    width: "255px",
     borderRadius: "5px",
 }
 
 export const lodButton = {
-    width: "265px",
+    width: "255px",
     fontSize: "12.5px",
 }
 

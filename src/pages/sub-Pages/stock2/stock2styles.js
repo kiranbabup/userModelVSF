@@ -8,7 +8,7 @@ export const firstBox = {
 };
 
 export const headerTypo = {
-    fontWeight: "bold", color: "green", fontSize:"30px"
+    fontWeight: "bold", color: "green", fontSize: "26px"
 }
 
 export const containerBox = {

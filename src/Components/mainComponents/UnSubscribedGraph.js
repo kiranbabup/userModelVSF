@@ -104,11 +104,11 @@ useEffect(()=>{
     <div style={mainGraphDivStyle}>
       <div>
         <select value={mainOption} onChange={handleDropdownChange1} style={selectGraphStyle}>
-        <option value="GNFT50" key="GNFT50" >NFT50</option>
-        <option value="GNFTMC50" key="GNFTMC50">NFTMC50</option>
-        <option value="GNFTSC50" key="GNFTSC50">NFTSC50</option>
-        <option value="GNFTLMC250" key="GNFTLMC250">NFTLMC250</option>
-        <option value="GNFTBANK" key="GNFTBANK">NFTBANK</option>
+        <option value="GNFT50" key="GNFT50" title="NIFTY 50" >NFT50</option>
+        <option value="GNFTMC50" key="GNFTMC50" title="NIFTY MIDCAP 50" >NFTMC50</option>
+        <option value="GNFTSC50" key="GNFTSC50" title="NIFTY SMALLCAP 50" >NFTSC50</option>
+        <option value="GNFTLMC250" key="GNFTLMC250" title="NIFTY LARGEMIDCAP 250" >NFTLMC250</option>
+        <option value="GNFTBANK" key="GNFTBANK" title="NIFTY BANK" >NFTBANK</option>
         </select>
         <Button onClick={handleClickOpen} variant="outlined" sx={{borderRadius:"50px"}}>Compare</Button>
         {open && <CompareViewGraphOptions names={graph5names} open={open} handleClose={handleClose} 

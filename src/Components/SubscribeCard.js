@@ -79,7 +79,7 @@ export default function SubscribeCard({ titleType, prices, months }) {
 
                 const discount = prices * (matchedCode.discount / 100);
                 setDiscountValue(matchedCode.discount);
-                const discountedPrice = prices - discount;
+                const discountedPrice = (prices - discount).toFixed(2);;
                 setCCPrice(discountedPrice);
             }
         }
@@ -100,10 +100,11 @@ export default function SubscribeCard({ titleType, prices, months }) {
 
     const onSubscribeClickHandle = async() => {
         const data = {
+            id: user.id,
             planname: months,
             amount: isCodeApplied ? CCprice : prices,
             phone: user.phone_no === null ? 9999999999 :  user.phone_no,
-            id: user.id,
+            email: user.email,
             transactionid: `MT${timestamp}`,
             muid: `MUID${timestamp}`,
         };
@@ -142,10 +143,10 @@ export default function SubscribeCard({ titleType, prices, months }) {
                 </Typography>
                 <Box p={1} />
                 <Typography >Get the Access to:</Typography>
-                <Typography color="text.secondary">{bull} All 115 indices individual yearly heatmap data.</Typography>
+                <Typography color="text.secondary">{bull} All 113 indices individual yearly heatmap data.</Typography>
                 <Typography color="text.secondary">{bull} Last 12 months comparision heatmap data.</Typography>
                 <Typography color="text.secondary">{bull} Previous month and Current Week heatmap data.</Typography>
-                <Typography color="text.secondary">{bull} All 115 indices Graph charts.</Typography>
+                <Typography color="text.secondary">{bull} All 113 indices Graph charts.</Typography>
                 <Box p={1} />
 
                 {!isPriceChanged ?

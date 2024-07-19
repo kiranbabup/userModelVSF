@@ -28,4 +28,4 @@ Your app is ready to be deployed!
 https://kiranbabup.github.io/userModelVSF
 
 # `Live in` amplify
-https://staging.d1rhdj4tqkimed.amplifyapp.com
+https://www.vsfintech.in

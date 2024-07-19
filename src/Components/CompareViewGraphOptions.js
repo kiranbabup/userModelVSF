@@ -38,9 +38,9 @@ export default function CompareViewGraphOptions({ open, handleClose, handleDropd
                     >
                         {/* .filter(name => !mainOption.includes(name)) */}
                         {names.map((name) => (
-                            <MenuItem key={name} value={name}>
-                                <Checkbox checked={selectedOption.indexOf(name) > -1} />
-                                <ListItemText primary={cleanOptionName(name)} />
+                            <MenuItem key={name.shortNames} value={name.graphNames} title={name.fullNames}>
+                                <Checkbox checked={selectedOption.indexOf(name.graphNames) > -1} />
+                                <ListItemText primary={cleanOptionName(name.graphNames)} />
                             </MenuItem>
                         ))}
                     </Select>

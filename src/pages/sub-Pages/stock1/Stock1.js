@@ -11,8 +11,8 @@ const Stock1 = () => {
             <HeaderComponent />
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <Box p={1} />
-                {/* Under Maintenance  */}
-                {/* <SearchYourStocks /> */}
+                <SearchYourStocks />
+                <Box p={2} />
                 <CreateYourOwnBasket />
                 <Box p={2} />
                 <IdentifyRightTime/>
