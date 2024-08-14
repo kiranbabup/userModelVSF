@@ -49,7 +49,7 @@ const VipHeatMapPage = () => {
         setStatetoUse();
         setIsLoadingHeatMap(true);
         try {
-            const response = await fetch('https://heatmapapi.onrender.com/getselectedheatmapdata', {
+            const response = await fetch('https://api.vsfintech.in/getselectedheatmapdata', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -109,13 +109,20 @@ const VipHeatMapPage = () => {
         handleSelectChange(selectedOptionStock1);
 
         const userdata = LsService.getCurrentUser();
+        console.log(userdata);
         const endingDate = userdata.subscribe_expired_on;
+        console.log(endingDate);
+
         setdaysLeft(calculateDaysLeft(endingDate));
+    }, []);
+
+    useEffect(() => {
         if (daysLeft <= 5) {
+            console.log(daysLeft);
             setIsDrawerOpen(true);
             setexpiryMsg(`Subscription Expires in ${daysLeft} days`);
         }
-    }, []);
+    }, [daysLeft]);
 
     const setStatetoUse = () => {
         setIsSingleSheet(true);

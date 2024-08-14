@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useTable } from 'react-table';
 import * as XLSX from 'xlsx';
 import styled from 'styled-components';
-import { Box, IconButton } from '@mui/material';
+import { Box, Button, IconButton } from '@mui/material';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import { mediaQueries } from '../assets/data/styles';
-
+import DownloadIcon from '@mui/icons-material/Download';
 const Container = styled.div`
   width: 70vw;
   overflow-x: auto;
@@ -83,9 +83,7 @@ const ReadExcel = ({ file, name }) => {
   }
   return (
     <>
-    <Box sx={{display:"flex", justifyContent:"end", marginRight:"5rem"}}>
-      <IconButton onClick={()=>csvDownload()} ><DownloadForOfflineIcon color='primary' fontSize="large" /> </IconButton>
-    </Box>
+      <Button variant='contained' sx={{fontSize:{xs:".6rem", sm:"1rem"}}} onClick={()=>csvDownload()} >Download<DownloadIcon sx={{ fontSize:{xs:"medium", sm:"1.5rem"}}} /> </Button>
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <Container >
         {data.length > 0 && (

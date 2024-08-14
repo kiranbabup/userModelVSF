@@ -6,6 +6,7 @@ import { useStyles } from "./LoginPage";
 import CircularProgress from '@mui/material/CircularProgress';
 import { loadingSpace } from "../assets/data/styles";
 import instance from "../services/axios";
+import ReadMore from "../Components/ReadMore";
 
 const BlogPage = () => {
     const classes = useStyles();
@@ -27,15 +28,15 @@ const BlogPage = () => {
         };
         fetchData();
     }, []);
-    // console.log(resultData);
-    const arrayBufferToBase64 = (buffer) => {
-        let binary = '';
-        const bytes = new Uint8Array(buffer);
-        for (let i = 0; i < bytes.byteLength; i++) {
-            binary += String.fromCharCode(bytes[i]);
-        }
-        return window.btoa(binary);
-    };
+    // // console.log(resultData);
+    // const arrayBufferToBase64 = (buffer) => {
+    //     let binary = '';
+    //     const bytes = new Uint8Array(buffer);
+    //     for (let i = 0; i < bytes.byteLength; i++) {
+    //         binary += String.fromCharCode(bytes[i]);
+    //     }
+    //     return window.btoa(binary);
+    // };
 
     return (
         <Box>
@@ -65,15 +66,15 @@ const BlogPage = () => {
                                     key={index}
                                     className={classes.card}
                                     sx={{
-                                        px: { xs: 1 },
-                                        py: { xs: 1 },
+                                        px: { xs: 4 },
+                                        py: { xs: 2 },
                                         width: { xs: "310px", sm: "80%" },
                                         display: "flex",
                                         flexDirection: { sm: "row", xs: "column" },
-                                        gap: 2,
+                                        gap: 4,
                                     }}
                                 >
-                                    {item.image && item.image.data ? (
+                                    {item.image ? (
                                         <Box
                                             sx={{
                                                 width: { xs: "100%", sm: "50%" },
@@ -81,7 +82,7 @@ const BlogPage = () => {
                                                 maxHeight:"20rem"
                                             }}
                                             component="img"
-                                            src={`data:image/jpeg;base64,${arrayBufferToBase64(item.image.data)}`}
+                                            src={item.image}
                                         />
                                     ) : null}
                                     <Box sx={{ width: { xs: "100%", sm: "50%" } }}>
@@ -89,11 +90,7 @@ const BlogPage = () => {
                                             {item.title}
                                         </Typography>
                                         <Box p={1} />
-                                        <Typography
-                                            sx={{ fontSize: { xs: 14, sm: 16 }, textAlign: "justify", textIndent: "30px" }}
-                                        >
-                                            {item.content}
-                                        </Typography>
+                                        <ReadMore content={item.content} maxCharacterCount={500} />
                                     </Box>
                                 </Card>
                             ))}

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import LsService from "../../services/localstorage";
 
 const drawerWidth = 240;
-const navItems = ['Home', 'Heatmap', 'stock1', 'stock2', 'Mutual Funds', 'Blog', 'Profile', 'Logout'];
+const navItems = ['Codes', 'Blog', 'Indices', 'Mutual Funds', 'Industries', 'Stocks', 'Subscribe', 'Profile', 'Logout'];
 
 const HeaderComponent = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -38,9 +38,9 @@ const HeaderComponent = () => {
     }
   }
 
-  const handleStock1 = () => {
+  const handleIndustries = () => {
     if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 0 || user.is_subscribed === false) : 0) {
-      nav("/120/subscription");
+      nav("/120/industries");
     } else if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 1 || user.is_subscribed === true) : 0) {
       nav('/120/stock1');
     } else {
@@ -50,7 +50,7 @@ const HeaderComponent = () => {
 
   const handleStock2 = () => {
     if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 0 || user.is_subscribed === false) : 0) {
-      nav("/120/subscription");
+      nav("/120/stocks");
     } else if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 1 || user.is_subscribed === true) : 0) {
       nav('/120/stock2');
     } else {
@@ -60,7 +60,7 @@ const HeaderComponent = () => {
 
   const handleMutualFunds = () => {
     if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 0 || user.is_subscribed === false) : 0) {
-      nav("/120/subscription");
+      nav("/120/mutualfunds");
     } else if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 1 || user.is_subscribed === true) : 0) {
       nav('/120/mutual_funds');
     } else {
@@ -101,18 +101,20 @@ const HeaderComponent = () => {
   const onListItemButtonClick = (item) => {
     if (item === "Logout") {
       handleLogout();
-    } else if (item === "Home") {
+    } else if (item === "Codes") {
       handleHome();
     } else if (item === "Profile") {
       handleProfile();
-    } else if (item === "Heatmap") {
+    } else if (item === "Indices") {
       handleHeatmap();
-    } else if (item === "stock1") {
-      handleStock1();
-    } else if (item === "stock2") {
+    } else if (item === "Industries") {
+      handleIndustries();
+    } else if (item === "Stocks") {
       handleStock2();
     } else if (item === "Mutual Funds") {
       handleMutualFunds();
+    } else if (item === "Subscribe") {
+      nav("/120/subscription");
     } else {
       handleBlog();
     }
@@ -123,16 +125,18 @@ const HeaderComponent = () => {
   };
 
   const getNavPath = (item) => {
-    if (item === 'Home') return user ? (user.is_subscribed ? '/120/viphome' : '/120/home') : '/404';
-    if (item === 'Heatmap') return user ? (user.is_subscribed ? '/120/vipheatmap' : '/120/heatmap') : '/404';
-    if (item === 'stock1') return user ? (user.is_subscribed ? '/120/stock1' : '/120/subscription') : '/404';
-    if (item === 'stock2') return user ? (user.is_subscribed ? '/120/stock2' : '/120/subscription') : '/404';
-    if (item === 'Mutual Funds') return user ? (user.is_subscribed ? '/120/mutual_funds' : '/120/subscription') : '/404';
+    if (item === 'Codes') return user ? (user.is_subscribed ? '/120/viphome' : '/120/home') : '/404';
+    if (item === 'Indices') return user ? (user.is_subscribed ? '/120/vipheatmap' : '/120/heatmap') : '/404';
+    if (item === 'Industries') return user ? (user.is_subscribed ? '/120/stock1' : '/120/industries') : '/404';
+    if (item === 'Stocks') return user ? (user.is_subscribed ? '/120/stock2' : '/120/stocks') : '/404';
+    if (item === 'Mutual Funds') return user ? (user.is_subscribed ? '/120/mutual_funds' : '/120/mutualfunds') : '/404';
+    if (item === 'Subscribe') return user ? (user.is_subscribed ? '' : '/120/subscription') : '/404';
     if (item === 'Blog') return user ? (user.is_subscribed ? '/120/vipblog' : '/120/blog') : '/404';
     if (item === 'Profile') return user ? (user.is_subscribed ? '/120/vipprofile' : '/120/profile') : '/404';
     if (item === 'Logout') return '/120/login';
     return '/404';
   };
+  const filteredNavItems = navItems.filter(item => !(item === 'Subscribe' && user?.is_subscribed));
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -147,7 +151,7 @@ const HeaderComponent = () => {
       />
       <Divider />
       <List>
-        {navItems.map((item) => (
+        {filteredNavItems.map((item) => (
           <ListItem key={item} disablePadding>
             <ListItemButton
               sx={{
@@ -176,7 +180,7 @@ const HeaderComponent = () => {
         src={vsfintechLogo}
       />
       <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-        {navItems.map((item) => (
+        {filteredNavItems.map((item) => (
           <Button
             key={item}
             sx={{

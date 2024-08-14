@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './stock1Styles.css'; // Import the CSS styles
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { firstBox, headerTypo } from '../stock2/stock2styles';
 
 const fetchSpreadsheetData = async (setSort1, setSort11) => {
@@ -38,21 +38,29 @@ const getClassForValue = (value) => {
 };
 
 const DataTable = ({ data, sortData, toggleSort, isAsc }) => (
-    <table border="1">
+    <table>
         <thead>
             <tr>
-                <th onClick={toggleSort}>{sortData ? 'Name' : 'Value'}</th>
-                {/* <th onClick={toggleSort}>Value</th> */}
-                <td>
-                    <button style={{ width: "3.5rem", cursor: 'pointer' }} onClick={toggleSort}>Value</button>
+                <th
+                style={{
+                    borderEndStartRadius: " 0.5rem",
+                    borderStartStartRadius: " 0.5rem",
+                    backgroundColor: "navy", color: "white"
+                }}
+                onClick={toggleSort}>Name</th>
+                <td style={{
+                            borderStartEndRadius: "0.5rem",
+                            borderEndEndRadius: "0.5rem",
+                        }}>
+                    <Button variant='contained' color='info' sx={{fontWeight:"bold"}} onClick={toggleSort}>Value</Button>
                 </td>
             </tr>
         </thead>
         <tbody>
             {data.map((item, index) => (
                 <tr key={index}>
-                    <td>{item.name}</td>
-                    <td className={getClassForValue(item.value)}>{item.value}</td>
+                    <td style={{paddingLeft:".5rem"}}>{item.name}</td>
+                    <td style={{textAlign:"center"}} className={getClassForValue(item.value)}>{item.value}</td>
                 </tr>
             ))}
         </tbody>

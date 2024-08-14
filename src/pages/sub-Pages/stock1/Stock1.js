@@ -10,7 +10,7 @@ const Stock1 = () => {
         <Box>
             <HeaderComponent />
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <Box p={1} />
+                <Box p={2} />
                 <SearchYourStocks />
                 <Box p={2} />
                 <CreateYourOwnBasket />

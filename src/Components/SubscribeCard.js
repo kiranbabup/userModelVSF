@@ -98,24 +98,29 @@ export default function SubscribeCard({ titleType, prices, months }) {
     //     navigate(url);
     // }
 
-    const onSubscribeClickHandle = async() => {
+    const onSubscribeClickHandle = async () => {
+        const currentUrl = window.location.href;
+        const baseUrl = currentUrl.includes('https://vsfintech.in') ? 'https://vsfintech.in/' : 'https://www.vsfintech.in/';
+
         const data = {
             id: user.id,
             planname: months,
             amount: isCodeApplied ? CCprice : prices,
-            phone: user.phone_no === null ? 9999999999 :  user.phone_no,
+            phone: user.phone_no === null ? 9999999999 : user.phone_no,
             email: user.email,
             transactionid: `MT${timestamp}`,
             muid: `MUID${timestamp}`,
+            url: baseUrl,
         };
+
         // console.log("subscribe data:", data);
         try {
             setLoading(true);
             const response = await AuthServices.makeOrder(data);
             setLoading(false);
             if (response.status != "200") {
-                // console.log({ text: response.data ?? "error" });
-                alert({ text: response.data ?? "error" });
+                console.log({ text: response.data ?? "error" });
+                // alert({ text: response.data ?? "error" });
                 return;
             }
 
@@ -123,8 +128,8 @@ export default function SubscribeCard({ titleType, prices, months }) {
             // console.log(redirect);
             window.location.href = redirect;
         } catch (error) {
-            // console.log(error);
-            alert({ text: error });
+            console.log(error);
+            // alert({ text: error });
             setLoading(false);
         }
     }

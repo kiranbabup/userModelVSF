@@ -23,7 +23,7 @@ const FullGraphVip = () => {
     const dateString = "DATE"
     setIsLoading(true);
     try {
-      const response = await fetch('https://heatmapapi.onrender.com/getselectedheatmapdata', {
+      const response = await fetch('https://api.vsfintech.in/getselectedheatmapdata', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Box, TextField, } from "@mui/material";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TablePagination, Button, Box, TextField } from '@mui/material';
+import React, { useState, useEffect, useMemo } from 'react';
 import HeaderComponent from "../../../Components/mainComponents/HeaderComponent";
-import { apiKey } from '../stock2/stock2styles';
+import { apiKey, firstBox } from '../stock2/stock2styles';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import HeightIcon from '@mui/icons-material/Height';
 
 const MutualFunds = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [data, setData] = useState([]);
     const [selectedItems, setSelectedItems] = useState(new Set());
-    const [sortOrder, setSortOrder] = useState('asc'); // Add state for sort order
+    const [sortOrder, setSortOrder] = useState('default');
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     useEffect(() => {
         if (searchTerm.trim() !== '') {
@@ -53,28 +59,63 @@ const MutualFunds = () => {
 
     const { selectedArray, total } = getSelectedData();
 
-    // Add sortValue function to handle sorting
-    const sortValue = () => {
-        const sortedData = [...data].sort((a, b) => {
-            const valueA = parseFloat(a[9]) || -Infinity; // Treat null as very low value for ascending order
+    const sortedData = useMemo(() => {
+        return [...data].sort((a, b) => {
+            const valueA = parseFloat(a[9]) || -Infinity;
             const valueB = parseFloat(b[9]) || -Infinity;
 
             if (sortOrder === 'asc') {
                 return valueA - valueB;
-            } else {
+            } else if (sortOrder === 'desc') {
                 return valueB - valueA;
+            } else {
+                return 0;
             }
         });
-        setData(sortedData);
-        setSortOrder(prevOrder => (prevOrder === 'asc' ? 'desc' : 'asc')); // Toggle sort order
+    }, [data, sortOrder]);
+
+    const handleSort = () => {
+        setSortOrder(prevOrder => {
+            if (prevOrder === 'default') {
+                return 'desc';
+            } else if (prevOrder === 'desc') {
+                return 'asc';
+            } else {
+                return 'desc';
+            }
+        });
     };
+
+    const renderSortIcon = () => {
+        if (sortOrder === 'asc') {
+            return <ArrowDropUpIcon />;
+        } else if (sortOrder === 'desc') {
+            return <ArrowDropDownIcon />;
+        } else {
+            return <HeightIcon />;
+        }
+    };
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+
+    const paginatedData = useMemo(() => {
+        const startIndex = page * rowsPerPage;
+        return sortedData.slice(startIndex, startIndex + rowsPerPage);
+    }, [sortedData, page, rowsPerPage]);
 
     return (
         <Box>
             <HeaderComponent />
             <Box p={2} />
             <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <Box sx={{ width: "90%", }}>
+                <Box style={firstBox}>
                     <TextField
                         type="text"
                         id="searchBar"
@@ -82,68 +123,87 @@ const MutualFunds = () => {
                         onChange={(e) => setSearchTerm(e.target.value)}
                         value={searchTerm}
                     />
-
                     <Box p={2} />
 
                     <div id="table1">
                         {selectedArray.length > 0 && (
-                            <table id='myTable' border="1">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Stock</th>
-                                        <th>%</th>
-                                        <th>Del</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {selectedArray.map((item, index) => (
-                                        <tr key={index}>
-                                            <td>{index + 1}</td>
-                                            <td>{item.name}</td>
-                                            <td>{((item.value / total) * 100).toFixed(1)}</td>
-                                            <td style={{ textAlign: "center" }}>
-                                                <button style={{ width: "1.5rem", cursor: 'pointer' }} onClick={() => handleDeleteItem(`${item.name},,${item.value}`)}>-</button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                            <TableContainer>
+                                <Table id='myTable'>
+                                    <TableHead>
+                                        <TableRow sx={{ backgroundColor: "navy" }}>
+                                            <TableCell sx={{ color: "white", fontWeight: "bold", borderEndStartRadius: "1rem", borderStartStartRadius: "1rem" }}>#</TableCell>
+                                            <TableCell sx={{ color: "white", fontWeight: "bold" }}>Stock</TableCell>
+                                            <TableCell sx={{ color: "white", fontWeight: "bold" }}>%</TableCell>
+                                            <TableCell sx={{ color: "white", fontWeight: "bold", borderStartEndRadius: "1rem", borderEndEndRadius: "1rem" }}>Del</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {selectedArray.map((item, index) => (
+                                            <TableRow key={index}>
+                                                <TableCell>{index + 1}</TableCell>
+                                                <TableCell>{item.name}</TableCell>
+                                                <TableCell>{((item.value / total) * 100).toFixed(1)}</TableCell>
+                                                <TableCell style={{ textAlign: "center" }}>
+                                                    <Button variant="contained" color="error" style={{ minWidth: "1.5rem" }} onClick={() => handleDeleteItem(`${item.name},,${item.value}`)}><DeleteForeverIcon /></Button>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
                         )}
                     </div>
+
                     <Box p={2} />
-                    <div id="resultsList">
-                        <table border="1">
-                            <thead>
-                                <tr>
-                                    <th>Stock Names</th>
-                                    <th style={{ textAlign: "center" }}>
-                                        <button style={{ width: "3rem", cursor: 'pointer' }} onClick={sortValue}>Sharp Ratio</button>
-                                    </th>
-                                    <th>Alpha</th>
-                                    <th>Beta</th>
-                                    <th>Add</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {data.map((row, index) => (
-                                    <tr key={index}>
-                                        <td>{row[2]}</td>
-                                        <td>{row[9]}</td>
-                                        <td>{row[10]}</td>
-                                        <td>{row[11]}</td>
-                                        <td style={{ textAlign: "center" }}>
-                                            <button style={{ width: "1.5rem", cursor: 'pointer' }} onClick={() => handleAddItem(`${row[2]},,${row[9]}`)}>+</button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                    <div id="resultsList" style={{ width: "95%" }} >
+                        <TableContainer>
+                            <Table>
+                                <TableHead sx={{ borderRadius: "1rem" }}>
+                                    <TableRow sx={{ backgroundColor: "navy", }}>
+                                        <TableCell sx={{
+                                            color: "white", fontWeight: "bold",
+                                            borderEndStartRadius: "1rem", borderStartStartRadius: "1rem"
+                                        }}>Stock Names</TableCell>
+                                        <TableCell style={{ textAlign: "center" }}>
+                                            <Button variant="contained" sx={{ padding: "0px", width: "4.5rem" }} onClick={handleSort}>
+                                                Ratio {renderSortIcon()}
+                                            </Button>
+                                        </TableCell>
+                                        <TableCell sx={{ color: "white", fontWeight: "bold" }}>Alpha</TableCell>
+                                        <TableCell sx={{ color: "white", fontWeight: "bold" }}>Beta</TableCell>
+                                        <TableCell sx={{ color: "white", fontWeight: "bold", borderStartEndRadius: "1rem", borderEndEndRadius: "1rem" }}>Add</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {paginatedData.map((row, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>{row[2]}</TableCell>
+                                            <TableCell>{row[9]}</TableCell>
+                                            <TableCell>{row[10]}</TableCell>
+                                            <TableCell>{row[11]}</TableCell>
+                                            <TableCell style={{ textAlign: "center" }}>
+                                                <Button variant="contained" color='success' style={{ minWidth: "1.5rem" }} onClick={() => handleAddItem(`${row[2]},,${row[9]}`)}>+</Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                            <TablePagination
+                                rowsPerPageOptions={[10, 25, 100]}
+                                component="div"
+                                count={sortedData.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                            />
+                        </TableContainer>
                     </div>
                 </Box>
             </Box>
             <Box p={2} />
         </Box>
-    )
+    );
 }
+
 export default MutualFunds;

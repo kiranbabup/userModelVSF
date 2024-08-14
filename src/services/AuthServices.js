@@ -10,9 +10,9 @@ class AuthServices {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-  googleLoginPerson = (data) => instance.post("https://heatmapapi.onrender.com/googlelogin", data);
+  googleLoginPerson = (data) => instance.post("https://api.vsfintech.in/googlelogin", data);
   
-  makeOrder =(data) => instance.post("https://heatmapapi.onrender.com/makeorder", data);
+  makeOrder =(data) => instance.post("https://api.vsfintech.in/makeorder", data);
 }
 
 export default new AuthServices();

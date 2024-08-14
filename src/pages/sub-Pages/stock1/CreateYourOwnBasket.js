@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './stock1Styles.css'; // Import your CSS file
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, Typography } from '@mui/material';
 import { firstBox, headerTypo } from '../stock2/stock2styles';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 const CreateYourOwnBasket = () => {
     const [values, setValues] = useState([]);
@@ -11,7 +12,8 @@ const CreateYourOwnBasket = () => {
     const [stockInfo, setStockInfo] = useState({ name: '', image: '' });
     const [isBasket, setIsBasket] = useState(false);
     const [sortOrder, setSortOrder] = useState('asc');
-    // const [isTable1, setisTable1] = useState(false);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -78,36 +80,47 @@ const CreateYourOwnBasket = () => {
         const total = arr.reduce((sum, item) => sum + parseFloat(item.split(',')[1]), 0);
 
         return (
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Stock</th>
-                        <th>%</th>
-                        <th>Del</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {arr.map((item, index) => {
-                        const [stock, value] = item.split(',');
-                        return (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{stock}</td>
-                                <td>{((value / total) * 100).toFixed(1)}</td>
-                                <td style={{ textAlign: "center" }}>
-                                    <button style={{ width: "1.5rem", cursor: 'pointer' }} onClick={() => handleDeleteFromBasket(item)}>-</button>
-                                </td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
+            <TableContainer>
+                <Table>
+                    <TableHead>
+                        <TableRow sx={{ backgroundColor: "navy" }}>
+                            <TableCell sx={{ color: "white", fontWeight: "bold", borderEndStartRadius: "1rem", borderStartStartRadius: "1rem" }}>#</TableCell>
+                            <TableCell sx={{ color: "white", fontWeight: "bold" }}>Stock</TableCell>
+                            <TableCell sx={{ color: "white", fontWeight: "bold", textAlign:"center" }}>%</TableCell>
+                            <TableCell sx={{ color: "white", fontWeight: "bold", borderStartEndRadius: "1rem", borderEndEndRadius: "1rem", textAlign:"center"  }}>Del</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {arr.map((item, index) => {
+                            const [stock, value] = item.split(',');
+                            return (
+                                <TableRow key={index}>
+                                    <TableCell>{index + 1}</TableCell>
+                                    <TableCell>{stock}</TableCell>
+                                    <TableCell>{((value / total) * 100).toFixed(1)}</TableCell>
+                                    <TableCell style={{ textAlign: "center" }}>
+                                        <Button variant="contained" color="error" style={{ minWidth: "1.5rem" }} onClick={() => handleDeleteFromBasket(item)}><DeleteForeverIcon /></Button>
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         );
     };
 
     const handleSort = () => {
         setSortOrder(prevOrder => (prevOrder === 'asc' ? 'desc' : 'asc'));
+    };
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
     };
 
     const renderStockTable = () => {
@@ -117,69 +130,98 @@ const CreateYourOwnBasket = () => {
             return sortOrder === 'asc' ? valueA - valueB : valueB - valueA;
         });
 
+        const paginatedData = sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
         return (
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Stocks</th>
-                        <td style={{ textAlign: "center" }}>
-                            <button style={{ width: "2.5rem", cursor: 'pointer' }} onClick={() => handleSort()}>%</button>
-                        </td>
-                        {/* <th onClick={handleSort} style={{ cursor: 'pointer' }}>%</th> */}
-                        <th>Quality</th>
-                        <th>Growth</th>
-                        <th>Add</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {sortedData.map((row, index) => {
-                        const qualityData = row[4] > 2.5 ? 'darkgreen-value' :
-                            row[4] > 1.3 ? 'lightgreen-value' :
-                                row[4] > 0.8 ? 'yellow-value' :
-                                    row[4] > 0.4 ? 'orange-value' : 'vlow-value';
-                        const qualityValue = parseFloat(row[5]);
-                        const growthValue = parseFloat(row[6]);
+            <Box sx={{width:{xs:"95%",sm:"50%"}}}>
+                <TableContainer>
+                    <Table>
+                        <TableHead sx={{ borderRadius: "1rem" }}>
+                            <TableRow sx={{ backgroundColor: "navy", }}>
+                                <TableCell sx={{
+                                    color: "white", fontWeight: "bold",
+                                    borderEndStartRadius: "1rem", borderStartStartRadius: "1rem"
+                                }}>Stocks</TableCell>
+                                <TableCell style={{ textAlign: "center" }}>
+                                    <Button variant="contained" onClick={handleSort}>
+                                        Value
+                                    </Button>
+                                </TableCell>
+                                <TableCell sx={{ color: "white", fontWeight: "bold" }}>Quality</TableCell>
+                                <TableCell sx={{ color: "white", fontWeight: "bold" }}>Growth</TableCell>
+                                <TableCell sx={{ color: "white", fontWeight: "bold", borderStartEndRadius: "1rem", borderEndEndRadius: "1rem" }}>Add</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {paginatedData.map((row, index) => {
+                                const qualityData = row[4] > 2.5 ? 'darkgreen-value' :
+                                    row[4] > 1.3 ? 'lightgreen-value' :
+                                        row[4] > 0.8 ? 'yellow-value' :
+                                            row[4] > 0.4 ? 'orange-value' : 'vlow-value';
+                                const qualityValue = parseFloat(row[5]);
+                                const growthValue = parseFloat(row[6]);
 
-                        let qualityClass = '';
-                        let growthClass = '';
+                                let qualityClass = '';
+                                let growthClass = '';
 
-                        if (qualityValue > 80 && qualityValue <= 100) {
-                            qualityClass = 'darkgreen-value';
-                        } else if (qualityValue > 60 && qualityValue <= 80) {
-                            qualityClass = 'lightgreen-value';
-                        } else if (qualityValue > 40 && qualityValue <= 60) {
-                            qualityClass = 'yellow-value';
-                        } else if (qualityValue > 20 && qualityValue <= 40) {
-                            qualityClass = 'orange-value';
-                        } else {
-                            qualityClass = 'vlow-value';
-                        }
+                                if (qualityValue > 80 && qualityValue <= 100) {
+                                    qualityClass = 'darkgreen-value';
+                                } else if (qualityValue > 60 && qualityValue <= 80) {
+                                    qualityClass = 'lightgreen-value';
+                                } else if (qualityValue > 40 && qualityValue <= 60) {
+                                    qualityClass = 'yellow-value';
+                                } else if (qualityValue > 20 && qualityValue <= 40) {
+                                    qualityClass = 'orange-value';
+                                } else {
+                                    qualityClass = 'vlow-value';
+                                }
 
-                        if (growthValue > 80 && growthValue <= 100) {
-                            growthClass = 'darkgreen-value';
-                        } else if (growthValue > 60 && growthValue <= 80) {
-                            growthClass = 'lightgreen-value';
-                        } else if (growthValue > 40 && growthValue <= 60) {
-                            growthClass = 'yellow-value';
-                        } else if (growthValue > 20 && growthValue <= 40) {
-                            growthClass = 'orange-value';
-                        } else {
-                            growthClass = 'vlow-value';
-                        }
-                        return (
-                            <tr key={index}>
-                                <td onClick={() => handleStockClick(row)} >{row[0]}</td>
-                                <td className={qualityData} >{row[4]}</td>
-                                <td className={qualityClass}>{row[5]}</td>
-                                <td className={growthClass}>{row[6]}</td>
-                                <td style={{ textAlign: "center" }}>
-                                    <button style={{ width: "1.5rem", cursor: 'pointer' }} onClick={() => handleAddToBasket(row)}>+</button>
-                                </td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
+                                if (growthValue > 80 && growthValue <= 100) {
+                                    growthClass = 'darkgreen-value';
+                                } else if (growthValue > 60 && growthValue <= 80) {
+                                    growthClass = 'lightgreen-value';
+                                } else if (growthValue > 40 && growthValue <= 60) {
+                                    growthClass = 'yellow-value';
+                                } else if (growthValue > 20 && growthValue <= 40) {
+                                    growthClass = 'orange-value';
+                                } else {
+                                    growthClass = 'vlow-value';
+                                }
+                                return (
+                                    <TableRow key={index}>
+                                        <TableCell >
+                                            <Button variant='contained' color='info'
+                                                fullWidth
+                                                sx={{
+                                                    textAlign: "start",
+                                                    display: "flex",
+                                                    justifyContent: "start"
+                                                }}
+                                                onClick={() => handleStockClick(row)}>
+                                                {row[0]}</Button>
+                                        </TableCell>
+                                        <TableCell style={{ textAlign: "center" }} className={qualityData} >{row[4]}</TableCell>
+                                        <TableCell style={{ textAlign: "center" }} className={qualityClass}>{row[5]}</TableCell>
+                                        <TableCell style={{ textAlign: "center" }} className={growthClass}>{row[6]}</TableCell>
+                                        <TableCell style={{ textAlign: "center" }}>
+                                            <Button variant="contained" color='success' style={{ minWidth: "1.5rem" }} onClick={() => handleAddToBasket(row)}>+</Button>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={[10, 25, 100]}
+                    component="div"
+                    count={sortedData.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+            </Box>
         );
     };
 

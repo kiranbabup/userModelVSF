@@ -1,6 +1,6 @@
 import { useMediaQuery, useTheme } from '@mui/material';
 import Heatmap from 'react-heatmap-grid';
-const YearlyHeatMap = ({data, months}) => {
+const YearlyHeatMap = ({ data, months }) => {
     // console.log(data);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -19,7 +19,12 @@ const YearlyHeatMap = ({data, months}) => {
             yLabelWidth={ywidth}
             yLabelTextAlign="center"
             cellStyle={(background, value, min, max, data, x, y) => ({
-                background: value < 0.50 ? `rgba(0, 128, 0, ${1 - (0.01 + (value - 0.01) / 0.49)})` : `rgba(255, 0, 0, ${1 - (max - value) / (max - 0.50)})`,
+                // background: value < 0.50 ? `rgba(0, 128, 0, ${1 - (0.01 + (value - 0.01) / 0.49)})` : `rgba(255, 0, 0, ${1 - (max - value) / (max - 0.50)})`,
+                background: value === 0
+                    ? 'rgba(128, 128, 128, 1)' // Gray color for value 0
+                    : value < 0.50
+                        ? `rgba(0, 128, 0, ${1 - (0.01 + (value - 0.01) / 0.49)})` // Green color for value < 0.50
+                        : `rgba(255, 0, 0, ${1 - (max - value) / (max - 0.50)})`,
                 fontSize: cellFontSize,
                 minWidth: cellminwidth,
                 border: '1px solid #ffffff',

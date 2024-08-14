@@ -125,18 +125,21 @@ const ProfilePage = () => {
         let last_name;
         let email;
         let phone_no;
+        let is_subscribed;
         switch (field) {
             case 'first_name':
                 first_name = newFN;
                 last_name = user.last_name;
                 email = user.email;
                 phone_no = user.phone_no;
+                is_subscribed = user.is_subscribed;
                 break;
             case 'last_name':
                 last_name = newLN;
                 first_name = user.first_name;
                 email = user.email;
                 phone_no = user.phone_no;
+                is_subscribed = user.is_subscribed;
                 break;
             case 'email':
                 if (!validateEmail(newEM)) {
@@ -147,6 +150,7 @@ const ProfilePage = () => {
                 last_name = user.last_name;
                 email = newEM;
                 phone_no = user.phone_no;
+                is_subscribed = user.is_subscribed;
                 break;
             case 'phone_no':
                 if (!validatePhoneNumber(newPhone)) {
@@ -157,41 +161,43 @@ const ProfilePage = () => {
                 last_name = user.last_name;
                 email = user.email;
                 phone_no = newPhone;
+                is_subscribed = user.is_subscribed;
                 break;
             default:
                 return;
         }
         setDisableIConBtn(true);
         try {
-            // let first_name = updatedUser.first_name;
-            // let last_name = updatedUser.last_name;
-            // let email = updatedUser.email;
-            // let phone_no = updatedUser.phone_no;
-            const response = await fetch(`https://heatmapapi.onrender.com/updateuser/${user.id}`, {
+            const response = await fetch(`https://api.vsfintech.in/updateuser/${user.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ first_name, last_name, email, phone_no }),
+                body: JSON.stringify({ first_name, last_name, email, phone_no, is_subscribed }),
             });
-            // console.log(response.ok);
-            if (response.ok) {
-                try {
-                    const response = await instance.get(`/getuserbyid/${user.id}`,);
-                    // console.log(response.data.data);
-                    LsService.updateCurrentUser(response.data.data);
-                } catch (err) {
-                    console.error('Error getting data:', err);
+            // console.log(response);
+            const errorData = await response.json();
+            // console.log(errorData);
+           
+                if (response.ok) {
+                    try {
+                        const response = await instance.get(`/getuserbyid/${user.id}`,);
+                        LsService.updateCurrentUser(response.data.data);
+                    } catch (err) {
+                        console.error('Error getting data:', err);
+                    }
+                    setIsEditFN(false);
+                    setIsEditLN(false);
+                    setIsEditE(false);
+                    setIsEditP(false);
+                    setDisableIConBtn(false);
+                    window.location.reload();
+                } else {
+                    alert(errorData.error);
+                    setDisableIConBtn(false);
+                    window.location.reload();
                 }
-                setIsEditFN(false);
-                setIsEditLN(false);
-                setIsEditE(false);
-                setIsEditP(false);
-                setDisableIConBtn(false);
-                window.location.reload();
-            } else {
-                alert('Something went wrong. Please try again later');
-            }
+            
         } catch (error) {
             console.error('Error editing Profile:', error.message);
             setDisableIConBtn(false);

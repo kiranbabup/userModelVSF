@@ -164,7 +164,7 @@ const LoginPage = ({ authSuccess }) => {
     try {
       // console.log(value);
 
-      const resendResponse = await fetch('https://heatmapapi.onrender.com/mobilevalidateuser', {
+      const resendResponse = await fetch('https://api.vsfintech.in/mobilevalidateuser', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -268,7 +268,7 @@ const LoginPage = ({ authSuccess }) => {
         try {
           // console.log(value);
           setLoginMsg("Logging in... Please wait...");
-          const createUserResponse = await fetch('https://heatmapapi.onrender.com/createuser', {
+          const createUserResponse = await fetch('https://api.vsfintech.in/createuser', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -327,7 +327,7 @@ const LoginPage = ({ authSuccess }) => {
         try {
           setLoginMsg("Logging in... Please wait...");
           // console.log(value);
-          const createUserResponse = await fetch('https://heatmapapi.onrender.com/createuser', {
+          const createUserResponse = await fetch('https://api.vsfintech.in/createuser', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -463,6 +463,8 @@ const LoginPage = ({ authSuccess }) => {
                   googleLoginMsg !== "" &&
                   <Typography sx={{ color: "blue", fontSize: "12px" }}>{googleLoginMsg}</Typography>
                 }
+                <Box p={1} />
+                <Typography><a href="https://www.vsfintech.com" target="_blank" >Click here</a> to go to VS Fintech Home Page</Typography>
               </Box>
             ) : (
               <Box>

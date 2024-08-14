@@ -28,6 +28,9 @@ const CustomeRoutes = () => {
           <Route path="120/subscription" element={<SubscriptionPage />} />
           <Route path="120/profile" element={<ProfilePage/>}/>
           <Route path="120/blog" element={<BlogPage/>}/>
+          <Route path="120/industries" element={<Stock1/>}/>
+        <Route path="120/stocks" element={<Stock2/>}/>
+        <Route path="120/mutualfunds" element={<MutualFunds/>}/>
           <Route path="120/paymentsuccessful" element={<PaymentSuccessful/>}/>
           <Route path="120/paymentfailed" element={<PaymentFailed/>}/>
 
