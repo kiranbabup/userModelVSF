@@ -19,7 +19,9 @@ const HeaderComponent = () => {
 
   useEffect(() => {
     let userdata = LsService.getCurrentUser();
-    setUser(userdata)
+    setUser(userdata);
+    console.log("header called");
+    
   }, []);
 
   const handleLogout = () => {

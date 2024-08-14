@@ -10,6 +10,7 @@ const HomePage = ()=>{
     return(
         <Box>
             <HeaderComponent />
+            
             <Box sx={{display:"flex", flexDirection:"column", alignItems:"center", gap:"1rem"}}>
                 <Typography sx={{ width:"30%", 
                     // background:"linear-gradient(180deg, rgba(18,59,6,1) 0%, rgba(110,178,15,1) 100%, rgba(4,10,47,1) 100%)", 

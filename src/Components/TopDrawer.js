@@ -3,36 +3,36 @@ import { Box, Drawer, IconButton, Typography } from '@mui/material';
 // import CustomButton from './CustomButton';
 // import { SUBSCRIBE_MSG, SUBSCRIBE_Success_MSG } from '../constants';
 // import Snackbar from '@mui/material/Snackbar';
-import CloseIcon from '@mui/icons-material/Close';
-import { useNavigate } from 'react-router-dom';
+// import CloseIcon from '@mui/icons-material/Close';
+// import { useNavigate } from 'react-router-dom';
 
-export default function TopDrawer({ isDrawerOpen, onClose, expiryMsg }) {
-  const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
+ const TopDrawer = ({ isDrawerOpen, onClose, expiryMsg })=> {
+  // const navigate = useNavigate();
+  // const [open, setOpen] = React.useState(false);
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpen(false);
-  };
+  // const handleClose = (event, reason) => {
+  //   if (reason === 'clickaway') {
+  //     return;
+  //   }
+  //   setOpen(false);
+  // };
 
-  const action = (
-    <React.Fragment>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </React.Fragment>
-  );
+  // const action = (
+  //   <React.Fragment>
+  //     <IconButton
+  //       size="small"
+  //       aria-label="close"
+  //       color="inherit"
+  //       onClick={handleClose}
+  //     >
+  //       <CloseIcon fontSize="small" />
+  //     </IconButton>
+  //   </React.Fragment>
+  // );
 
-  const onSubscribeClickHandle = () => {
-    navigate("/120/subscription")
-  }
+  // const onSubscribeClickHandle = () => {
+  //   navigate("/120/subscription")
+  // }
 
   const list = (
     <Box
@@ -59,3 +59,4 @@ export default function TopDrawer({ isDrawerOpen, onClose, expiryMsg }) {
     </Drawer>
   );
 }
+export default TopDrawer;

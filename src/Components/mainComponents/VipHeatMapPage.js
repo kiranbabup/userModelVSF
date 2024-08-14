@@ -10,11 +10,11 @@ import AllHeatMap from '../heatmaps/weekNmonth/AllHeatMap';
 import { columnStyle, dsiplayMesgStyle, fieldsetStyle, loadingSpace, lodButton, mainDivStyle, selectStyle, subDivStyle } from '../../assets/data/styles';
 import { broadStocksNames, months, sectorStockName, strategyStockName, thematicStockName } from '../../constants';
 import YearlyHeatMap from '../dataComponents/YearlyHeatMap';
-import TopDrawer from '../TopDrawer';
-import { calculateDaysLeft } from '../../assets/data/functions';
-import { useNavigate } from 'react-router-dom';
+// import TopDrawer from '../TopDrawer';
+// import { calculateDaysLeft } from '../../assets/data/functions';
+// import { useNavigate } from 'react-router-dom';
 // import { useSelector } from 'react-redux';
-import LsService from "../../services/localstorage";
+// import LsService from "../../services/localstorage";
 
 const VipHeatMapPage = () => {
     // const resultData = useSelector(state => state.data.resultData);
@@ -38,10 +38,10 @@ const VipHeatMapPage = () => {
     const [isLoadingThematicHeatMap, setIsLoadingThematicHeatMap] = useState(false);
     const [isLoadingSectorHeatMap, setIsLoadingSectorHeatMap] = useState(false);
     const [isLoadingAllHeatMap, setIsLoadingAllHeatMap] = useState(false);
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const [expiryMsg, setexpiryMsg] = useState("");
-    const [daysLeft, setdaysLeft] = useState(20);
-    const navigate = useNavigate();
+    // const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    // const [expiryMsg, setexpiryMsg] = useState("");
+    // const [daysLeft, setdaysLeft] = useState(20);
+    // const navigate = useNavigate();
 
     const handleSelectChange = async (selectedOption) => {
         const dateString = "DATE"
@@ -108,21 +108,21 @@ const VipHeatMapPage = () => {
     useEffect(() => {
         handleSelectChange(selectedOptionStock1);
 
-        const userdata = LsService.getCurrentUser();
-        console.log(userdata);
-        const endingDate = userdata.subscribe_expired_on;
-        console.log(endingDate);
+        // const userdata = LsService.getCurrentUser();
+        // console.log(userdata);
+        // const endingDate = userdata.subscribe_expired_on;
+        // console.log(endingDate);
 
-        setdaysLeft(calculateDaysLeft(endingDate));
+        // setdaysLeft(calculateDaysLeft(endingDate));
     }, []);
 
-    useEffect(() => {
-        if (daysLeft <= 5) {
-            console.log(daysLeft);
-            setIsDrawerOpen(true);
-            setexpiryMsg(`Subscription Expires in ${daysLeft} days`);
-        }
-    }, [daysLeft]);
+    // useEffect(() => {
+    //     if (daysLeft <= 5) {
+    //         console.log(daysLeft);
+    //         setIsDrawerOpen(true);
+    //         setexpiryMsg(`Subscription Expires in ${daysLeft} days`);
+    //     }
+    // }, [daysLeft]);
 
     const setStatetoUse = () => {
         setIsSingleSheet(true);
@@ -207,14 +207,13 @@ const VipHeatMapPage = () => {
         setIsAllSheet(true);
     }
 
-    const handleDrawerClose = () => {
-        if (daysLeft <= 0) {
-            navigate("/120/subscriptionexpired");
-
-        } else {
-            setIsDrawerOpen(false);
-        }
-    }
+    // const handleDrawerClose = () => {
+    //     if (daysLeft <= 0) {
+    //         navigate("/120/subscriptionexpired");
+    //     } else {
+    //         setIsDrawerOpen(false);
+    //     }
+    // }
 
     return (
         <div style={mainDivStyle}>
@@ -313,7 +312,7 @@ const VipHeatMapPage = () => {
                         {isAllSheet && <AllHeatMap isLoadingAllHeatMap={isLoadingAllHeatMap} setIsLoadingAllHeatMap={setIsLoadingAllHeatMap} />}
                     </Box>
             }
-            <TopDrawer isDrawerOpen={isDrawerOpen} onClose={handleDrawerClose} expiryMsg={expiryMsg} />
+            {/* <TopDrawer isDrawerOpen={isDrawerOpen} onClose={handleDrawerClose} expiryMsg={expiryMsg} /> */}
         </div>
     );
 };

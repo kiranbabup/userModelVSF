@@ -125,21 +125,18 @@ const ProfilePage = () => {
         let last_name;
         let email;
         let phone_no;
-        let is_subscribed;
         switch (field) {
             case 'first_name':
                 first_name = newFN;
                 last_name = user.last_name;
                 email = user.email;
                 phone_no = user.phone_no;
-                is_subscribed = user.is_subscribed;
                 break;
             case 'last_name':
-                last_name = newLN;
                 first_name = user.first_name;
+                last_name = newLN;
                 email = user.email;
                 phone_no = user.phone_no;
-                is_subscribed = user.is_subscribed;
                 break;
             case 'email':
                 if (!validateEmail(newEM)) {
@@ -150,7 +147,6 @@ const ProfilePage = () => {
                 last_name = user.last_name;
                 email = newEM;
                 phone_no = user.phone_no;
-                is_subscribed = user.is_subscribed;
                 break;
             case 'phone_no':
                 if (!validatePhoneNumber(newPhone)) {
@@ -161,7 +157,6 @@ const ProfilePage = () => {
                 last_name = user.last_name;
                 email = user.email;
                 phone_no = newPhone;
-                is_subscribed = user.is_subscribed;
                 break;
             default:
                 return;
@@ -173,7 +168,7 @@ const ProfilePage = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ first_name, last_name, email, phone_no, is_subscribed }),
+                body: JSON.stringify({ first_name, last_name, email, phone_no }),
             });
             // console.log(response);
             const errorData = await response.json();
