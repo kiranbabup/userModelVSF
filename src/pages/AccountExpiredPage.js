@@ -27,13 +27,13 @@ const AccountExpiredPage = () => {
           const details = result.data.find(user => user.id === userdata.id);
           if (details) {
             const endingDate = details.subscribe_expired_on;
-            console.log(endingDate);
+            // console.log(endingDate);
             const daysLeft = calculateDaysLeft(endingDate);
             if (daysLeft <= 0) {
-              console.log(daysLeft);
+              // console.log(daysLeft);
               setIsOver(true);
             } else {
-              console.log(daysLeft);
+              // console.log(daysLeft);
               setIsOver(false)
             }
           }
@@ -46,7 +46,7 @@ const AccountExpiredPage = () => {
       console.error("User data is not available.");
     }
   }, []);
-  console.log(user.id);
+  // console.log(user.id);
 
   const handleLogout = async () => {
     const is_subscribed = "false";
@@ -58,8 +58,8 @@ const AccountExpiredPage = () => {
         },
         body: JSON.stringify({ is_subscribed }),
       });
-      console.log(response);
-      console.log(response.ok);
+      // console.log(response);
+      // console.log(response.ok);
 
       if (response.ok) {
         dispatch(authLogout());

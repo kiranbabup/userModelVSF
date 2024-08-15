@@ -25,7 +25,7 @@ const Stock2 = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     useEffect(() => {
-        fetch(`https://sheets.googleapis.com/v4/spreadsheets/1Vyx0O5atvsSMg9lqK-sH65Tb7vT3mcbyiNZ4A_ci_r8/values/Embed?alt=json&key=${apiKey}`)
+        fetch(`https://sheets.googleapis.com/v4/spreadsheets/1Op6I3TnPXOxHwWxaFsDdPRZRFB-wnO3nzxuXVlhSZO0/values/Latest_values?alt=json&key=${apiKey}`)
             .then(response => response.json())
             .then(response => {
                 const fetchedValues = response.values.slice(1);
@@ -42,6 +42,8 @@ const Stock2 = () => {
             setEmbedHTML("")
             return;
         }
+        // console.log(values);
+        
         const filtered = values.filter(row =>
             row.some(cell => cell.toLowerCase().includes(searchTerm.toLowerCase().trim()))
         );

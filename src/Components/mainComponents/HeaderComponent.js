@@ -20,8 +20,7 @@ const HeaderComponent = () => {
   useEffect(() => {
     let userdata = LsService.getCurrentUser();
     setUser(userdata);
-    console.log("header called");
-    
+    // console.log("header called");
   }, []);
 
   const handleLogout = () => {
@@ -32,9 +31,9 @@ const HeaderComponent = () => {
 
   const handleHeatmap = () => {
     if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 0 || user.is_subscribed === false) : 0) {
-      nav("/120/heatmap");
+      nav("/120/indices");
     } else if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 1 || user.is_subscribed === true) : 0) {
-      nav('/120/vipheatmap');
+      nav('/120/vipindices');
     } else {
       nav("/404")
     }
@@ -44,7 +43,7 @@ const HeaderComponent = () => {
     if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 0 || user.is_subscribed === false) : 0) {
       nav("/120/industries");
     } else if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 1 || user.is_subscribed === true) : 0) {
-      nav('/120/stock1');
+      nav('/120/vipindustries');
     } else {
       nav("/404")
     }
@@ -54,7 +53,7 @@ const HeaderComponent = () => {
     if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 0 || user.is_subscribed === false) : 0) {
       nav("/120/stocks");
     } else if (user ? (user.email_verified === 1 || user.email_verified === true) && (user.is_subscribed === 1 || user.is_subscribed === true) : 0) {
-      nav('/120/stock2');
+      nav('/120/vipstocks');
     } else {
       nav("/404")
     }
@@ -128,9 +127,9 @@ const HeaderComponent = () => {
 
   const getNavPath = (item) => {
     if (item === 'Codes') return user ? (user.is_subscribed ? '/120/viphome' : '/120/home') : '/404';
-    if (item === 'Indices') return user ? (user.is_subscribed ? '/120/vipheatmap' : '/120/heatmap') : '/404';
-    if (item === 'Industries') return user ? (user.is_subscribed ? '/120/stock1' : '/120/industries') : '/404';
-    if (item === 'Stocks') return user ? (user.is_subscribed ? '/120/stock2' : '/120/stocks') : '/404';
+    if (item === 'Indices') return user ? (user.is_subscribed ? '/120/vipindices' : '/120/indices') : '/404';
+    if (item === 'Industries') return user ? (user.is_subscribed ? '/120/vipindustries' : '/120/industries') : '/404';
+    if (item === 'Stocks') return user ? (user.is_subscribed ? '/120/vipstocks' : '/120/stocks') : '/404';
     if (item === 'Mutual Funds') return user ? (user.is_subscribed ? '/120/mutual_funds' : '/120/mutualfunds') : '/404';
     if (item === 'Subscribe') return user ? (user.is_subscribed ? '' : '/120/subscription') : '/404';
     if (item === 'Blog') return user ? (user.is_subscribed ? '/120/vipblog' : '/120/blog') : '/404';

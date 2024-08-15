@@ -24,7 +24,7 @@ const CustomeRoutes = () => {
 
       <Route path="/" element={<ProtectedRoute type="unsub" />} >
         <Route path="120/home" element={<HomePage />} />
-        <Route path="120/heatmap" element={<UnsubLandingPage />} />
+        <Route path="120/indices" element={<UnsubLandingPage />} />
         <Route path="120/subscription" element={<SubscriptionPage />} />
         <Route path="120/profile" element={<ProfilePage />} />
         <Route path="120/blog" element={<BlogPage />} />
@@ -37,11 +37,11 @@ const CustomeRoutes = () => {
 
       <Route path="/" element={<ProtectedRoute type="sub" />} >
         <Route path="120/viphome" element={<HomePage />} />
-        <Route path="120/vipheatmap" element={<SubLandingPage />} />
+        <Route path="120/vipindices" element={<SubLandingPage />} />
         <Route path="120/vipprofile" element={<ProfilePage />} />
         <Route path="120/vipblog" element={<BlogPage />} />
-        <Route path="120/stock1" element={<Stock1 />} />
-        <Route path="120/stock2" element={<Stock2 />} />
+        <Route path="120/vipindustries" element={<Stock1 />} />
+        <Route path="120/vipstocks" element={<Stock2 />} />
         <Route path="120/mutual_funds" element={<MutualFunds />} />
         <Route path="120/subscriptionexpired" element={<AccountExpiredPage />} />
       </Route>
